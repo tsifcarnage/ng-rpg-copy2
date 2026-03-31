@@ -43,6 +43,12 @@ h2.title-contrast {
   margin-bottom: 0.25rem;
 }
 
+h3.subtitle-contrast {
+  color: $contrast-warning;
+  text-align: center;
+  margin-bottom: 0.125rem;
+}
+
 p.subtitle {
   color: $blue-slate;
   text-align: center;
@@ -72,20 +78,40 @@ input {
   color: $slate-grey;
 }
 
-div.card {
+app-character-card {
   padding: 6px;
   height: 300px;
   background: rgba($color: #ffffff, $alpha: 0.05);
   border: 1px solid $slate-grey;
-  border-radius: 4px;
+  border-radius: 6px;
   min-width: 30%;
   margin: 6px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  cursor: pointer;
+  &:hover {
+    box-shadow: 9px 8px 12px 3px rgba(47, 47, 47, 0.71);
+    transform: scale(1.03);
+  }
+  &.selected {
+    border: 1px solid $contrast-warning;
+    background: rgba($color: #ffffff, $alpha: 0.15) !important;
+  }
 }
 
-p.pill {
-  color: $contrast-warning;
-  text-align: center;
-  padding: 2px;
-  border-radius: 14px;
-  background-color: rgba($color: $contrast-warning, $alpha: .10);
+div.pill-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  justify-content: center;
+
+  p.pill {
+    margin: 0px;
+    color: $contrast-warning;
+    text-align: center;
+    padding: 4px 8px;
+    border-radius: 8px;
+    background-color: rgba($color: $contrast-warning, $alpha: 0.1);
+  }
 }

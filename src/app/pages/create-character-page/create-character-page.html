@@ -7,13 +7,8 @@
   <h3>Choix de la classe</h3>
   <div class="select-class">
     @for (item of data; track item.description) {
-      <div class="card">
-        <p>{{item.name}}</p>
-        <p>{{item.description}}</p>
-        @for (feature of item.features; track $index) {
-          <p class="pill">{{feature}}</p>
-        }
-      </div>
+    <app-character-card [ngClass]="{'selected':item.type === selectedCharacter?.type }" [item]="item"
+      (cardSelected)="onSelect(item)"></app-character-card>
     }
   </div>
   <div class="landing-button" routerLink="/create-character">🚀 Commencer l'aventure !</div>

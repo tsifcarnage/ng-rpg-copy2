@@ -18,6 +18,7 @@
     align-items: center;
     margin-left: 2rem;
     button {
+      cursor: pointer;
       max-height: 2rem;
       background-color: transparent;
       color: white;
@@ -44,6 +45,7 @@
       color: aqua;
     }
     button {
+      cursor: pointer;
       max-height: 2rem;
       background-color: transparent;
       color: white;
@@ -55,13 +57,13 @@
         background-color: rgba($color: #ffffff, $alpha: 0.1) !important;
       }
       &.success {
-        background-color: rgba($color: #15a308, $alpha: 0.9) !important;
+        background-color: rgba($color: #15a308, $alpha: 0.7) !important;
         &:hover {
           background-color: rgba($color: #15a308, $alpha: 1) !important;
         }
       }
       &.danger {
-        background-color: rgba($color: #ec3535, $alpha: .9) !important;
+        background-color: rgba($color: #ec3535, $alpha: 0.7) !important;
         &:hover {
           background-color: rgba($color: #ec3535, $alpha: 1) !important;
         }

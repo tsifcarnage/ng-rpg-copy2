@@ -4,9 +4,9 @@
       <h2 class="title-contrast">⚔️ RPG Angular</h2>
     </div>
     <div class="actions">
-      <button>🗺️ Carte</button>
-      <button>🏰 Ville</button>
-      <button>🎒 Inventaire</button>
+      <button routerLinkActive="active" routerLink="/map">🗺️ Carte</button>
+      <button routerLinkActive="active" routerLink="/city">🏰 Ville</button>
+      <button routerLinkActive="active" routerLink="/inventory">🎒 Inventaire</button>
     </div>
   </div>
 
@@ -14,7 +14,7 @@
     <p>💰 0</p>
     <p>Niv. 1</p>
     <p>Joueur 1</p>
-    <button class="success">💾 Sauvegarder</button>
-    <button class="danger">✖ Quitter</button>
+    <button class="success" (click)="onSave()">💾 Sauvegarder</button>
+    <button class="danger" (click)="onExit()">✖ Quitter</button>
   </div>
 </div>

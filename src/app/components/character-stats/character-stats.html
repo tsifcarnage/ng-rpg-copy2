@@ -1,0 +1,23 @@
+<div class="card-stats">
+  <h3>Stats de départ - {{ character().type | titlecase}}</h3>
+  <div>
+    <p>⚔️ Attaque</p>
+    <p>{{character().characteristics.atk}}</p>
+  </div>
+  <div>
+    <p>🛡️ Défense</p>
+    <p>{{character().characteristics.def}}</p>
+  </div>
+  <div>
+    <p>💨 Vitesse</p>
+    <p>{{character().characteristics.speed}}</p>
+  </div>
+  <div>
+    <p>❤️ PV max</p>
+    <p>{{character().characteristics.hp}}</p>
+  </div>
+  <div>
+    <p>💙 MP max</p>
+    <p>{{character().characteristics.mana}}</p>
+  </div>
+</div>

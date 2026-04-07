@@ -11,5 +11,8 @@
       (cardSelected)="onSelect(item)"></app-character-card>
     }
   </div>
+  @if (selectedCharacter) {
+  <app-character-stats [character]="selectedCharacter"></app-character-stats>
+  }
   <div class="landing-button" routerLink="/create-character">🚀 Commencer l'aventure !</div>
 </div>

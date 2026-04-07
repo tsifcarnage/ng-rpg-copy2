@@ -1,0 +1,21 @@
+.card-stats {
+  max-width: 60vw;
+  border: 1px solid rgba(181, 179, 240, .5);
+  padding: 2rem;
+  padding: 2rem;
+  margin: 1rem auto;
+  border-radius: 0.25rem;
+  div {
+    display: flex;
+    justify-content: space-between;
+    background-color: rgba($color: #767676, $alpha: .2);
+    margin: 0.25rem;
+    padding: 0.5rem;
+    border-radius: 0.25rem;
+    p {
+      display: block;
+      margin: 0;
+      padding: 0;
+    }
+  }
+}

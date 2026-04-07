@@ -3,10 +3,11 @@ import { CharacterCard } from '../../components/character-card/character-card';
 import { USER_CHOICES_CLASS } from '../../data/class.data';
 import { ICharacter } from '../../models/character.interface';
 import { NgClass } from '@angular/common';
+import { CharacterStats } from '../../components/character-stats/character-stats';
 
 @Component({
   selector: 'app-create-character-page',
-  imports: [CharacterCard, NgClass],
+  imports: [CharacterCard, CharacterStats, NgClass],
   templateUrl: './create-character-page.html',
   styleUrl: './create-character-page.scss',
 })

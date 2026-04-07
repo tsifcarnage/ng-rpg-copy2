@@ -4,15 +4,17 @@ import { USER_CHOICES_CLASS } from '../../data/class.data';
 import { ICharacter } from '../../models/character.interface';
 import { NgClass } from '@angular/common';
 import { CharacterStats } from '../../components/character-stats/character-stats';
+import { FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-create-character-page',
-  imports: [CharacterCard, CharacterStats, NgClass],
+  imports: [CharacterCard, CharacterStats, ReactiveFormsModule, NgClass],
   templateUrl: './create-character-page.html',
   styleUrl: './create-character-page.scss',
 })
 export class CreateCharacterPage {
   public readonly data = USER_CHOICES_CLASS;
+  public readonly nameFormControl = new FormControl('', [Validators.required]);
 
   public selectedCharacter?: ICharacter;
 

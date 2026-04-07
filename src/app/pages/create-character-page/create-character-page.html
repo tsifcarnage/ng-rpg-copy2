@@ -1,8 +1,8 @@
 <div class="container">
   <h2 class="title-contrast">⚔️ Création du personnage</h2>
   <div class="input-ctrl">
-    <p class="subtitle-left">Nom du prénom</p>
-    <input type="text" placeholder="Entrez le nom de votre héro...">
+    <p class="subtitle-left">Nom du prénom *</p>
+    <input type="text" [formControl]="nameFormControl" placeholder="Entrez le nom de votre héro...">
   </div>
   <h3>Choix de la classe</h3>
   <div class="select-class">
@@ -14,5 +14,7 @@
   @if (selectedCharacter) {
   <app-character-stats [character]="selectedCharacter"></app-character-stats>
   }
-  <div class="landing-button" routerLink="/create-character">🚀 Commencer l'aventure !</div>
+  <div class="landing-button" [ngClass]="{'disabled': nameFormControl.invalid}">
+    🚀 Commencer l'aventure !
+  </div>
 </div>

@@ -14,7 +14,9 @@
   @if (selectedCharacter) {
   <app-character-stats [character]="selectedCharacter"></app-character-stats>
   }
-  <div class="landing-button" [ngClass]="{'disabled': nameFormControl.invalid}">
+  <div class="landing-button"
+  [ngClass]="{'disabled': nameFormControl.invalid || !selectedCharacter}"
+  (click)="createCharacter()">
     🚀 Commencer l'aventure !
   </div>
 </div>

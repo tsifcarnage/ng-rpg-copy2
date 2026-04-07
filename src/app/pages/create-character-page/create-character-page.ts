@@ -1,10 +1,11 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { CharacterCard } from '../../components/character-card/character-card';
 import { USER_CHOICES_CLASS } from '../../data/class.data';
 import { ICharacter } from '../../models/character.interface';
 import { NgClass } from '@angular/common';
 import { CharacterStats } from '../../components/character-stats/character-stats';
 import { FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-create-character-page',
@@ -15,6 +16,7 @@ import { FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
 export class CreateCharacterPage {
   public readonly data = USER_CHOICES_CLASS;
   public readonly nameFormControl = new FormControl('', [Validators.required]);
+  public readonly router = inject(Router);
 
   public selectedCharacter?: ICharacter;
 
@@ -23,6 +25,12 @@ export class CreateCharacterPage {
       this.selectedCharacter = undefined;
     } else {
       this.selectedCharacter = character;
+    }
+  }
+
+  public createCharacter(): void {
+    if (this.nameFormControl.valid && this.selectedCharacter) {
+      this.router.navigateByUrl('/map');
     }
   }
 }

@@ -1,0 +1,59 @@
+:host {
+  padding: 12px;
+  height: 300px;
+  min-width: 50vw;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid #6c6f7f;
+  border-radius: 6px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+
+  .player-info {
+    display: flex;
+    justify-content: space-between;
+    .left {
+      display: flex;
+      gap: 0.25rem;
+      .icon {
+        font-size: 30px;
+        margin: 0;
+      }
+      .infos {
+        .info-item {
+          margin: 0px;
+
+          &:first-child {
+            font-size: larger;
+          }
+          &:last-child {
+            font-size: smaller;
+            color: gray;
+          }
+        }
+      }
+    }
+    .money {
+      color: yellow;
+    }
+  }
+}
+
+.gauge-list {
+  .gauge-item {
+    div:first-child {
+      display: flex;
+      justify-content: space-between;
+      p {
+        display: block;
+        font-size: smaller;
+      }
+    }
+    progress {
+      width: 100%;
+      height: 15px;
+      border-radius: 5rem;
+      overflow: hidden;
+    }
+  }
+}

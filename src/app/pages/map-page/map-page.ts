@@ -23,9 +23,6 @@ export class MapPage {
       const player = this.playerService.getUserByPseudo(playerPseudo);
       if (player) {
         this.gameManagerService.initGame(player);
-        console.log('===== GAME INIT =======', player);
-      } else {
-        console.log('===== PLAYER NOT FOUND =======');
       }
     });
   }

@@ -12,8 +12,8 @@
         <span class="enemies">{{ zone.enemies }}</span>
       </div>
     </div>
-    @if (true) { <div class="lock-overlay">🔒 Niv. {{ zone.minLevel }}
-    </div>
+    @if (lvl() < zone.minLevel) {
+      <div class="lock-overlay">🔒 Niv. {{ zone.minLevel }}</div>
     }
   </div>
   }

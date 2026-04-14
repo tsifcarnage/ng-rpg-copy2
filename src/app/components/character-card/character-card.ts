@@ -1,5 +1,5 @@
 import { Component, input, output } from '@angular/core';
-import { ClassType } from '../../enums/class-type.enum';
+import { ClassType, IconByType } from '../../enums/class-type.enum';
 import { ICharacter } from '../../models/character.interface';
 
 @Component({
@@ -13,4 +13,5 @@ export class CharacterCard {
 
   public readonly cardSelected = output<void>();
   public readonly ClassType = ClassType;
+  public readonly IconByType = IconByType;
 }

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, input } from '@angular/core';
 
 interface ZoneInfo {
   id: string;
@@ -18,6 +18,8 @@ interface ZoneInfo {
   styleUrl: './map-selector.scss',
 })
 export class MapSelector {
+  public readonly lvl = input.required<number>();
+
   public readonly zones: ZoneInfo[] = [
     {
       id: 'forest',

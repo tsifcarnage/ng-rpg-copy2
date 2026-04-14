@@ -1,33 +1,33 @@
 <div class="player-info">
   <div class="left">
-    <p class="icon">⚔️</p>
+    <p class="icon">{{IconByType[player().type]}}</p>
     <div class="infos">
-      <p class="info-item">Player Name</p>
-      <p class="info-item">Warrior - Niveau 1</p>
+      <p class="info-item">{{player().pseudo}}</p>
+      <p class="info-item">{{player().type}} - Niveau {{player().lvl}}</p>
     </div>
   </div>
-  <p class="money">💰 50</p>
+  <p class="money">💰 {{player().money}}</p>
 </div>
 <div class="gauge-list">
   <div class="gauge-item">
     <div>
       <p>PV</p>
-      <p>100 / 120</p>
+      <p>{{player().currentHp}} / {{player().characteristics.hp}}</p>
     </div>
-    <progress max="120" value="100"></progress>
+    <progress [value]="player().currentHp" [max]="player().characteristics.hp"></progress>
   </div>
   <div class="gauge-item">
     <div>
       <p>PM</p>
-      <p>30 / 30</p>
+      <p>{{player().currentMp}} / {{player().characteristics.mana}}</p>
     </div>
-    <progress max="30" value="30"></progress>
+    <progress [value]="player().currentMp" [max]="player().characteristics.mana"></progress>
   </div>
   <div class="gauge-item">
     <div>
       <p>Expérience</p>
-      <p>0 / 100</p>
+      <p>{{player().currentXp}} / {{player().lvl * 100}}</p>
     </div>
-    <progress max="100" value="0"></progress>
+    <progress [value]="player().currentXp" [max]="player().lvl * 100"></progress>
   </div>
 </div>

@@ -1,16 +1,6 @@
 <div class="card" (click)="cardSelected.emit()">
   <div class="card-body">
-    @switch (item().type) {
-    @case (ClassType.Mage) {
-    <p class="card-icon">🔮</p>
-    }
-    @case (ClassType.Warrior) {
-    <p class="card-icon">⚔️</p>
-    }
-    @case (ClassType.Rogue) {
-    <p class="card-icon">🗡️</p>
-    }
-    }
+    <p class="card-icon">{{IconByType[item().type]}}</p>
     <h3 class="subtitle-contrast">{{item().name}}</h3>
     <p class="smaller">{{item().description}}</p>
   </div>

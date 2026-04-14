@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, input } from '@angular/core';
 import { Router, RouterLink, RouterLinkActive } from '@angular/router';
 
 @Component({
@@ -9,6 +9,9 @@ import { Router, RouterLink, RouterLinkActive } from '@angular/router';
 })
 export class GameHeader {
   public readonly router = inject(Router);
+  public readonly money = input.required<number>();
+  public readonly lvl = input.required<number>();
+  public readonly pseudo = input.required<string>();
 
   public onSave(): void {
     // handle it later

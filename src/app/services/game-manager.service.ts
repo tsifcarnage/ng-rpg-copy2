@@ -12,4 +12,8 @@ export class GameManagerService {
   public get isInit(): boolean {
     return !!this._currentPlayer;
   }
+
+  public get currentPlayer(): IPlayer {
+    return this._currentPlayer!;
+  }
 }

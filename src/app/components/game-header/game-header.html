@@ -11,9 +11,9 @@
   </div>
 
   <div class="resume">
-    <p>💰 0</p>
-    <p>Niv. 1</p>
-    <p>Joueur 1</p>
+    <p>💰 {{money()}}</p>
+    <p>Niv. {{lvl()}}</p>
+    <p>{{pseudo()}}</p>
     <button class="success" (click)="onSave()">💾 Sauvegarder</button>
     <button class="danger" (click)="onExit()">✖ Quitter</button>
   </div>

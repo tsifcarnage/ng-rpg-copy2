@@ -1,10 +1,8 @@
-import { ICharacter } from "./character.interface";
+import { IBaseInstance } from './base-entity.interface';
+import { ICharacter } from './character.interface';
 
-export interface IPlayer extends ICharacter {
+export interface IPlayer extends ICharacter, IBaseInstance {
   pseudo: string;
-  lvl: number;
-  currentHp:number;
-  currentMp: number;
-  currentXp: number;
   money: number;
+  currentXp: number;
 }

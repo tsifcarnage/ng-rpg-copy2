@@ -1,17 +1,8 @@
 import { ClassType } from "../enums/class-type.enum";
+import { IBaseEntity } from "./base-entity.interface";
 
-export interface ICharacter {
+export interface ICharacter extends IBaseEntity {
   type: ClassType;
-  name: string;
-  description: string;
   features: string[];
-  characteristics: ICharacteristics
 }
 
-export interface ICharacteristics {
-  atk: number;
-  def: number;
-  speed: number;
-  hp: number;
-  mana: number;
-}

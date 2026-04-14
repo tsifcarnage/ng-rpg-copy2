@@ -37,6 +37,10 @@ export class PlayerService {
     return this.retrievePlayers().find((p) => p.pseudo === pseudo);
   }
 
+  public get hasPlayerCreated(): boolean {
+    return this.retrievePlayers().length > 0;
+  }
+
   public save() {}
   public delete() {}
 }

@@ -3,6 +3,11 @@
   <h1 class="title-contrast">Chronicles of Angular</h1>
   <p class="subtitle">Un RPG au tour par tour</p>
   <div class="landing-button" routerLink="/create-character">✨ Nouvelle partie</div>
+
+  @if(playerService.hasPlayerCreated) {
+    <div class="landing-button">💾 Partie(s) sauvegardée(s)</div>
+  }
+
   <div class="features-list">
     <div class="feature-item">⚔️ Combat au tour par tour</div>
     <div class="feature-item">🧙‍♀️ 3 classes jouables</div>

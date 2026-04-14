@@ -8,7 +8,7 @@ import { CityPage } from './pages/city-page/city-page';
 export const routes: Routes = [
   { path: 'landing', component: LandingPage },
   { path: 'create-character', component: CreateCharacterPage },
-  { path: 'map', component: MapPage },
+  { path: 'map/:pseudo', component: MapPage },
   { path: 'inventory', component: InventoryPage },
   { path: 'city', component: CityPage },
   { path: '**', redirectTo: 'landing' },

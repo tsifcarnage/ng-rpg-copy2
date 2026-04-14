@@ -6,6 +6,8 @@ import { NgClass } from '@angular/common';
 import { CharacterStats } from '../../components/character-stats/character-stats';
 import { FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { PlayerService } from '../../services/player.service';
+import { IPlayer } from '../../models/player.interface';
 
 @Component({
   selector: 'app-create-character-page',
@@ -17,6 +19,7 @@ export class CreateCharacterPage {
   public readonly data = USER_CHOICES_CLASS;
   public readonly nameFormControl = new FormControl('', [Validators.required]);
   public readonly router = inject(Router);
+  public readonly playerService = inject(PlayerService);
 
   public selectedCharacter?: ICharacter;
 
@@ -30,7 +33,18 @@ export class CreateCharacterPage {
 
   public createCharacter(): void {
     if (this.nameFormControl.valid && this.selectedCharacter) {
-      this.router.navigateByUrl('/map');
+      const player: IPlayer = {
+        ...this.selectedCharacter,
+        pseudo: this.nameFormControl.value!,
+        lvl: 1,
+        currentXp: 0,
+        currentHp: this.selectedCharacter.characteristics.hp,
+        currentMp: this.selectedCharacter.characteristics.mana,
+        money: 50,
+      };
+
+      this.playerService.add(player);
+      this.router.navigateByUrl(`/map/${player.pseudo}`);
     }
   }
 }

@@ -1,7 +1,11 @@
 <app-game-header></app-game-header>
-<div class="container">
-  <app-player-summary></app-player-summary>
-</div>
-<div class="map-section">
-  <app-map-selector></app-map-selector>
-</div>
+@if (gameManagerService.isInit) {
+  <div class="container">
+    <app-player-summary></app-player-summary>
+  </div>
+  <div class="map-section">
+    <app-map-selector></app-map-selector>
+  </div>
+} @else {
+  <h1>ERRROR</h1>
+}

@@ -1,0 +1,53 @@
+import { Component } from '@angular/core';
+
+interface ZoneInfo {
+  id: string;
+  name: string;
+  description: string;
+  icon: string;
+  difficulty: string;
+  difficultyColor: string;
+  minLevel: number;
+  enemies: string;
+}
+
+@Component({
+  selector: 'app-map-selector',
+  imports: [],
+  templateUrl: './map-selector.html',
+  styleUrl: './map-selector.scss',
+})
+export class MapSelector {
+  public readonly zones: ZoneInfo[] = [
+    {
+      id: 'forest',
+      name: 'Forêt des Ombres',
+      description: 'Une forêt mystérieuse peuplée de créatures sauvages.',
+      icon: '🌲',
+      difficulty: 'Facile',
+      difficultyColor: '#2ecc71',
+      minLevel: 1,
+      enemies: 'Loups, Gobelins, Trolls',
+    },
+    {
+      id: 'dungeon',
+      name: 'Donjon Maudit',
+      description: 'Un donjon sombre abritant des morts-vivants et des mages noirs.',
+      icon: '🏚️',
+      difficulty: 'Moyen',
+      difficultyColor: '#f39c12',
+      minLevel: 3,
+      enemies: 'Squelettes, Mages Sombres, Liche',
+    },
+    {
+      id: 'mountain',
+      name: 'Montagnes du Chaos',
+      description: 'Des sommets dangereux habités par des créatures légendaires.',
+      icon: '⛰️',
+      difficulty: 'Difficile',
+      difficultyColor: '#e74c3c',
+      minLevel: 5,
+      enemies: 'Harpies, Golems, Dragon',
+    },
+  ];
+}

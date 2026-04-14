@@ -1,0 +1,20 @@
+<h2 class="map-title">🗺️ Carte du Monde</h2>
+<p class="map-subtitle">Choisissez une zone pour combattre</p>
+<div class="zones-grid">
+  @for (zone of zones; track zone.id) {
+  <div class="zone-card">
+    <div class="zone-icon">{{ zone.icon }}</div>
+    <div class="zone-info">
+      <div class="zone-name">{{ zone.name }}</div>
+      <div class="zone-desc">{{ zone.description }}</div>
+      <div class="zone-meta">
+        <span class="difficulty" [style.color]="zone.difficultyColor">{{ zone.difficulty }}</span>
+        <span class="enemies">{{ zone.enemies }}</span>
+      </div>
+    </div>
+    @if (true) { <div class="lock-overlay">🔒 Niv. {{ zone.minLevel }}
+    </div>
+    }
+  </div>
+  }
+</div>

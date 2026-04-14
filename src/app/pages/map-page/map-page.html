@@ -1,5 +1,5 @@
-<app-game-header></app-game-header>
 @if (gameManagerService.isInit) {
+<app-game-header></app-game-header>
   <div class="container">
     <app-player-summary></app-player-summary>
   </div>
@@ -7,5 +7,7 @@
     <app-map-selector></app-map-selector>
   </div>
 } @else {
-  <h1>ERRROR</h1>
+  <div class="container">
+    <h1>ERRROR</h1>
+  </div>
 }

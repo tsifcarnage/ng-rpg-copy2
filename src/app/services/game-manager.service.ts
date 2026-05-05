@@ -9,6 +9,10 @@ export class GameManagerService {
     this._currentPlayer = player;
   }
 
+  public resetGame(): void {
+    this._currentPlayer = undefined;
+  }
+
   public get isInit(): boolean {
     return !!this._currentPlayer;
   }

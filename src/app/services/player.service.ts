@@ -21,7 +21,7 @@ export class PlayerService {
     }
   }
 
-  private retrievePlayers(): IPlayer[] {
+  public retrievePlayers(): IPlayer[] {
     const currentPlayersStr = localStorage.getItem(this.PLAYER_KEY);
     if (currentPlayersStr) {
       try {

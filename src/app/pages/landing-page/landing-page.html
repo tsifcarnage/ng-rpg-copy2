@@ -4,8 +4,10 @@
   <p class="subtitle">Un RPG au tour par tour</p>
   <div class="landing-button" routerLink="/create-character">✨ Nouvelle partie</div>
 
-  @if(playerService.hasPlayerCreated) {
-    <div class="landing-button">💾 Partie(s) sauvegardée(s)</div>
+  @for(player of playerService.retrievePlayers(); track player.pseudo) {
+    <div class="landing-button" (click)="initGameWithSavedPlayer(player)">
+      💾 {{player.pseudo}} - lvl {{player.lvl}} -{{player.name}}
+    </div>
   }
 
   <div class="features-list">

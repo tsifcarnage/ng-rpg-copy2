@@ -5,7 +5,13 @@
 <app-game-header [lvl]="player.lvl" [money]="player.money" [pseudo]="player.pseudo">
 </app-game-header>
 
-<h2>Hello to fight page !</h2>
+<app-fight-character-card></app-fight-character-card>
+<app-fight-character-card></app-fight-character-card>
+
+<app-fight-history></app-fight-history>
+
+<app-fight-actions></app-fight-actions>
+
 } @else {
 <div class="container">
   <h1>ERRROR</h1>

@@ -7,6 +7,5 @@ import { Component, input } from '@angular/core';
   styleUrl: './fight-character-card.scss',
 })
 export class FightCharacterCard {
-  public readonly isPlayer = input.required();
-
+  public readonly isPlayer = input.required<boolean>();
 }

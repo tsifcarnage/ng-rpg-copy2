@@ -1,1 +1,14 @@
-<p>fight-actions works!</p>
+<div class="common-actions">
+  <button>🗡️ Attaque</button>
+  <button>🏃‍♀️ Fuir</button>
+</div>
+<div class="type-actions">
+  @for (item of typeActions; track item.name) {
+  <button>{{item.icon}} - {{item.name}} - {{ item.cost }} MP</button>
+  }
+</div>
+<div class="inventory-actions">
+  @for (item of inventoryActions; track item.name) {
+  <button>{{item.icon}} - {{item.name}} (x{{ item.qty }})</button>
+  }
+</div>

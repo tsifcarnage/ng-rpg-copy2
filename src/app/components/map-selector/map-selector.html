@@ -1,8 +1,10 @@
+
 <h2 class="map-title">🗺️ Carte du Monde</h2>
 <p class="map-subtitle">Choisissez une zone pour combattre</p>
 <div class="zones-grid">
   @for (zone of zones; track zone.id) {
-  <div class="zone-card" (click)="zoneSelected.emit(zone)">
+  @let isZoneLocked = lvl() < zone.minLevel;
+  <div class="zone-card {{isZoneLocked ? 'locked' : ''}}" (click)="isZoneLocked ? void 0 : zoneSelected.emit(zone)">
     <div class="zone-icon">{{ zone.icon }}</div>
     <div class="zone-info">
       <div class="zone-name">{{ zone.name }}</div>
@@ -12,7 +14,7 @@
         <span class="enemies">{{ zone.enemies }}</span>
       </div>
     </div>
-    @if (lvl() < zone.minLevel) {
+    @if (isZoneLocked) {
       <div class="lock-overlay">🔒 Niv. {{ zone.minLevel }}</div>
     }
   </div>

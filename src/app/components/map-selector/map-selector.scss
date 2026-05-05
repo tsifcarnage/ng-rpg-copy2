@@ -31,6 +31,9 @@
   transition: all 0.2s;
   position: relative;
   overflow: hidden;
+  &.locked {
+    cursor: not-allowed;
+  }
 }
 .zone-card:hover:not(.locked) {
   background: rgba(255, 255, 255, 0.09);

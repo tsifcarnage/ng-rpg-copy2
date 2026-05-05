@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, input } from '@angular/core';
 
 @Component({
   selector: 'app-fight-character-card',
@@ -7,5 +7,6 @@ import { Component } from '@angular/core';
   styleUrl: './fight-character-card.scss',
 })
 export class FightCharacterCard {
+  public readonly isPlayer = input.required();
 
 }

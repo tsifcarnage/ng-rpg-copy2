@@ -5,8 +5,12 @@
 <app-game-header [lvl]="player.lvl" [money]="player.money" [pseudo]="player.pseudo">
 </app-game-header>
 
-<app-fight-character-card></app-fight-character-card>
-<app-fight-character-card></app-fight-character-card>
+<div class="fight-main">
+  <app-fight-character-card [isPlayer]="true"></app-fight-character-card>
+  <h2>VS</h2>
+  <app-fight-character-card [isPlayer]="false"></app-fight-character-card>
+</div>
+
 
 <app-fight-history></app-fight-history>
 

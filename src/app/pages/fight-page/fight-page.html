@@ -5,13 +5,7 @@
 <app-game-header [lvl]="player.lvl" [money]="player.money" [pseudo]="player.pseudo">
 </app-game-header>
 
-<div class="container">
-  <app-player-summary [player]="player"></app-player-summary>
-</div>
-
-<div class="map-section">
-  <app-map-selector (zoneSelected)="redirectToFight($event)" [lvl]="player.lvl"></app-map-selector>
-</div>
+<h2>Hello to fight page !</h2>
 } @else {
 <div class="container">
   <h1>ERRROR</h1>

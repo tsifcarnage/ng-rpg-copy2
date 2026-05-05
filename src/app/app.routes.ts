@@ -6,6 +6,7 @@ import { InventoryPage } from './pages/inventory-page/inventory-page';
 import { CityPage } from './pages/city-page/city-page';
 import { userSelectedGuard } from './guards/user-selected-guard';
 import { userNotSelectedGuard } from './guards/user-not-selected-guard';
+import { FightPage } from './pages/fight-page/fight-page';
 
 export const routes: Routes = [
   { path: 'landing', component: LandingPage, canActivate: [userNotSelectedGuard] },
@@ -13,5 +14,6 @@ export const routes: Routes = [
   { path: 'map', component: MapPage, canActivate: [userSelectedGuard] },
   { path: 'inventory', component: InventoryPage, canActivate: [userSelectedGuard] },
   { path: 'city', component: CityPage, canActivate: [userSelectedGuard] },
+  { path: 'fight', component: FightPage, canActivate: [userSelectedGuard] },
   { path: '**', redirectTo: 'landing' },
 ];

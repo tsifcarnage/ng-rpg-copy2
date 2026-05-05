@@ -1,4 +1,4 @@
-import { Component, input } from '@angular/core';
+import { Component, input, output } from '@angular/core';
 
 interface ZoneInfo {
   id: string;
@@ -19,6 +19,8 @@ interface ZoneInfo {
 })
 export class MapSelector {
   public readonly lvl = input.required<number>();
+
+  public readonly zoneSelected = output<ZoneInfo>();
 
   public readonly zones: ZoneInfo[] = [
     {

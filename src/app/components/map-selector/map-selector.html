@@ -2,7 +2,7 @@
 <p class="map-subtitle">Choisissez une zone pour combattre</p>
 <div class="zones-grid">
   @for (zone of zones; track zone.id) {
-  <div class="zone-card">
+  <div class="zone-card" (click)="zoneSelected.emit(zone)">
     <div class="zone-icon">{{ zone.icon }}</div>
     <div class="zone-info">
       <div class="zone-name">{{ zone.name }}</div>

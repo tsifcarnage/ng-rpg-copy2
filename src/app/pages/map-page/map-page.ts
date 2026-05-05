@@ -13,17 +13,5 @@ import { GameManagerService } from '../../services/game-manager.service';
   styleUrl: './map-page.scss',
 })
 export class MapPage {
-  private readonly activatedRoute = inject(ActivatedRoute);
-  private readonly playerService = inject(PlayerService);
   public readonly gameManagerService = inject(GameManagerService);
-
-  constructor() {
-    this.activatedRoute.params.subscribe((params) => {
-      const playerPseudo = params['pseudo'];
-      const player = this.playerService.getUserByPseudo(playerPseudo);
-      if (player) {
-        this.gameManagerService.initGame(player);
-      }
-    });
-  }
 }

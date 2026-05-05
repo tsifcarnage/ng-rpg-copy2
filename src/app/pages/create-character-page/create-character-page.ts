@@ -8,6 +8,7 @@ import { FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { PlayerService } from '../../services/player.service';
 import { IPlayer } from '../../models/player.interface';
+import { GameManagerService } from '../../services/game-manager.service';
 
 @Component({
   selector: 'app-create-character-page',
@@ -20,6 +21,7 @@ export class CreateCharacterPage {
   public readonly nameFormControl = new FormControl('', [Validators.required]);
   public readonly router = inject(Router);
   public readonly playerService = inject(PlayerService);
+  public readonly gameManagerService = inject(GameManagerService);
 
   public selectedCharacter?: ICharacter;
 
@@ -44,7 +46,15 @@ export class CreateCharacterPage {
       };
 
       this.playerService.add(player);
-      this.router.navigateByUrl(`/map/${player.pseudo}`);
+      this.initGameWithNewUser(player.pseudo);
+      this.router.navigateByUrl(`/map`);
+    }
+  }
+
+  private initGameWithNewUser(playerPseudo: string) {
+    const player = this.playerService.getUserByPseudo(playerPseudo);
+    if (player) {
+      this.gameManagerService.initGame(player);
     }
   }
 }

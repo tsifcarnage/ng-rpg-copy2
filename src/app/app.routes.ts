@@ -4,12 +4,13 @@ import { CreateCharacterPage } from './pages/create-character-page/create-charac
 import { MapPage } from './pages/map-page/map-page';
 import { InventoryPage } from './pages/inventory-page/inventory-page';
 import { CityPage } from './pages/city-page/city-page';
+import { userSelectedGuard } from './guards/user-selected-guard';
 
 export const routes: Routes = [
   { path: 'landing', component: LandingPage },
   { path: 'create-character', component: CreateCharacterPage },
-  { path: 'map/:pseudo', component: MapPage },
-  { path: 'inventory', component: InventoryPage },
-  { path: 'city', component: CityPage },
+  { path: 'map', component: MapPage, canActivate: [userSelectedGuard] },
+  { path: 'inventory', component: InventoryPage, canActivate: [userSelectedGuard] },
+  { path: 'city', component: CityPage, canActivate: [userSelectedGuard] },
   { path: '**', redirectTo: 'landing' },
 ];

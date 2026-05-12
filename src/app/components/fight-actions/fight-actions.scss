@@ -1,0 +1,124 @@
+.actions-wrapper {
+  max-width: 960px;
+  margin: 1.25rem auto 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.action-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+
+  &.common-actions {
+    flex-direction: row;
+    gap: 0.75rem;
+  }
+
+  .group-title {
+    margin: 0 0 0.15rem;
+    font-size: 0.8rem;
+    color: #f4af26;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    font-weight: 600;
+  }
+
+  .group-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 0.5rem;
+  }
+}
+
+.action-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.7rem 0.9rem;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid #6c6f7f;
+  border-radius: 8px;
+  color: #fff;
+  font-size: 0.9rem;
+  text-align: left;
+  cursor: pointer;
+  transition: background 0.15s, transform 0.15s, border-color 0.15s, box-shadow 0.15s;
+  font-family: inherit;
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.1);
+    transform: translateY(-1px);
+    border-color: rgba(244, 175, 38, 0.4);
+  }
+  &:active {
+    transform: translateY(0);
+  }
+
+  .btn-icon {
+    font-size: 1.25rem;
+    flex-shrink: 0;
+  }
+  .btn-label {
+    flex: 1;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .btn-cost {
+    font-size: 0.75rem;
+    color: #60a5fa;
+    background: rgba(96, 165, 250, 0.12);
+    padding: 3px 8px;
+    border-radius: 999px;
+    font-variant-numeric: tabular-nums;
+    flex-shrink: 0;
+
+    &.qty {
+      color: #f4af26;
+      background: rgba(244, 175, 38, 0.12);
+    }
+  }
+
+  &.primary {
+    flex: 1;
+    justify-content: center;
+    background: rgba(21, 163, 8, 0.22);
+    border-color: rgba(21, 163, 8, 0.6);
+    font-weight: 600;
+    font-size: 1rem;
+    padding: 0.85rem;
+
+    &:hover {
+      background: rgba(21, 163, 8, 0.35);
+      box-shadow: 0 0 16px rgba(21, 163, 8, 0.25);
+    }
+    .btn-label { flex: 0; }
+  }
+
+  &.danger {
+    flex: 0 0 auto;
+    justify-content: center;
+    min-width: 140px;
+    background: rgba(236, 53, 53, 0.18);
+    border-color: rgba(236, 53, 53, 0.5);
+    padding: 0.85rem;
+
+    &:hover {
+      background: rgba(236, 53, 53, 0.3);
+      box-shadow: 0 0 16px rgba(236, 53, 53, 0.2);
+    }
+    .btn-label { flex: 0; }
+  }
+
+  &.skill:hover {
+    border-color: rgba(96, 165, 250, 0.55);
+    box-shadow: 0 0 14px rgba(96, 165, 250, 0.12);
+  }
+
+  &.item:hover {
+    border-color: rgba(244, 175, 38, 0.55);
+    box-shadow: 0 0 14px rgba(244, 175, 38, 0.12);
+  }
+}

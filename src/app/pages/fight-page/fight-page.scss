@@ -1,10 +1,85 @@
+.fight-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 1.5rem 1.5rem 3rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.fight-intro {
+  text-align: center;
+  margin-top: 0.5rem;
+
+  h1 {
+    margin: 0;
+    font-size: 1.8rem;
+  }
+  .subtitle {
+    color: #9aa1ab;
+    margin: 0.25rem 0 0;
+    font-size: 0.95rem;
+  }
+}
+
 .fight-main {
   display: flex;
-  justify-content: space-evenly;
-  margin-top: 2rem;
-  h2 {
-    color: orange;
-    display: block;
-    margin-top: 7rem;
+  justify-content: center;
+  align-items: center;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+  margin-top: 0.5rem;
+}
+
+.vs-badge {
+  position: relative;
+  width: 84px;
+  height: 84px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+
+  .vs-glow {
+    position: absolute;
+    inset: 0;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(244, 175, 38, 0.35), transparent 65%);
+    animation: pulse 2.4s ease-in-out infinite;
+  }
+
+  .vs-text {
+    position: relative;
+    font-size: 2rem;
+    font-weight: 800;
+    color: #f4af26;
+    letter-spacing: 0.05em;
+    text-shadow: 0 0 16px rgba(244, 175, 38, 0.55);
+    padding: 0.5rem 0.85rem;
+    border: 2px solid rgba(244, 175, 38, 0.55);
+    border-radius: 50%;
+    background: rgba(0, 0, 0, 0.6);
+    line-height: 1;
+  }
+}
+
+@keyframes pulse {
+  0%, 100% { transform: scale(1); opacity: 0.8; }
+  50% { transform: scale(1.15); opacity: 1; }
+}
+
+.container {
+  padding: 4rem 2rem;
+  text-align: center;
+}
+
+@media (max-width: 720px) {
+  .fight-main {
+    flex-direction: column;
+  }
+  .vs-badge {
+    width: 64px;
+    height: 64px;
+    .vs-text { font-size: 1.5rem; }
   }
 }

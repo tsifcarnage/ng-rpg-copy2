@@ -1,3 +1,79 @@
-<div class="card {{isPlayer() ? 'player' : 'enemy'}}">
-  <p>fight-character-card works!</p>
+@if (isPlayer()) {
+@let p = player();
+<div class="fight-card player">
+  <div class="card-header">
+    <span class="side-tag">⚔️ Vous</span>
+    <span class="kind-tag">Niv. {{p.lvl}}</span>
+  </div>
+
+  <div class="identity">
+    <div class="icon">{{IconByType[p.type]}}</div>
+    <div class="infos">
+      <p class="name">{{p.pseudo}}</p>
+      <p class="subtitle">{{p.type | lowercase}}</p>
+    </div>
+  </div>
+
+  <div class="gauge-list">
+    <div class="gauge-item hp">
+      <div class="gauge-labels">
+        <p>❤️ PV</p>
+        <p>{{p.currentHp}} / {{p.characteristics.hp}}</p>
+      </div>
+      <progress [value]="p.currentHp" [max]="p.characteristics.hp"></progress>
+    </div>
+    <div class="gauge-item mp">
+      <div class="gauge-labels">
+        <p>💙 PM</p>
+        <p>{{p.currentMp}} / {{p.characteristics.mana}}</p>
+      </div>
+      <progress [value]="p.currentMp" [max]="p.characteristics.mana"></progress>
+    </div>
+  </div>
+
+  <div class="stat-pills">
+    <span class="pill">⚔️ {{p.characteristics.atk}}</span>
+    <span class="pill">🛡️ {{p.characteristics.def}}</span>
+    <span class="pill">💨 {{p.characteristics.speed}}</span>
+  </div>
 </div>
+} @else {
+@let e = enemy;
+<div class="fight-card enemy">
+  <div class="card-header">
+    <span class="side-tag enemy-tag">💀 Ennemi</span>
+    <span class="kind-tag kind-{{e.kind}}">{{e.kind | titlecase}} · Niv. {{e.lvl}}</span>
+  </div>
+
+  <div class="identity">
+    <div class="icon">{{IconByRace[e.race]}}</div>
+    <div class="infos">
+      <p class="name">{{e.name}}</p>
+      <p class="subtitle">{{e.description}}</p>
+    </div>
+  </div>
+
+  <div class="gauge-list">
+    <div class="gauge-item hp">
+      <div class="gauge-labels">
+        <p>❤️ PV</p>
+        <p>{{e.currentHp}} / {{e.characteristics.hp}}</p>
+      </div>
+      <progress [value]="e.currentHp" [max]="e.characteristics.hp"></progress>
+    </div>
+    <div class="gauge-item mp">
+      <div class="gauge-labels">
+        <p>💙 PM</p>
+        <p>{{e.currentMp}} / {{e.characteristics.mana}}</p>
+      </div>
+      <progress [value]="e.currentMp" [max]="e.characteristics.mana"></progress>
+    </div>
+  </div>
+
+  <div class="stat-pills">
+    <span class="pill">⚔️ {{e.characteristics.atk}}</span>
+    <span class="pill">🛡️ {{e.characteristics.def}}</span>
+    <span class="pill">💨 {{e.characteristics.speed}}</span>
+  </div>
+</div>
+}

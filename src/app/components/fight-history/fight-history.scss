@@ -1,11 +1,96 @@
+.history-wrapper {
+  width: 100%;
+  max-width: 960px;
+  margin: 0 auto;
+}
+
+.history-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0.5rem;
+  padding: 0 0.25rem;
+
+  h3 {
+    margin: 0;
+    color: #f4af26;
+    font-size: 0.95rem;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+  .status-dot {
+    font-size: 0.75rem;
+    color: #7cdc6e;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+}
+
 .history-card {
-  width: 90%;
-  border: 1px solid orange;
-  margin: auto 2rem;
+  border: 1px solid #6c6f7f;
+  border-radius: 10px;
+  background: rgba(0, 0, 0, 0.45);
+  padding: 0.5rem 0.75rem;
   min-height: 200px;
-  max-height: 200px;
-  border-radius: .25rem;
-  padding: .1rem 1rem;
-  background-color: rgba($color: #000000, $alpha: .5);
-  overflow: auto;
+  max-height: 220px;
+  overflow-y: auto;
+  font-family: 'JetBrains Mono', 'Courier New', monospace;
+  font-size: 0.85rem;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(244, 175, 38, 0.4) transparent;
+
+  &::-webkit-scrollbar {
+    width: 6px;
+  }
+  &::-webkit-scrollbar-thumb {
+    background: rgba(244, 175, 38, 0.3);
+    border-radius: 999px;
+  }
+}
+
+.log-row {
+  display: grid;
+  grid-template-columns: 78px 22px 1fr;
+  gap: 0.5rem;
+  align-items: center;
+  padding: 4px 6px;
+  border-radius: 4px;
+  border-left: 2px solid transparent;
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.03);
+  }
+
+  .time {
+    color: #6c6f7f;
+    font-variant-numeric: tabular-nums;
+    font-size: 0.78rem;
+  }
+  .icon {
+    text-align: center;
+  }
+  .text {
+    color: #d0d4dc;
+  }
+
+  &.kind-system {
+    border-left-color: #f4af26;
+    .text { color: #f4af26; font-weight: 600; }
+  }
+  &.kind-info {
+    border-left-color: #5c6672;
+    .text { color: #c7ccd5; font-style: italic; }
+  }
+  &.kind-player {
+    border-left-color: rgba(124, 220, 110, 0.8);
+    .text { color: #b8e8ad; }
+  }
+  &.kind-enemy {
+    border-left-color: rgba(255, 107, 107, 0.8);
+    .text { color: #f3b8b8; }
+  }
+  &.kind-heal {
+    border-left-color: #60a5fa;
+    .text { color: #b4d2fb; }
+  }
 }

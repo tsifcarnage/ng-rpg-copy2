@@ -5,19 +5,29 @@
 <app-game-header [lvl]="player.lvl" [money]="player.money" [pseudo]="player.pseudo">
 </app-game-header>
 
-<div class="fight-main">
-  <app-fight-character-card [isPlayer]="true"></app-fight-character-card>
-  <h2>VS</h2>
-  <app-fight-character-card [isPlayer]="false"></app-fight-character-card>
-</div>
+<section class="fight-container">
+  <header class="fight-intro">
+    <h1 class="title-contrast">⚔️ Combat en cours</h1>
+    <p class="subtitle">Choisissez vos actions avec sagesse, héros.</p>
+  </header>
 
+  <div class="fight-main">
+    <app-fight-character-card [isPlayer]="true"></app-fight-character-card>
+    <div class="vs-badge">
+      <span class="vs-glow"></span>
+      <span class="vs-text">VS</span>
+    </div>
+    <app-fight-character-card [isPlayer]="false"></app-fight-character-card>
+  </div>
 
-<app-fight-history></app-fight-history>
+  <app-fight-history></app-fight-history>
 
-<app-fight-actions></app-fight-actions>
+  <app-fight-actions></app-fight-actions>
+</section>
 
 } @else {
 <div class="container">
-  <h1>ERRROR</h1>
+  <h1 class="title-contrast">⚠️ Erreur</h1>
+  <p class="subtitle">Aucune partie en cours.</p>
 </div>
 }

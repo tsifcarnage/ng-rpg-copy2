@@ -44,5 +44,5 @@ export class FightCharacterCard {
   public readonly IconByRace = IconByRace;
 
   public readonly player = computed(() => this.gameManagerService.currentPlayer);
-  public readonly enemy = MOCK_ENEMY;
+  public readonly enemy = computed(() => this.gameManagerService.currentEnemy);
 }

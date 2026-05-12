@@ -13,4 +13,8 @@ import { FightActions } from "../../components/fight-actions/fight-actions";
 })
 export class FightPage {
   public readonly gameManagerService = inject(GameManagerService);
+
+  constructor() {
+    this.gameManagerService.startFight();
+  }
 }

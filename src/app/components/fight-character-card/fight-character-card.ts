@@ -12,23 +12,6 @@ const IconByRace: Record<EnemyRaceType, string> = {
   [EnemyRaceType.Troll]: '🐺',
 };
 
-const MOCK_ENEMY: IEnemyInstance = {
-  name: 'Gobelin des cavernes',
-  description: 'Petite créature sournoise embusquée dans les ruines.',
-  race: EnemyRaceType.Goblin,
-  kind: 'normal',
-  lvl: 2,
-  currentHp: 45,
-  currentMp: 10,
-  characteristics: {
-    atk: 8,
-    def: 4,
-    speed: 12,
-    hp: 60,
-    mana: 20,
-  },
-};
-
 @Component({
   selector: 'app-fight-character-card',
   imports: [LowerCasePipe, TitleCasePipe],

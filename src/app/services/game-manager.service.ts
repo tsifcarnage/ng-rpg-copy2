@@ -2,14 +2,15 @@ import { inject, Injectable } from '@angular/core';
 import { IPlayer } from '../models/player.interface';
 import { GameState } from '../enums/game-state.enum';
 import { Random } from './random.service';
-import { IEnemyInstance } from '../models/enemy.interface';
+import { IEnemy, IEnemyInstance } from '../models/enemy.interface';
 import { ENEMY_DATA } from '../data/enemy.data';
 
 @Injectable({ providedIn: 'root' })
 export class GameManagerService {
   private _currentPlayer?: IPlayer;
   private _gameState: GameState = GameState.NONE;
-  private _enemies: IEnemyInstance[] = ENEMY_DATA;
+  private _enemiesTemplate: IEnemy[] = ENEMY_DATA;
+  private _enemies: IEnemyInstance[] = [];
   private _currentEnemy?: IEnemyInstance;
   private _randoms: number[] = [];
 

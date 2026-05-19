@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { map, Observable } from 'rxjs';
 import { IRandomRequestDto, IRandomResponseDto } from '../models/random-dto.interface';
 
 @Injectable({
@@ -30,5 +30,16 @@ export class Random {
     };
 
     return this.http.post<IRandomResponseDto>(this.RANDOM_URL, body);
+  }
+
+  public generateIntegerAndGetData(
+    count: number = 10,
+    min: number = 0,
+    max: number = 10,
+  ): Observable<number[]> {
+    return this.generateInteger(count, min, max)
+      .pipe(
+        map((value) => value.result.random.data)
+      );
   }
 }

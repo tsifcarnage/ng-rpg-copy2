@@ -18,6 +18,5 @@ export class FightPage {
 
   constructor() {
     this.gameManagerService.startFight();
-    console.log('FightPage Created')
   }
 }

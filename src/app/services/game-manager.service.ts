@@ -2,10 +2,9 @@ import { inject, Injectable } from '@angular/core';
 import { IPlayer } from '../models/player.interface';
 import { GameState } from '../enums/game-state.enum';
 import { Random } from './random.service';
-import { IEnemy, IEnemyInstance } from '../models/enemy.interface';
-import { ENEMY_DATA } from '../data/enemy.data';
+import { IEnemyInstance } from '../models/enemy.interface';
 import { EnemyRaceType } from '../enums/enemy-race-type.enum';
-import { map, Observable } from 'rxjs';
+import { delay, map, Observable, zip } from 'rxjs';
 import { EntityHelper } from '../helpers/entity.helper';
 import { EnemyKind } from '../enums/kind.enum';
 
@@ -15,16 +14,11 @@ export class GameManagerService {
   private _gameState: GameState = GameState.NONE;
   private _enemies: IEnemyInstance[] = [];
   private _currentEnemy?: IEnemyInstance;
-  private _randoms: number[] = [];
 
   private readonly randomService = inject(Random);
 
   public initGame(player: IPlayer): void {
     this._currentPlayer = player;
-
-    this.randomService.generateInteger().subscribe((response) => {
-      this._randoms = response.result.random.data;
-    });
   }
 
   public resetGame(): void {
@@ -43,51 +37,69 @@ export class GameManagerService {
     return this._currentEnemy!;
   }
 
+  public get state(): GameState {
+    return this._gameState!;
+  }
+
   public getRandomEnemiesType(): Observable<EnemyRaceType[]> {
-    return this.randomService.generateIntegerAndGetData(5, 0, 2).pipe(
-      map((values) => EntityHelper.getRaceByNumbers(values)),
-    );
+    return this.randomService
+      .generateIntegerAndGetData(5, 0, 2)
+      .pipe(map((values) => EntityHelper.getRaceByNumbers(values)));
   }
 
   public getRandomEnemiesKind(): Observable<EnemyKind[]> {
-    return this.randomService.generateIntegerAndGetData(5, 0, 2).pipe(
-      map((values) => EntityHelper.getKindByNumbers(values)),
-    );
+    return this.randomService
+      .generateIntegerAndGetData(5, 0, 2)
+      .pipe(map((values) => EntityHelper.getKindByNumbers(values)));
   }
 
   public startFight(): void {
-    this.getRandomEnemiesKind().subscribe((values) => {
-      console.log(values)
-      this._gameState = GameState.FIGHT_INIT as GameState;
-      while (this._gameState !== GameState.FIGHT_END) {
-        console.log('Fight state => ', this._gameState);
-        switch (this._gameState) {
-          case GameState.FIGHT_INIT:
-            this._currentEnemy = this._enemies.shift();
-            this._gameState = GameState.TURN_DECIDE;
-            break;
-          case GameState.TURN_DECIDE:
-            this._gameState = this.handleTurnDecide();
-            break;
-          case GameState.PLAYER_TURN:
-            this._gameState = this.handlePlayerTurn();
-            break;
-          case GameState.ENEMY_TURN:
-            this._gameState = this.handleEnemyTurn();
-            break;
-          case GameState.APPLY_EFFECT:
-            this._gameState = this.handleApplyEffect();
-            break;
-          case GameState.CHECK_END:
-            this._gameState = this.handleCheckEnd();
-            break;
+    const type$ = this.getRandomEnemiesType();
+    const kind$ = this.getRandomEnemiesKind();
 
-          default:
-            this._gameState = GameState.FIGHT_END;
-            break;
+    zip(type$, kind$)
+      .pipe(
+        map(([type, kind]) => ({
+          type,
+          kind,
+        }))
+      )
+      .subscribe((values) => {
+        this._enemies = values.type.map((type, i) =>
+          EntityHelper.enemyRaceToInstance(type, values.kind[i]),
+        );
+
+        this._gameState = GameState.FIGHT_INIT as GameState;
+
+        while (this._gameState !== GameState.FIGHT_END) {
+          console.log('Fight state => ', this._gameState);
+          switch (this._gameState) {
+            case GameState.FIGHT_INIT:
+              this._currentEnemy = this._enemies.shift();
+              this._gameState = GameState.TURN_DECIDE;
+              break;
+            case GameState.TURN_DECIDE:
+              this._gameState = this.handleTurnDecide();
+              break;
+            case GameState.PLAYER_TURN:
+              this._gameState = this.handlePlayerTurn();
+              break;
+            case GameState.ENEMY_TURN:
+              this._gameState = this.handleEnemyTurn();
+              break;
+            case GameState.APPLY_EFFECT:
+              this._gameState = this.handleApplyEffect();
+              break;
+            case GameState.CHECK_END:
+              this._gameState = this.handleCheckEnd();
+              break;
+
+            default:
+              this._gameState = GameState.FIGHT_END;
+              break;
+          }
         }
-      }
-    });
+      });
   }
 
   public handleTurnDecide(): GameState {

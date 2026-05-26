@@ -5,6 +5,8 @@
 <app-game-header [lvl]="player.lvl" [money]="player.money" [pseudo]="player.pseudo">
 </app-game-header>
 
+@if(gameManagerService.state !== GameState.NONE) {
+
 <section class="fight-container">
   <header class="fight-intro">
     <h1 class="title-contrast">⚔️ Combat en cours</h1>
@@ -24,6 +26,10 @@
 
   <app-fight-actions></app-fight-actions>
 </section>
+} @else {
+<h1>CHARGEMENT....</h1>
+<p>{{gameManagerService.state}}</p>
+}
 
 } @else {
 <div class="container">

@@ -1,9 +1,10 @@
 import { Component, inject } from '@angular/core';
 import { GameHeader } from '../../components/game-header/game-header';
 import { GameManagerService } from '../../services/game-manager.service';
-import { FightCharacterCard } from "../../components/fight-character-card/fight-character-card";
-import { FightHistory } from "../../components/fight-history/fight-history";
-import { FightActions } from "../../components/fight-actions/fight-actions";
+import { FightCharacterCard } from '../../components/fight-character-card/fight-character-card';
+import { FightHistory } from '../../components/fight-history/fight-history';
+import { FightActions } from '../../components/fight-actions/fight-actions';
+import { GameState } from '../../enums/game-state.enum';
 
 @Component({
   selector: 'app-fight-page',
@@ -13,6 +14,7 @@ import { FightActions } from "../../components/fight-actions/fight-actions";
 })
 export class FightPage {
   public readonly gameManagerService = inject(GameManagerService);
+  public readonly GameState = GameState;
 
   constructor() {
     this.gameManagerService.startFight();

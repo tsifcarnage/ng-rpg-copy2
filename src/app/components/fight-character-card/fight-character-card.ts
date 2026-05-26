@@ -8,8 +8,8 @@ import { IEnemyInstance } from '../../models/enemy.interface';
 const IconByRace: Record<EnemyRaceType, string> = {
   [EnemyRaceType.Goblin]: '👺',
   [EnemyRaceType.Orc]: '👹',
-  [EnemyRaceType.Loup]: '🧌',
-  [EnemyRaceType.Troll]: '🐺',
+  [EnemyRaceType.Loup]: '🐺',
+  [EnemyRaceType.Troll]: '🧌',
 };
 
 @Component({

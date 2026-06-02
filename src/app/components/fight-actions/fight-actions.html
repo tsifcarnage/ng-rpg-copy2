@@ -1,6 +1,6 @@
 <div class="actions-wrapper">
   <div class="action-group common-actions">
-    <button [disabled]="disabled()" class="action-btn primary">
+    <button [disabled]="disabled()" (click)="playerAtk.emit()" class="action-btn primary">
       <span class="btn-icon">🗡️</span>
       <span class="btn-label">Attaque</span>
     </button>

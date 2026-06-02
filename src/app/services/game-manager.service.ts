@@ -74,7 +74,9 @@ export class GameManagerService {
         this._gameState.set(GameState.FIGHT_INIT as GameState);
         this._gameState.set(this.handleInitFight());
         this._gameState.set(this.handleTurnDecide());
-        this.fightLoop();
+        if (this._gameState() === GameState.ENEMY_TURN) {
+          this.fightLoop();
+        }
       });
   }
 
@@ -88,7 +90,7 @@ export class GameManagerService {
     return GameState.TURN_DECIDE;
   }
 
-  private fightLoop(): void {
+  public fightLoop(): void {
     if (this._gameState() === GameState.ENEMY_TURN) {
       this.applyEnemyAttack();
       if (this.checkEnd()) {
@@ -96,6 +98,17 @@ export class GameManagerService {
       } else {
         this._gameState.set(GameState.PLAYER_TURN);
         this.logEntryService.addLog('system', '💻', `À vous de jouer !`);
+      }
+    } else if (this._gameState() === GameState.PLAYER_TURN) {
+      this.applyPlayerAttack();
+      if (this.checkEnd()) {
+        this._gameState.set(GameState.FIGHT_END);
+      } else {
+        setTimeout(() => {
+          this._gameState.set(GameState.ENEMY_TURN);
+          this.logEntryService.addLog('system', '💻', `Au tour de l'ennemi !`);
+          this.fightLoop();
+        }, 500);
       }
     }
   }
@@ -111,16 +124,33 @@ export class GameManagerService {
 
     this._currentPlayer!.currentHp -= atk;
 
-    this.logEntryService.addLog(
-      'enemy',
-      '😈',
-      `Le joueur a perdu : ${atk} HP`,
-    );
+    this.logEntryService.addLog('enemy', '😈', `Le joueur a perdu : ${atk} HP`);
+  }
+
+  private applyPlayerAttack(): void {
+    this._gameState.set(GameState.APPLY_EFFECT);
+    const ratio = EntityHelper.RatioMap[this._currentEnemy!.kind];
+    const atk = this.checkPlayerDamage(ratio);
+
+    this._currentEnemy!.currentHp -= atk;
+
+    this.logEntryService.addLog('player', '🧑‍🦲', `Le joueur inflige : ${atk} HP`);
   }
 
   private checkEnemyDamage(ratio: number): number {
     const atk = this._currentEnemy!.characteristics.atk * ratio;
-    if(this._currentPlayer!.characteristics.def > atk) {
+    if (this._currentPlayer!.characteristics.def > atk) {
+      return atk / 2;
+    } else {
+      return atk;
+    }
+  }
+
+  private checkPlayerDamage(ratio: number): number {
+    const def = this._currentEnemy!.characteristics.def * ratio;
+    const atk = this._currentPlayer!.characteristics.atk;
+
+    if (atk < def) {
       return atk / 2;
     } else {
       return atk;

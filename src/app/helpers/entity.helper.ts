@@ -42,6 +42,11 @@ export class EntityHelper {
 
     return {
       ...template,
+      characteristics: {
+        ...template.characteristics,
+        hp: template.characteristics.hp * ratio,
+        mana: template.characteristics.mana * ratio,
+      },
       currentHp: template.characteristics.hp * ratio,
       currentMp: template.characteristics.mana * ratio,
       lvl: 1,

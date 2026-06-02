@@ -1,10 +1,10 @@
 <div class="actions-wrapper">
   <div class="action-group common-actions">
-    <button class="action-btn primary">
+    <button [disabled]="disabled()" class="action-btn primary">
       <span class="btn-icon">🗡️</span>
       <span class="btn-label">Attaque</span>
     </button>
-    <button class="action-btn danger">
+    <button [disabled]="disabled()" class="action-btn danger">
       <span class="btn-icon">🏃‍♀️</span>
       <span class="btn-label">Fuir</span>
     </button>
@@ -14,7 +14,7 @@
     <h4 class="group-title">✨ Compétences</h4>
     <div class="group-grid">
       @for (item of typeActions; track item.name) {
-      <button class="action-btn skill">
+      <button [disabled]="disabled()" class="action-btn skill">
         <span class="btn-icon">{{item.icon}}</span>
         <span class="btn-label">{{item.name}}</span>
         <span class="btn-cost">{{item.cost}} PM</span>
@@ -27,7 +27,7 @@
     <h4 class="group-title">🎒 Inventaire</h4>
     <div class="group-grid">
       @for (item of inventoryActions; track item.name) {
-      <button class="action-btn item">
+      <button [disabled]="disabled()" class="action-btn item">
         <span class="btn-icon">{{item.icon}}</span>
         <span class="btn-label">{{item.name}}</span>
         <span class="btn-cost qty">x{{item.qty}}</span>

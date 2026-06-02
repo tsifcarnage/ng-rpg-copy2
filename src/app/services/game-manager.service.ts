@@ -72,35 +72,9 @@ export class GameManagerService {
         );
 
         this._gameState.set(GameState.FIGHT_INIT as GameState);
-
-        while (this._gameState() !== GameState.FIGHT_END) {
-          console.log('Fight state => ', this._gameState());
-          switch (this._gameState()) {
-            case GameState.FIGHT_INIT:
-              this._currentEnemy = this._enemies.shift();
-              this._gameState.set(GameState.TURN_DECIDE);
-              break;
-            case GameState.TURN_DECIDE:
-              this._gameState.set(this.handleTurnDecide());
-              break;
-            case GameState.PLAYER_TURN:
-              this._gameState.set(this.handlePlayerTurn());
-              break;
-            case GameState.ENEMY_TURN:
-              this._gameState.set(this.handleEnemyTurn());
-              break;
-            case GameState.APPLY_EFFECT:
-              this._gameState.set(this.handleApplyEffect());
-              break;
-            case GameState.CHECK_END:
-              this._gameState.set(this.handleCheckEnd());
-              break;
-
-            default:
-              this._gameState.set(GameState.FIGHT_END);
-              break;
-          }
-        }
+        this._gameState.set(this.handleInitFight());
+        this._gameState.set(this.handleTurnDecide());
+        this.fightLoop();
       });
   }
 
@@ -109,11 +83,57 @@ export class GameManagerService {
     this.logEntryService.addLog('system', '💻', `Nouvelle étape du jeu : ${state}`);
   }
 
+  public handleInitFight(): GameState {
+    this.systemPromptLog();
+    this._currentEnemy = this._enemies.shift();
+    this.logEntryService.addLog(
+      'info',
+      'ℹ️',
+      `L'ennemi : ${this.currentEnemy.name} de niveau ${this.currentEnemy.lvl} est apparu !`,
+    );
+    return GameState.TURN_DECIDE;
+  }
+
+  public fightLoop(): void {
+    if (this._gameState() === GameState.ENEMY_TURN) {
+      this._gameState.set(this.handleEnemyTurn());
+      this.applyEnemyAttack();
+      if (this.checkEnd()) {
+        this._gameState.set(GameState.FIGHT_END);
+      } else {
+        this._gameState.set(this.handlePlayerTurn());
+      }
+    }
+  }
+
+  public checkEnd(): boolean {
+    return this._currentEnemy!.currentHp <= 0 || this._currentPlayer!.currentHp <= 0;
+  }
+
+  public applyEnemyAttack(): void {
+    this._gameState.set(GameState.APPLY_EFFECT);
+    this._currentPlayer!.currentHp -= this._currentEnemy!.characteristics.atk;
+    this.logEntryService.addLog(
+      'enemy',
+      '😈',
+      `Le joueur a perdu : ${this._currentEnemy!.characteristics.atk} HP`,
+    );
+  }
+
   public handleTurnDecide(): GameState {
     this.systemPromptLog();
-    return this._currentPlayer!.characteristics.speed >= this._currentEnemy!.characteristics.speed
-      ? GameState.PLAYER_TURN
-      : GameState.ENEMY_TURN;
+
+    const turn =
+      this._currentPlayer!.characteristics.speed >= this._currentEnemy!.characteristics.speed
+        ? GameState.PLAYER_TURN
+        : GameState.ENEMY_TURN;
+
+    this.logEntryService.addLog(
+      'system',
+      '💻',
+      `${turn === GameState.PLAYER_TURN ? 'Le joueur' : "l'ennemi"} commence !`,
+    );
+    return turn;
   }
 
   public handlePlayerTurn(): GameState {
@@ -124,15 +144,5 @@ export class GameManagerService {
   public handleEnemyTurn(): GameState {
     this.systemPromptLog();
     return GameState.APPLY_EFFECT;
-  }
-
-  public handleApplyEffect(): GameState {
-    this.systemPromptLog();
-    return GameState.CHECK_END;
-  }
-
-  public handleCheckEnd(): GameState {
-    this.systemPromptLog();
-    return GameState.FIGHT_END;
   }
 }

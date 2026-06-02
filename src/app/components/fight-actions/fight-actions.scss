@@ -44,7 +44,11 @@
   font-size: 0.9rem;
   text-align: left;
   cursor: pointer;
-  transition: background 0.15s, transform 0.15s, border-color 0.15s, box-shadow 0.15s;
+  transition:
+    background 0.15s,
+    transform 0.15s,
+    border-color 0.15s,
+    box-shadow 0.15s;
   font-family: inherit;
 
   &:hover {
@@ -54,6 +58,11 @@
   }
   &:active {
     transform: translateY(0);
+  }
+
+  &:disabled {
+    cursor: not-allowed;
+    filter: opacity(0.5);
   }
 
   .btn-icon {
@@ -94,7 +103,9 @@
       background: rgba(21, 163, 8, 0.35);
       box-shadow: 0 0 16px rgba(21, 163, 8, 0.25);
     }
-    .btn-label { flex: 0; }
+    .btn-label {
+      flex: 0;
+    }
   }
 
   &.danger {
@@ -109,7 +120,9 @@
       background: rgba(236, 53, 53, 0.3);
       box-shadow: 0 0 16px rgba(236, 53, 53, 0.2);
     }
-    .btn-label { flex: 0; }
+    .btn-label {
+      flex: 0;
+    }
   }
 
   &.skill:hover {

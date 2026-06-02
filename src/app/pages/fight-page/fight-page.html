@@ -23,7 +23,7 @@
 
   <app-fight-history [entries]="logEntryService.logEntries"></app-fight-history>
 
-  <app-fight-actions></app-fight-actions>
+  <app-fight-actions [disabled]="gameManagerService.state() !== GameState.PLAYER_TURN"></app-fight-actions>
 </section>
 } @else {
 <h1>CHARGEMENT....</h1>

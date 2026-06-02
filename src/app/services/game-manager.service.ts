@@ -91,7 +91,7 @@ export class GameManagerService {
   }
 
   /**
-   * 1. ne pas afficher les décimale dans les cartes (decimalPipe) |
+   * 1. ne pas afficher les décimales dans les cartes (decimalPipe) |
    * 2. afficher le status final du combat dans l'history log
    * 3. ne pas afficher de nombre < 0 (avec un pipe)
    * 4. on affiche la def l'atk et la vitesse avec le ratio (sans décimale)

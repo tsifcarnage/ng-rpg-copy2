@@ -4,6 +4,7 @@ import { GameManagerService } from '../../services/game-manager.service';
 import { IconByType } from '../../enums/class-type.enum';
 import { EnemyRaceType } from '../../enums/enemy-race-type.enum';
 import { IEnemyInstance } from '../../models/enemy.interface';
+import { InterfaceDigitsPipe } from '../../pipes/interface-digits-pipe';
 
 const IconByRace: Record<EnemyRaceType, string> = {
   [EnemyRaceType.Goblin]: '👺',
@@ -14,7 +15,7 @@ const IconByRace: Record<EnemyRaceType, string> = {
 
 @Component({
   selector: 'app-fight-character-card',
-  imports: [LowerCasePipe, TitleCasePipe],
+  imports: [LowerCasePipe, TitleCasePipe, InterfaceDigitsPipe],
   templateUrl: './fight-character-card.html',
   styleUrl: './fight-character-card.scss',
 })

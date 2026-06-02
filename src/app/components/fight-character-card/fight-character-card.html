@@ -18,16 +18,16 @@
     <div class="gauge-item hp">
       <div class="gauge-labels">
         <p>❤️ PV</p>
-        <p>{{p.currentHp}} / {{p.characteristics.hp}}</p>
+        <p>{{p.currentHp | interfaceDigits}} / {{p.characteristics.hp | interfaceDigits}}</p>
       </div>
-      <progress [value]="p.currentHp" [max]="p.characteristics.hp"></progress>
+      <progress [value]="p.currentHp  | interfaceDigits" [max]="p.characteristics.hp  | interfaceDigits"></progress>
     </div>
     <div class="gauge-item mp">
       <div class="gauge-labels">
         <p>💙 PM</p>
-        <p>{{p.currentMp}} / {{p.characteristics.mana}}</p>
+        <p>{{p.currentMp | interfaceDigits}} / {{p.characteristics.mana | interfaceDigits}}</p>
       </div>
-      <progress [value]="p.currentMp" [max]="p.characteristics.mana"></progress>
+      <progress [value]="p.currentMp  | interfaceDigits" [max]="p.characteristics.mana  | interfaceDigits"></progress>
     </div>
   </div>
 
@@ -57,16 +57,16 @@
     <div class="gauge-item hp">
       <div class="gauge-labels">
         <p>❤️ PV</p>
-        <p>{{e.currentHp}} / {{e.characteristics.hp}}</p>
+        <p>{{e.currentHp | interfaceDigits}} / {{e.characteristics.hp | interfaceDigits}}</p>
       </div>
       <progress [value]="e.currentHp" [max]="e.characteristics.hp"></progress>
     </div>
     <div class="gauge-item mp">
       <div class="gauge-labels">
         <p>💙 PM</p>
-        <p>{{e.currentMp}} / {{e.characteristics.mana}}</p>
+        <p>{{e.currentMp | interfaceDigits}} / {{e.characteristics.mana | interfaceDigits}}</p>
       </div>
-      <progress [value]="e.currentMp" [max]="e.characteristics.mana"></progress>
+      <progress [value]="e.currentMp  | interfaceDigits" [max]="e.characteristics.mana  | interfaceDigits"></progress>
     </div>
   </div>
 

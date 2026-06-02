@@ -4,7 +4,7 @@ import { GameState } from '../enums/game-state.enum';
 import { Random } from './random.service';
 import { IEnemyInstance } from '../models/enemy.interface';
 import { EnemyRaceType } from '../enums/enemy-race-type.enum';
-import { delay, map, Observable, zip } from 'rxjs';
+import { map, Observable, zip } from 'rxjs';
 import { EntityHelper } from '../helpers/entity.helper';
 import { EnemyKind } from '../enums/kind.enum';
 import { LogEntryService } from './log-entry.service';
@@ -43,15 +43,15 @@ export class GameManagerService {
     return this._gameState!;
   }
 
-  public getRandomEnemiesType(): Observable<EnemyRaceType[]> {
+  private getRandomEnemiesType(): Observable<EnemyRaceType[]> {
     return this.randomService
       .generateIntegerAndGetData(5, 0, 2)
       .pipe(map((values) => EntityHelper.getRaceByNumbers(values)));
   }
 
-  public getRandomEnemiesKind(): Observable<EnemyKind[]> {
+  private getRandomEnemiesKind(): Observable<EnemyKind[]> {
     return this.randomService
-      .generateIntegerAndGetData(5, 0, 2)
+      .generateIntegerAndGetData(5, 1, 2)
       .pipe(map((values) => EntityHelper.getKindByNumbers(values)));
   }
 
@@ -78,13 +78,7 @@ export class GameManagerService {
       });
   }
 
-  private systemPromptLog(): void {
-    const state = this._gameState();
-    this.logEntryService.addLog('system', '💻', `Nouvelle étape du jeu : ${state}`);
-  }
-
-  public handleInitFight(): GameState {
-    this.systemPromptLog();
+  private handleInitFight(): GameState {
     this._currentEnemy = this._enemies.shift();
     this.logEntryService.addLog(
       'info',
@@ -94,35 +88,46 @@ export class GameManagerService {
     return GameState.TURN_DECIDE;
   }
 
-  public fightLoop(): void {
+  private fightLoop(): void {
     if (this._gameState() === GameState.ENEMY_TURN) {
-      this._gameState.set(this.handleEnemyTurn());
       this.applyEnemyAttack();
       if (this.checkEnd()) {
         this._gameState.set(GameState.FIGHT_END);
       } else {
-        this._gameState.set(this.handlePlayerTurn());
+        this._gameState.set(GameState.PLAYER_TURN);
+        this.logEntryService.addLog('system', '💻', `À vous de jouer !`);
       }
     }
   }
 
-  public checkEnd(): boolean {
+  private checkEnd(): boolean {
     return this._currentEnemy!.currentHp <= 0 || this._currentPlayer!.currentHp <= 0;
   }
 
-  public applyEnemyAttack(): void {
+  private applyEnemyAttack(): void {
     this._gameState.set(GameState.APPLY_EFFECT);
-    this._currentPlayer!.currentHp -= this._currentEnemy!.characteristics.atk;
+    const ratio = EntityHelper.RatioMap[this._currentEnemy!.kind];
+    const atk = this.checkEnemyDamage(ratio);
+
+    this._currentPlayer!.currentHp -= atk;
+
     this.logEntryService.addLog(
       'enemy',
       '😈',
-      `Le joueur a perdu : ${this._currentEnemy!.characteristics.atk} HP`,
+      `Le joueur a perdu : ${atk} HP`,
     );
   }
 
-  public handleTurnDecide(): GameState {
-    this.systemPromptLog();
+  private checkEnemyDamage(ratio: number): number {
+    const atk = this._currentEnemy!.characteristics.atk * ratio;
+    if(this._currentPlayer!.characteristics.def > atk) {
+      return atk / 2;
+    } else {
+      return atk;
+    }
+  }
 
+  private handleTurnDecide(): GameState {
     const turn =
       this._currentPlayer!.characteristics.speed >= this._currentEnemy!.characteristics.speed
         ? GameState.PLAYER_TURN
@@ -134,15 +139,5 @@ export class GameManagerService {
       `${turn === GameState.PLAYER_TURN ? 'Le joueur' : "l'ennemi"} commence !`,
     );
     return turn;
-  }
-
-  public handlePlayerTurn(): GameState {
-    this.systemPromptLog();
-    return GameState.ENEMY_TURN;
-  }
-
-  public handleEnemyTurn(): GameState {
-    this.systemPromptLog();
-    return GameState.APPLY_EFFECT;
   }
 }

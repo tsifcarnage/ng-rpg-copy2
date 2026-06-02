@@ -1,5 +1,5 @@
 import { DatePipe } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, input } from '@angular/core';
 import { LogEntry } from '../../models/log-entry.interface';
 
 @Component({
@@ -9,5 +9,5 @@ import { LogEntry } from '../../models/log-entry.interface';
   styleUrl: './fight-history.scss',
 })
 export class FightHistory {
-  public readonly entries: LogEntry[] = [];
+  public readonly entries = input<LogEntry[]>();
 }

@@ -21,7 +21,7 @@
     <app-fight-character-card [isPlayer]="false"></app-fight-character-card>
   </div>
 
-  <app-fight-history></app-fight-history>
+  <app-fight-history [entries]="logEntryService.logEntries"></app-fight-history>
 
   <app-fight-actions></app-fight-actions>
 </section>

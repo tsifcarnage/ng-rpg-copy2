@@ -4,9 +4,10 @@ import { GameState } from '../enums/game-state.enum';
 import { Random } from './random.service';
 import { IEnemyInstance } from '../models/enemy.interface';
 import { EnemyRaceType } from '../enums/enemy-race-type.enum';
-import { map, Observable, zip } from 'rxjs';
+import { delay, map, Observable, zip } from 'rxjs';
 import { EntityHelper } from '../helpers/entity.helper';
 import { EnemyKind } from '../enums/kind.enum';
+import { LogEntryService } from './log-entry.service';
 
 @Injectable({ providedIn: 'root' })
 export class GameManagerService {
@@ -16,6 +17,7 @@ export class GameManagerService {
   private _currentEnemy?: IEnemyInstance;
 
   private readonly randomService = inject(Random);
+  private readonly logEntryService = inject(LogEntryService);
 
   public initGame(player: IPlayer): void {
     this._currentPlayer = player;
@@ -72,7 +74,7 @@ export class GameManagerService {
         this._gameState.set(GameState.FIGHT_INIT as GameState);
 
         while (this._gameState() !== GameState.FIGHT_END) {
-          console.log('Fight state => ', this._gameState);
+          console.log('Fight state => ', this._gameState());
           switch (this._gameState()) {
             case GameState.FIGHT_INIT:
               this._currentEnemy = this._enemies.shift();
@@ -102,25 +104,35 @@ export class GameManagerService {
       });
   }
 
+  private systemPromptLog(): void {
+    const state = this._gameState();
+    this.logEntryService.addLog('system', '💻', `Nouvelle étape du jeu : ${state}`);
+  }
+
   public handleTurnDecide(): GameState {
+    this.systemPromptLog();
     return this._currentPlayer!.characteristics.speed >= this._currentEnemy!.characteristics.speed
       ? GameState.PLAYER_TURN
       : GameState.ENEMY_TURN;
   }
 
   public handlePlayerTurn(): GameState {
+    this.systemPromptLog();
     return GameState.ENEMY_TURN;
   }
 
   public handleEnemyTurn(): GameState {
+    this.systemPromptLog();
     return GameState.APPLY_EFFECT;
   }
 
   public handleApplyEffect(): GameState {
+    this.systemPromptLog();
     return GameState.CHECK_END;
   }
 
   public handleCheckEnd(): GameState {
+    this.systemPromptLog();
     return GameState.FIGHT_END;
   }
 }

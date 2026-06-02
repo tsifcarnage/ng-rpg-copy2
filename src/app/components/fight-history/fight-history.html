@@ -4,7 +4,7 @@
     <span class="status-dot">● en cours</span>
   </div>
   <div class="history-card">
-    @for (entry of entries; track $index) {
+    @for (entry of entries(); track $index) {
     <div class="log-row kind-{{entry.kind}}">
       <span class="time">{{entry.time | date:'HH:mm:ss'}}</span>
       <span class="icon">{{entry.icon}}</span>

@@ -90,17 +90,12 @@ export class GameManagerService {
     return GameState.TURN_DECIDE;
   }
 
-  /**
-   * 1. ne pas afficher les décimales dans les cartes (decimalPipe) |
-   * 2. afficher le status final du combat dans l'history log
-   * 3. ne pas afficher de nombre < 0 (avec un pipe)
-   * 4. on affiche la def l'atk et la vitesse avec le ratio (sans décimale)
-   */
   public fightLoop(): void {
     if (this._gameState() === GameState.ENEMY_TURN) {
       this.applyEnemyAttack();
       if (this.checkEnd()) {
         this._gameState.set(GameState.FIGHT_END);
+        this.logFightEnd(false);
       } else {
         this._gameState.set(GameState.PLAYER_TURN);
         this.logEntryService.addLog('system', '💻', `À vous de jouer !`);
@@ -109,6 +104,7 @@ export class GameManagerService {
       this.applyPlayerAttack();
       if (this.checkEnd()) {
         this._gameState.set(GameState.FIGHT_END);
+        this.logFightEnd(true);
       } else {
         setTimeout(() => {
           this._gameState.set(GameState.ENEMY_TURN);
@@ -119,14 +115,23 @@ export class GameManagerService {
     }
   }
 
+  private logFightEnd(playerWon: boolean): void {
+    this.logEntryService.addLog(
+      'system',
+      '☠️',
+      playerWon
+        ? `Victoire ${this._currentEnemy!.name} a été vaincu`
+        : `Défaite... ${this._currentPlayer!.name} est tombé au combat !`,
+    );
+  }
+
   private checkEnd(): boolean {
     return this._currentEnemy!.currentHp <= 0 || this._currentPlayer!.currentHp <= 0;
   }
 
   private applyEnemyAttack(): void {
     this._gameState.set(GameState.APPLY_EFFECT);
-    const ratio = EntityHelper.RatioMap[this._currentEnemy!.kind];
-    const atk = this.checkEnemyDamage(ratio);
+    const atk = this.checkEnemyDamage();
 
     this._currentPlayer!.currentHp -= atk;
 
@@ -135,16 +140,15 @@ export class GameManagerService {
 
   private applyPlayerAttack(): void {
     this._gameState.set(GameState.APPLY_EFFECT);
-    const ratio = EntityHelper.RatioMap[this._currentEnemy!.kind];
-    const atk = this.checkPlayerDamage(ratio);
+    const atk = this.checkPlayerDamage();
 
     this._currentEnemy!.currentHp -= atk;
 
     this.logEntryService.addLog('player', '🧑‍🦲', `Le joueur inflige : ${atk} HP`);
   }
 
-  private checkEnemyDamage(ratio: number): number {
-    const atk = this._currentEnemy!.characteristics.atk * ratio;
+  private checkEnemyDamage(): number {
+    const atk = this._currentEnemy!.characteristics.atk;
     if (this._currentPlayer!.characteristics.def > atk) {
       return atk / 2;
     } else {
@@ -152,8 +156,8 @@ export class GameManagerService {
     }
   }
 
-  private checkPlayerDamage(ratio: number): number {
-    const def = this._currentEnemy!.characteristics.def * ratio;
+  private checkPlayerDamage(): number {
+    const def = this._currentEnemy!.characteristics.def;
     const atk = this._currentPlayer!.characteristics.atk;
 
     if (atk < def) {

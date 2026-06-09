@@ -43,7 +43,9 @@ export class EntityHelper {
     return {
       ...template,
       characteristics: {
-        ...template.characteristics,
+        atk: template.characteristics.atk * ratio,
+        def: template.characteristics.def * ratio,
+        speed: template.characteristics.speed * ratio,
         hp: template.characteristics.hp * ratio,
         mana: template.characteristics.mana * ratio,
       },

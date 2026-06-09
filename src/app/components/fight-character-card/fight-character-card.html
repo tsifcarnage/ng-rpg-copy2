@@ -32,9 +32,9 @@
   </div>
 
   <div class="stat-pills">
-    <span class="pill">⚔️ {{p.characteristics.atk}}</span>
-    <span class="pill">🛡️ {{p.characteristics.def}}</span>
-    <span class="pill">💨 {{p.characteristics.speed}}</span>
+    <span class="pill">⚔️ {{p.characteristics.atk | interfaceDigits}}</span>
+    <span class="pill">🛡️ {{p.characteristics.def | interfaceDigits}}</span>
+    <span class="pill">💨 {{p.characteristics.speed | interfaceDigits}}</span>
   </div>
 </div>
 } @else {
@@ -71,9 +71,9 @@
   </div>
 
   <div class="stat-pills">
-    <span class="pill">⚔️ {{e.characteristics.atk}}</span>
-    <span class="pill">🛡️ {{e.characteristics.def}}</span>
-    <span class="pill">💨 {{e.characteristics.speed}}</span>
+    <span class="pill">⚔️ {{e.characteristics.atk|interfaceDigits}}</span>
+    <span class="pill">🛡️ {{e.characteristics.def|interfaceDigits}}</span>
+    <span class="pill">💨 {{e.characteristics.speed|interfaceDigits}}</span>
   </div>
 </div>
 }

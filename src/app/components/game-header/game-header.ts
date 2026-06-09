@@ -1,6 +1,7 @@
 import { Component, inject, input } from '@angular/core';
 import { Router, RouterLink, RouterLinkActive } from '@angular/router';
 import { GameManagerService } from '../../services/game-manager.service';
+import { PlayerService } from '../../services/player.service';
 
 @Component({
   selector: 'app-game-header',
@@ -15,9 +16,11 @@ export class GameHeader {
   public readonly pseudo = input.required<string>();
 
   public gameManager = inject(GameManagerService);
+  public playerService = inject(PlayerService);
 
   public onSave(): void {
-    // handle it later
+    this.playerService.save(this.gameManager.currentPlayer);
+    alert('Jeu sauvegardé !')
   }
 
   public onExit(): void {

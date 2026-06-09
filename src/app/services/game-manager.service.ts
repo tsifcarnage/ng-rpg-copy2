@@ -8,6 +8,7 @@ import { map, Observable, zip } from 'rxjs';
 import { EntityHelper } from '../helpers/entity.helper';
 import { EnemyKind } from '../enums/kind.enum';
 import { LogEntryService } from './log-entry.service';
+import { Router } from '@angular/router';
 
 @Injectable({ providedIn: 'root' })
 export class GameManagerService {
@@ -17,6 +18,7 @@ export class GameManagerService {
   private _enemies: IEnemyInstance[] = [];
 
   private readonly randomService = inject(Random);
+  private readonly router = inject(Router);
   private readonly logEntryService = inject(LogEntryService);
 
   public initGame(player: IPlayer): void {
@@ -101,6 +103,7 @@ export class GameManagerService {
       if (this.checkEnd()) {
         this._gameState.set(GameState.FIGHT_END);
         this.logFightEnd(false);
+        this.returnToMap(true);
       } else {
         this._gameState.set(GameState.PLAYER_TURN);
         this.logEntryService.addLog('system', '💻', `À vous de jouer !`);
@@ -115,6 +118,7 @@ export class GameManagerService {
           this.startNewFight();
         } else {
           this._gameState.set(GameState.NONE);
+          this.returnToMap(false);
         }
       } else {
         setTimeout(() => {
@@ -218,5 +222,18 @@ export class GameManagerService {
       `${turn === GameState.PLAYER_TURN ? 'Le joueur' : "l'ennemi"} commence !`,
     );
     return turn;
+  }
+
+  public returnToMap(restoreLife: boolean): void {
+    // If player is dead, we restore HP & MP
+    // But the player loose half money
+    if (restoreLife) {
+      this._currentPlayer!.currentHp = this._currentPlayer!.characteristics.hp;
+      this._currentPlayer!.currentMp = this._currentPlayer!.characteristics.mana;
+      this._currentPlayer!.money *= 0.5;
+    }
+
+    this.router.navigateByUrl('/map');
+    this.logEntryService.reset();
   }
 }

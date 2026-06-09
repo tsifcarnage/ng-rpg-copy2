@@ -21,6 +21,7 @@ interface InventoryActions {
 export class FightActions {
   public disabled = input.required<boolean>(); // if true -> no action possible;
   public playerAtk = output<void>();
+  public playerQuit = output<void>();
 
   public readonly typeActions: TypeActions[] = [
     { icon: '⚔️', name: 'Taillade', cost: 10 },

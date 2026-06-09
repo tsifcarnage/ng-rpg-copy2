@@ -4,7 +4,7 @@
       <span class="btn-icon">🗡️</span>
       <span class="btn-label">Attaque</span>
     </button>
-    <button [disabled]="disabled()" class="action-btn danger">
+    <button [disabled]="disabled()" (click)="playerQuit.emit()" class="action-btn danger">
       <span class="btn-icon">🏃‍♀️</span>
       <span class="btn-label">Fuir</span>
     </button>

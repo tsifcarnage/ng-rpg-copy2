@@ -25,7 +25,8 @@
 
   <app-fight-actions
     [disabled]="gameManagerService.state() !== GameState.PLAYER_TURN"
-    (playerAtk)="gameManagerService.fightLoop()">
+    (playerAtk)="gameManagerService.fightLoop()"
+    (playerQuit)="gameManagerService.returnToMap(false)">
   </app-fight-actions>
 </section>
 } @else {

@@ -41,6 +41,20 @@ export class PlayerService {
     return this.retrievePlayers().length > 0;
   }
 
-  public save() {}
+  public save(currentPlayer: IPlayer): void {
+    const players = this.retrievePlayers().filter((p) => p.pseudo !== currentPlayer.pseudo);
+
+    players.push(currentPlayer);
+
+    console.log(currentPlayer, players);
+
+    try {
+      const toSave = JSON.stringify(players);
+      localStorage.setItem(this.PLAYER_KEY, toSave);
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
   public delete() {}
 }

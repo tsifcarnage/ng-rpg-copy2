@@ -14,7 +14,7 @@ export class GameManagerService {
   private _currentPlayer?: IPlayer;
   private _gameState: WritableSignal<GameState> = signal(GameState.NONE);
   private _enemies: IEnemyInstance[] = [];
-  private _currentEnemy?: IEnemyInstance;
+  private _currentEnemy: WritableSignal<IEnemyInstance|undefined> = signal(undefined);
 
   private readonly randomService = inject(Random);
   private readonly logEntryService = inject(LogEntryService);
@@ -36,7 +36,7 @@ export class GameManagerService {
   }
 
   public get currentEnemy(): IEnemyInstance {
-    return this._currentEnemy!;
+    return this._currentEnemy()!;
   }
 
   public get state(): WritableSignal<GameState> {
@@ -72,16 +72,20 @@ export class GameManagerService {
         );
 
         this._gameState.set(GameState.FIGHT_INIT as GameState);
-        this._gameState.set(this.handleInitFight());
-        this._gameState.set(this.handleTurnDecide());
-        if (this._gameState() === GameState.ENEMY_TURN) {
-          this.fightLoop();
-        }
+        this.startNewFight();
       });
   }
 
+  private startNewFight(): void {
+    this._gameState.set(this.handleInitFight());
+    this._gameState.set(this.handleTurnDecide());
+    if (this._gameState() === GameState.ENEMY_TURN) {
+      this.fightLoop();
+    }
+  }
+
   private handleInitFight(): GameState {
-    this._currentEnemy = this._enemies.shift();
+    this._currentEnemy.set(this._enemies.shift());
     this.logEntryService.addLog(
       'info',
       'ℹ️',
@@ -105,6 +109,11 @@ export class GameManagerService {
       if (this.checkEnd()) {
         this._gameState.set(GameState.FIGHT_END);
         this.logFightEnd(true);
+        if(this._enemies.length >= 1) {
+          this.startNewFight();
+        } else {
+          this._gameState.set(GameState.NONE);
+        }
       } else {
         setTimeout(() => {
           this._gameState.set(GameState.ENEMY_TURN);
@@ -120,13 +129,13 @@ export class GameManagerService {
       'system',
       '☠️',
       playerWon
-        ? `Victoire ${this._currentEnemy!.name} a été vaincu`
+        ? `Victoire ${this._currentEnemy()!.name} a été vaincu`
         : `Défaite... ${this._currentPlayer!.name} est tombé au combat !`,
     );
   }
 
   private checkEnd(): boolean {
-    return this._currentEnemy!.currentHp <= 0 || this._currentPlayer!.currentHp <= 0;
+    return this._currentEnemy()!.currentHp <= 0 || this._currentPlayer!.currentHp <= 0;
   }
 
   private applyEnemyAttack(): void {
@@ -142,13 +151,13 @@ export class GameManagerService {
     this._gameState.set(GameState.APPLY_EFFECT);
     const atk = this.checkPlayerDamage();
 
-    this._currentEnemy!.currentHp -= atk;
+    this._currentEnemy()!.currentHp -= atk;
 
     this.logEntryService.addLog('player', '🧑‍🦲', `Le joueur inflige : ${atk} HP`);
   }
 
   private checkEnemyDamage(): number {
-    const atk = this._currentEnemy!.characteristics.atk;
+    const atk = this._currentEnemy()!.characteristics.atk;
     if (this._currentPlayer!.characteristics.def > atk) {
       return atk / 2;
     } else {
@@ -157,7 +166,7 @@ export class GameManagerService {
   }
 
   private checkPlayerDamage(): number {
-    const def = this._currentEnemy!.characteristics.def;
+    const def = this._currentEnemy()!.characteristics.def;
     const atk = this._currentPlayer!.characteristics.atk;
 
     if (atk < def) {
@@ -169,7 +178,7 @@ export class GameManagerService {
 
   private handleTurnDecide(): GameState {
     const turn =
-      this._currentPlayer!.characteristics.speed >= this._currentEnemy!.characteristics.speed
+      this._currentPlayer!.characteristics.speed >= this._currentEnemy()!.characteristics.speed
         ? GameState.PLAYER_TURN
         : GameState.ENEMY_TURN;
 

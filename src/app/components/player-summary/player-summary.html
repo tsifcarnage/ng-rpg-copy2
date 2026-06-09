@@ -12,22 +12,24 @@
   <div class="gauge-item">
     <div>
       <p>PV</p>
-      <p>{{player().currentHp}} / {{player().characteristics.hp}}</p>
+      <p>{{player().currentHp|interfaceDigits}} / {{player().characteristics.hp|interfaceDigits}}</p>
     </div>
-    <progress [value]="player().currentHp" [max]="player().characteristics.hp"></progress>
+    <progress [value]="player().currentHp|interfaceDigits"
+      [max]="player().characteristics.hp|interfaceDigits"></progress>
   </div>
   <div class="gauge-item">
     <div>
       <p>PM</p>
-      <p>{{player().currentMp}} / {{player().characteristics.mana}}</p>
+      <p>{{player().currentMp | interfaceDigits}} / {{player().characteristics.mana | interfaceDigits}}</p>
     </div>
-    <progress [value]="player().currentMp" [max]="player().characteristics.mana"></progress>
+    <progress [value]="player().currentMp | interfaceDigits"
+      [max]="player().characteristics.mana | interfaceDigits"></progress>
   </div>
   <div class="gauge-item">
     <div>
       <p>Expérience</p>
-      <p>{{player().currentXp}} / {{player().lvl * 100}}</p>
+      <p>{{player().currentXp | interfaceDigits}} / {{player().lvl | xpRemaining}}</p>
     </div>
-    <progress [value]="player().currentXp" [max]="player().lvl * 100"></progress>
+    <progress [value]="player().currentXp | interfaceDigits" [max]="player().lvl | xpRemaining"></progress>
   </div>
 </div>

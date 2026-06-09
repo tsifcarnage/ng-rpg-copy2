@@ -154,7 +154,7 @@ export class GameManagerService {
     }
   }
 
-  private xpForNextLevel(level: number): number {
+  public xpForNextLevel(level: number): number {
     return 500 * Math.pow(2.5, level - 1);
   }
 

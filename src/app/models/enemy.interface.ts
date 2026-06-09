@@ -4,6 +4,8 @@ import { IBaseEntity, IBaseInstance } from './base-entity.interface';
 
 export interface IEnemy extends IBaseEntity {
   race: EnemyRaceType;
+  xpReward: number;
+  goldReward: number;
 }
 
 export interface IEnemyInstance extends IEnemy, IBaseInstance {

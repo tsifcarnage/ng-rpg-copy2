@@ -52,7 +52,9 @@ export class EntityHelper {
       currentHp: template.characteristics.hp * ratio,
       currentMp: template.characteristics.mana * ratio,
       lvl: 1,
-      kind: kind
+      kind: kind,
+      goldReward: template.goldReward * ratio,
+      xpReward: template.xpReward * ratio,
     };
   }
 }

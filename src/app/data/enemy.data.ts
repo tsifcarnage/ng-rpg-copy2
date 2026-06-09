@@ -13,6 +13,8 @@ export const ENEMY_DATA: IEnemy[] = [
       mana: 0,
     },
     race: EnemyRaceType.Goblin,
+    xpReward: 100,
+    goldReward: 10,
   },
   {
     name: 'Troll',
@@ -25,6 +27,8 @@ export const ENEMY_DATA: IEnemy[] = [
       mana: 0,
     },
     race: EnemyRaceType.Troll,
+    xpReward: 250,
+    goldReward: 50,
   },
   {
     name: 'Loup',
@@ -37,5 +41,7 @@ export const ENEMY_DATA: IEnemy[] = [
       mana: 0,
     },
     race: EnemyRaceType.Loup,
+    xpReward: 125,
+    goldReward: 25,
   },
 ];

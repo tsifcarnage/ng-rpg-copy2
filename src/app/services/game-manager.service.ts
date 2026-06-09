@@ -13,8 +13,8 @@ import { LogEntryService } from './log-entry.service';
 export class GameManagerService {
   private _currentPlayer?: IPlayer;
   private _gameState: WritableSignal<GameState> = signal(GameState.NONE);
+  private _currentEnemy: WritableSignal<IEnemyInstance | undefined> = signal(undefined);
   private _enemies: IEnemyInstance[] = [];
-  private _currentEnemy: WritableSignal<IEnemyInstance|undefined> = signal(undefined);
 
   private readonly randomService = inject(Random);
   private readonly logEntryService = inject(LogEntryService);
@@ -67,9 +67,10 @@ export class GameManagerService {
         })),
       )
       .subscribe((values) => {
-        this._enemies = values.type.map((type, i) =>
-          EntityHelper.enemyRaceToInstance(type, values.kind[i]),
-        );
+        this._enemies = values.type.map((type, i) => {
+          const kind = i >= 3 ? values.kind[i] : EnemyKind.NORMAL;
+          return EntityHelper.enemyRaceToInstance(type, kind);
+        });
 
         this._gameState.set(GameState.FIGHT_INIT as GameState);
         this.startNewFight();
@@ -109,7 +110,8 @@ export class GameManagerService {
       if (this.checkEnd()) {
         this._gameState.set(GameState.FIGHT_END);
         this.logFightEnd(true);
-        if(this._enemies.length >= 1) {
+        this.handleReward();
+        if (this._enemies.length >= 1) {
           this.startNewFight();
         } else {
           this._gameState.set(GameState.NONE);
@@ -122,6 +124,34 @@ export class GameManagerService {
         }, 500);
       }
     }
+  }
+
+  private handleReward(): void {
+    this._currentPlayer!.money += this._currentEnemy()!.goldReward;
+    this._currentPlayer!.currentXp += this._currentEnemy()!.xpReward;
+
+    const levelingUp =
+      this.xpForNextLevel(this._currentPlayer!.lvl) < this._currentPlayer!.currentXp;
+
+    if (levelingUp) {
+      // + 1 lvl
+      this._currentPlayer!.lvl += 1;
+
+      // ajouter 10 %
+      this._currentPlayer!.characteristics.atk *= 1.1;
+      this._currentPlayer!.characteristics.def *= 1.1;
+      this._currentPlayer!.characteristics.speed *= 1.1;
+      this._currentPlayer!.characteristics.mana *= 1.1;
+      this._currentPlayer!.characteristics.hp *= 1.1;
+
+      // réinitialise les PV + MP
+      this._currentPlayer!.currentHp = this._currentPlayer!.characteristics.hp;
+      this._currentPlayer!.currentMp = this._currentPlayer!.characteristics.mana;
+    }
+  }
+
+  private xpForNextLevel(level: number): number {
+    return 500 * Math.pow(2.5, level - 1);
   }
 
   private logFightEnd(playerWon: boolean): void {

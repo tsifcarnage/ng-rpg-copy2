@@ -6,13 +6,42 @@ div.container {
   display: flex;
   flex-direction: column;
 
+  .logo-wrap {
+    position: relative;
+    display: flex;
+    justify-content: center;
+
+    // Soft amber aura breathing behind the blades
+    &::after {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 260px;
+      height: 260px;
+      transform: translate(-50%, -50%);
+      background: radial-gradient(circle, var(--accent-glow), transparent 65%);
+      filter: blur(8px);
+      z-index: 0;
+      animation: aura 4s ease-in-out infinite;
+      pointer-events: none;
+    }
+  }
+
   img {
+    position: relative;
+    z-index: 1;
     max-width: 25vw;
     max-height: 150px;
     margin: auto;
     animation: float 3s ease-in-out infinite;
     filter: drop-shadow(0 10px 24px rgba(0, 0, 0, 0.5));
   }
+}
+
+@keyframes aura {
+  0%, 100% { opacity: 0.55; transform: translate(-50%, -50%) scale(1); }
+  50%      { opacity: 0.9; transform: translate(-50%, -50%) scale(1.12); }
 }
 
 .features-list {
@@ -31,11 +60,18 @@ div.container {
     border-radius: var(--radius-lg);
     width: 40%;
     text-align: center;
-    transition: background var(--transition), transform var(--transition);
+    transition: background var(--transition), transform var(--transition), border-color var(--transition);
+    animation: fade-up 0.5s var(--ease-out) both;
+
+    &:nth-child(1) { animation-delay: 0.15s; }
+    &:nth-child(2) { animation-delay: 0.25s; }
+    &:nth-child(3) { animation-delay: 0.35s; }
+    &:nth-child(4) { animation-delay: 0.45s; }
 
     &:hover {
       background: var(--surface-hover);
-      transform: translateY(-2px);
+      border-color: var(--accent-border);
+      transform: translateY(-3px);
     }
   }
 }

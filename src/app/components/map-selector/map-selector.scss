@@ -33,25 +33,64 @@
   cursor: pointer;
   position: relative;
   overflow: hidden;
-  transition: background var(--transition), border-color var(--transition), transform var(--transition);
+  transition: background var(--transition), border-color var(--transition),
+    transform var(--transition), box-shadow var(--transition);
+  animation: fade-up 0.5s var(--ease-out) both;
+
+  // Staggered reveal of the zone list
+  &:nth-child(1) { animation-delay: 0.05s; }
+  &:nth-child(2) { animation-delay: 0.12s; }
+  &:nth-child(3) { animation-delay: 0.19s; }
+  &:nth-child(4) { animation-delay: 0.26s; }
+
+  // Accent sweep that grows from the left edge on hover
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(90deg, var(--violet-soft), transparent 45%);
+    opacity: 0;
+    transition: opacity var(--transition);
+    pointer-events: none;
+  }
 
   &:hover:not(.locked) {
     background: var(--surface-hover);
     border-color: var(--violet-border);
-    transform: translateX(4px);
+    transform: translateX(6px);
+    box-shadow: var(--shadow-glow-violet);
+    &::before { opacity: 1; }
+    .zone-icon {
+      transform: scale(1.08) rotate(-3deg);
+      border-color: var(--violet-border);
+    }
   }
   &.locked {
-    opacity: 0.5;
+    opacity: 0.55;
     cursor: not-allowed;
+    filter: grayscale(0.4);
   }
 }
 
 .zone-icon {
-  font-size: 3rem;
+  font-size: 2.4rem;
   flex-shrink: 0;
+  width: 68px;
+  height: 68px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.3);
+  border: 1px solid var(--border-soft);
+  border-radius: var(--radius-lg);
+  position: relative;
+  z-index: 1;
+  transition: transform var(--transition), border-color var(--transition);
 }
 .zone-info {
   flex: 1;
+  position: relative;
+  z-index: 1;
 }
 .zone-name {
   font-size: 1.2rem;

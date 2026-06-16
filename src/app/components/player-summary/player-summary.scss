@@ -6,7 +6,8 @@
   min-width: 50vw;
   background: var(--surface);
   border: 1px solid var(--border);
-  border-radius: var(--radius);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-card);
   display: flex;
   flex-direction: column;
   justify-content: space-evenly;
@@ -42,6 +43,10 @@
 }
 
 .gauge-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+
   .gauge-item {
     div:first-child {
       display: flex;
@@ -49,10 +54,31 @@
       p {
         display: block;
         font-size: smaller;
+        margin: 0.15rem 0;
+        &:last-child {
+          color: var(--text-muted);
+          font-variant-numeric: tabular-nums;
+        }
       }
     }
     progress {
-      @include gauge(15px);
+      @include gauge(14px);
     }
+
+    // HP / MP / XP — coloured value fills
+    &:nth-child(1) progress::-webkit-progress-value {
+      background: linear-gradient(90deg, #2fbf3a, var(--success-light));
+    }
+    &:nth-child(1) progress::-moz-progress-bar { background: var(--success-light); }
+
+    &:nth-child(2) progress::-webkit-progress-value {
+      background: linear-gradient(90deg, var(--info-deep), var(--info));
+    }
+    &:nth-child(2) progress::-moz-progress-bar { background: var(--info); }
+
+    &:nth-child(3) progress::-webkit-progress-value {
+      background: linear-gradient(90deg, var(--accent), var(--gold));
+    }
+    &:nth-child(3) progress::-moz-progress-bar { background: var(--gold); }
   }
 }

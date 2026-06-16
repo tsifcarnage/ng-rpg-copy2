@@ -52,7 +52,10 @@
   // Elevation & motion
   --shadow-card: 0 8px 24px rgba(0, 0, 0, 0.35);
   --shadow-hover: 0 14px 32px rgba(0, 0, 0, 0.5);
+  --shadow-glow-accent: 0 0 0 1px var(--accent-border), 0 10px 30px rgba(244, 175, 38, 0.18);
+  --shadow-glow-violet: 0 0 0 1px var(--violet-border), 0 10px 30px rgba(139, 124, 240, 0.2);
   --transition: 0.18s ease;
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
 
   // Fonts
   --font-sans: 'Inter', 'Roboto', Helvetica, system-ui, sans-serif;
@@ -60,9 +63,15 @@
 }
 
 // ─── Base ───────────────────────────────────────────────────────────────────
+html {
+  scroll-behavior: smooth;
+}
 html,
 body {
-  background: radial-gradient(circle at 50% 0%, var(--twilight-indigo), #0a0d12 75%);
+  background:
+    radial-gradient(1100px 560px at 12% -8%, rgba(139, 124, 240, 0.14), transparent 60%),
+    radial-gradient(1000px 520px at 92% -4%, rgba(244, 175, 38, 0.08), transparent 55%),
+    radial-gradient(circle at 50% 0%, var(--twilight-indigo), #0a0d12 78%);
   background-attachment: fixed;
   color: var(--text);
   width: 100%;
@@ -79,6 +88,58 @@ body {
   box-sizing: border-box;
 }
 
+::selection {
+  background: var(--accent-soft);
+  color: var(--accent);
+}
+
+// ─── Motion ───────────────────────────────────────────────────────────────────
+@keyframes page-in {
+  from { opacity: 0; transform: translateY(14px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes fade-up {
+  from { opacity: 0; transform: translateY(18px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes pop-in {
+  0%   { opacity: 0; transform: scale(0.92) translateY(10px); }
+  100% { opacity: 1; transform: scale(1) translateY(0); }
+}
+@keyframes sheen {
+  0%   { background-position: -150% 0; }
+  100% { background-position: 250% 0; }
+}
+@keyframes card-in-left {
+  from { opacity: 0; transform: translateX(-40px) scale(0.96); }
+  to   { opacity: 1; transform: translateX(0) scale(1); }
+}
+@keyframes card-in-right {
+  from { opacity: 0; transform: translateX(40px) scale(0.96); }
+  to   { opacity: 1; transform: translateX(0) scale(1); }
+}
+
+// Page-level entrance — every routed page fades up on mount.
+app-landing-page,
+app-create-character-page,
+app-map-page,
+app-inventory-page,
+app-fight-page,
+app-city-page {
+  display: block;
+  animation: page-in 0.45s var(--ease-out) both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+}
+
 // ─── Typography ───────────────────────────────────────────────────────────────
 h1.title-contrast,
 h2.title-contrast {
@@ -89,8 +150,18 @@ h2.title-contrast {
   text-shadow: 0 2px 18px var(--accent-glow);
 }
 h1.title-contrast {
-  font-size: 36px;
+  font-size: 38px;
   font-weight: 800;
+  letter-spacing: -0.01em;
+  // Animated gold gradient text
+  background: linear-gradient(100deg, var(--gold) 0%, #fff3cf 25%, var(--accent) 50%, var(--gold) 75%);
+  background-size: 250% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: var(--accent); // fallback
+  text-shadow: none;
+  animation: sheen 6s linear infinite;
 }
 h2.title-contrast {
   font-weight: 700;

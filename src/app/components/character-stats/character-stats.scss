@@ -1,22 +1,38 @@
 .card-stats {
   max-width: 60vw;
   border: 1px solid var(--violet-border);
-  padding: 2rem;
+  padding: 1.5rem;
   margin: 1rem auto;
-  border-radius: var(--radius-sm);
+  border-radius: var(--radius-lg);
+  background: rgba(139, 124, 240, 0.04);
+  box-shadow: var(--shadow-card);
 
   div {
     display: flex;
     justify-content: space-between;
-    background: rgba(118, 118, 118, 0.2);
-    margin: 0.25rem;
-    padding: 0.5rem;
-    border-radius: var(--radius-sm);
+    align-items: center;
+    background: var(--surface);
+    border: 1px solid transparent;
+    margin: 0.35rem 0;
+    padding: 0.55rem 0.75rem;
+    border-radius: var(--radius);
+    transition: background var(--transition), border-color var(--transition), transform var(--transition);
+
+    &:hover {
+      background: var(--surface-hover);
+      border-color: var(--violet-border);
+      transform: translateX(3px);
+    }
 
     p {
       display: block;
       margin: 0;
       padding: 0;
+      &:last-child {
+        font-weight: 700;
+        color: var(--accent);
+        font-variant-numeric: tabular-nums;
+      }
     }
   }
 }

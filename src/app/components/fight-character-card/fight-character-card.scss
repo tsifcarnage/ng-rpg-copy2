@@ -13,6 +13,10 @@
   overflow: hidden;
   transition: transform 0.2s, box-shadow 0.2s;
 
+  &:hover {
+    transform: translateY(-4px);
+  }
+
   &::before {
     content: '';
     position: absolute;
@@ -22,6 +26,7 @@
   }
 
   &.player {
+    animation: card-in-left 0.5s var(--ease-out) both;
     border-color: rgba(21, 163, 8, 0.55);
     box-shadow: 0 0 24px rgba(21, 163, 8, 0.08), inset 0 0 0 1px rgba(21, 163, 8, 0.1);
 
@@ -36,6 +41,7 @@
   }
 
   &.enemy {
+    animation: card-in-right 0.5s var(--ease-out) both;
     border-color: rgba(236, 53, 53, 0.55);
     box-shadow: 0 0 24px rgba(236, 53, 53, 0.08), inset 0 0 0 1px rgba(236, 53, 53, 0.1);
 

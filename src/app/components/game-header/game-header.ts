@@ -2,10 +2,11 @@ import { Component, inject, input } from '@angular/core';
 import { Router, RouterLink, RouterLinkActive } from '@angular/router';
 import { GameManagerService } from '../../services/game-manager.service';
 import { PlayerService } from '../../services/player.service';
+import { InterfaceDigitsPipe } from '../../pipes/interface-digits-pipe';
 
 @Component({
   selector: 'app-game-header',
-  imports: [RouterLink, RouterLinkActive],
+  imports: [RouterLink, RouterLinkActive, InterfaceDigitsPipe],
   templateUrl: './game-header.html',
   styleUrl: './game-header.scss',
 })

@@ -1,6 +1,7 @@
-.card-stats {
+.inventory-stats {
   max-width: 60vw;
   border: 1px solid rgba(181, 179, 240, 0.5);
+  background-color: #2f4f3f2d;
   padding: 2rem;
   padding: 2rem;
   margin: 1rem auto;
@@ -17,5 +18,10 @@
       margin: 0;
       padding: 0;
     }
+  }
+  .moneySummary {
+    background-color: rgb(95, 95, 14);
+    justify-content: center;
+    color: yellow;
   }
 }

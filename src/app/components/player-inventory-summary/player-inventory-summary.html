@@ -1,0 +1,27 @@
+<div class="inventory-stats">
+  <h3>{{ player().type }} {{ IconByType[player().type] }}</h3>
+  <p>{{ player().pseudo }} - Niv. {{ player().lvl }}</p>
+  <div>
+    <p>⚔️ Attaque</p>
+    <p>{{ player().characteristics.atk }}</p>
+  </div>
+  <div>
+    <p>🛡️ Défense</p>
+    <p>{{ player().characteristics.def }}</p>
+  </div>
+  <div>
+    <p>💨 Vitesse</p>
+    <p>{{ player().characteristics.speed }}</p>
+  </div>
+  <div>
+    <p>❤️ PV max</p>
+    <p>{{ player().characteristics.hp }}</p>
+  </div>
+  <div>
+    <p>💙 MP max</p>
+    <p>{{ player().characteristics.mana }}</p>
+  </div>
+  <div class="moneySummary">
+    <h3>💰 {{ player().money }} pièces d'or</h3>
+  </div>
+</div>

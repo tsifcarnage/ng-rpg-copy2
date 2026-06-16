@@ -1,0 +1,66 @@
+.bag {
+  &-stat {
+    max-width: 60vw;
+    border: 1px solid rgba(181, 179, 240, 0.5);
+    background-color: #2f4f3f2d;
+    padding: 2rem;
+    padding: 2rem;
+    margin: 1rem auto;
+    border-radius: 0.25rem;
+  }
+  &-button {
+    display: flex;
+    gap: 1rem;
+
+    button {
+      border: transparent;
+      border-radius: 1rem;
+      background-color: rgba($color: #767676, $alpha: 0.2);
+      color: white;
+      padding: 0.5rem 1rem;
+      &:hover {
+        background-color: #8c4e88;
+      }
+    }
+  }
+  &-content {
+    display: flex;
+    justify-content: space-between;
+    border-radius: 0.5rem;
+    margin: 1rem 0;
+    padding: 0.5rem;
+    background-color: rgba($color: #767676, $alpha: 0.2);
+    .potion {
+      font-size: 40px;
+      align-self: center;
+    }
+    .content-text {
+      width: 70%;
+      h3,
+      p,
+      div {
+        margin: 0;
+      }
+      div {
+        display: flex;
+        p {
+          border-radius: 20px;
+          padding: 0.5rem;
+          background-color: rgba($color: #767676, $alpha: 0.2);
+        }
+        span {
+          padding: 0 1rem;
+          align-self: center;
+        }
+      }
+    }
+    .use {
+      height: 2rem;
+      color: white;
+      align-self: center;
+      background-color: #8c4e88;
+      border: none;
+      border-radius: 0.5rem;
+    }
+  }
+}

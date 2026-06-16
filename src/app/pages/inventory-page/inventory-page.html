@@ -1,11 +1,18 @@
 @if (gameManagerService.isInit) {
+  @let player = gameManagerService.currentPlayer;
 
-@let player = gameManagerService.currentPlayer;
-
-<app-game-header [lvl]="player.lvl" [money]="player.money" [pseudo]="player.pseudo">
-</app-game-header>
+  <app-game-header [lvl]="player.lvl" [money]="player.money" [pseudo]="player.pseudo">
+  </app-game-header>
+  <div class="inventory-flex">
+    <div>
+      <app-player-inventory-summary [player]="player"></app-player-inventory-summary>
+    </div>
+    <div>
+      <app-inventory-bag></app-inventory-bag>
+    </div>
+  </div>
 } @else {
-<div class="container">
-  <h1>ERRROR</h1>
-</div>
+  <div class="container">
+    <h1>ERRROR</h1>
+  </div>
 }

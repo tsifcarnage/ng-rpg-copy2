@@ -1,0 +1,10 @@
+.inventory-flex {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  padding: 32px;
+  div {
+    width: 50%;
+    height: 100%;
+  }
+}

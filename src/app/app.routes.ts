@@ -14,6 +14,6 @@ export const routes: Routes = [
   { path: 'map', component: MapPage, canActivate: [userSelectedGuard] },
   { path: 'inventory', component: InventoryPage, canActivate: [userSelectedGuard] },
   { path: 'city', component: CityPage, canActivate: [userSelectedGuard] },
-  { path: 'fight', component: FightPage, canActivate: [userSelectedGuard] },
+  { path: 'fight/:zone', component: FightPage, canActivate: [userSelectedGuard] },
   { path: '**', redirectTo: 'landing' },
 ];

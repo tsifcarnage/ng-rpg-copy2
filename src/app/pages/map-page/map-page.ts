@@ -17,6 +17,6 @@ export class MapPage {
   public readonly router = inject(Router);
 
   public redirectToFight(event: any): void {
-    this.router.navigateByUrl('/fight');
+    this.router.navigateByUrl('/fight/' + event.zone);
   }
 }

@@ -1,4 +1,5 @@
 import { Component, input, output } from '@angular/core';
+import { ZoneMap } from '../../enums/zone.enum';
 
 interface ZoneInfo {
   id: string;
@@ -9,6 +10,7 @@ interface ZoneInfo {
   difficultyColor: string;
   minLevel: number;
   enemies: string;
+  zone :ZoneMap;
 }
 
 @Component({
@@ -32,6 +34,7 @@ export class MapSelector {
       difficultyColor: '#2ecc71',
       minLevel: 1,
       enemies: 'Loups, Gobelins, Trolls',
+      zone: ZoneMap.FOREST
     },
     {
       id: 'dungeon',
@@ -40,8 +43,9 @@ export class MapSelector {
       icon: '🏚️',
       difficulty: 'Moyen',
       difficultyColor: '#f39c12',
-      minLevel: 3,
-      enemies: 'Squelettes, Mages Sombres, Liche',
+      minLevel: 5,
+      enemies: 'Veuve, Mages Noir, Liche',
+      zone: ZoneMap.DUNGEON
     },
     {
       id: 'mountain',
@@ -50,8 +54,9 @@ export class MapSelector {
       icon: '⛰️',
       difficulty: 'Difficile',
       difficultyColor: '#e74c3c',
-      minLevel: 5,
-      enemies: 'Harpies, Golems, Dragon',
+      minLevel: 10,
+      enemies: ' Dragon,Orc des montagnes, Roi Angular',
+      zone: ZoneMap.MOUNTAIN
     },
   ];
 }

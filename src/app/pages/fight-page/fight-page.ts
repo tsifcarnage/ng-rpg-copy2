@@ -6,6 +6,8 @@ import { FightHistory } from '../../components/fight-history/fight-history';
 import { FightActions } from '../../components/fight-actions/fight-actions';
 import { GameState } from '../../enums/game-state.enum';
 import { LogEntryService } from '../../services/log-entry.service';
+import { ActivatedRoute } from '@angular/router';
+import { ZoneMap } from '../../enums/zone.enum';
 
 @Component({
   selector: 'app-fight-page',
@@ -16,9 +18,11 @@ import { LogEntryService } from '../../services/log-entry.service';
 export class FightPage {
   public readonly gameManagerService = inject(GameManagerService);
   public readonly logEntryService = inject(LogEntryService);
+  public readonly activatedRoute = inject(ActivatedRoute);
   public readonly GameState = GameState;
 
   constructor() {
-    this.gameManagerService.startFight();
+    const zone: ZoneMap = this.activatedRoute.snapshot.params['zone']
+    this.gameManagerService.startFight(zone);
   }
 }

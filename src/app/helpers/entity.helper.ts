@@ -1,6 +1,7 @@
 import { ENEMY_DATA } from '../data/enemy.data';
 import { EnemyRaceType } from '../enums/enemy-race-type.enum';
 import { EnemyKind } from '../enums/kind.enum';
+import { ZoneMap } from '../enums/zone.enum';
 import { IEnemy, IEnemyInstance } from '../models/enemy.interface';
 
 export class EntityHelper {
@@ -27,8 +28,29 @@ export class EntityHelper {
     2: EnemyRaceType.Loup,
   };
 
-  public static getRaceByNumbers(arr: number[]): EnemyRaceType[] {
-    return arr.map((n) => EntityHelper.RaceMap[n] ?? EnemyRaceType.Goblin);
+  public static RaceMapDungeon: Record<number, EnemyRaceType> = {
+    0: EnemyRaceType.Widow,
+    1: EnemyRaceType.DarkMage,
+    2: EnemyRaceType.Lich,
+  };
+
+  public static RaceMapMountain: Record<number, EnemyRaceType> = {
+    0: EnemyRaceType.Orc,
+    1: EnemyRaceType.Dragon,
+    2: EnemyRaceType.Angular,
+  };
+
+  public static getRaceByNumbersAndZone(arr: number[], zone: ZoneMap): EnemyRaceType[] {
+    switch (zone) {
+      case ZoneMap.FOREST:
+        return arr.map((n) => EntityHelper.RaceMap[n] ?? EnemyRaceType.Goblin);
+      case ZoneMap.DUNGEON:
+        return arr.map((n) => EntityHelper.RaceMapDungeon[n] ?? EnemyRaceType.Widow);
+      case ZoneMap.MOUNTAIN:
+        return arr.map((n) => EntityHelper.RaceMapMountain[n] ?? EnemyRaceType.Orc);
+      default:
+        return [];
+    }
   }
 
   public static getKindByNumbers(arr: number[]): EnemyKind[] {

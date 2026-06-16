@@ -9,6 +9,7 @@ import { EntityHelper } from '../helpers/entity.helper';
 import { EnemyKind } from '../enums/kind.enum';
 import { LogEntryService } from './log-entry.service';
 import { Router } from '@angular/router';
+import { ZoneMap } from '../enums/zone.enum';
 
 @Injectable({ providedIn: 'root' })
 export class GameManagerService {
@@ -45,10 +46,10 @@ export class GameManagerService {
     return this._gameState!;
   }
 
-  private getRandomEnemiesType(): Observable<EnemyRaceType[]> {
+  private getRandomEnemiesType(zone: ZoneMap): Observable<EnemyRaceType[]> {
     return this.randomService
       .generateIntegerAndGetData(5, 0, 2)
-      .pipe(map((values) => EntityHelper.getRaceByNumbers(values)));
+      .pipe(map((values) => EntityHelper.getRaceByNumbersAndZone(values, zone)));
   }
 
   private getRandomEnemiesKind(): Observable<EnemyKind[]> {
@@ -57,8 +58,8 @@ export class GameManagerService {
       .pipe(map((values) => EntityHelper.getKindByNumbers(values)));
   }
 
-  public startFight(): void {
-    const type$ = this.getRandomEnemiesType();
+  public startFight(zone: ZoneMap): void {
+    const type$ = this.getRandomEnemiesType(zone);
     const kind$ = this.getRandomEnemiesKind();
 
     zip(type$, kind$)

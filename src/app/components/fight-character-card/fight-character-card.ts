@@ -3,14 +3,18 @@ import { LowerCasePipe, TitleCasePipe } from '@angular/common';
 import { GameManagerService } from '../../services/game-manager.service';
 import { IconByType } from '../../enums/class-type.enum';
 import { EnemyRaceType } from '../../enums/enemy-race-type.enum';
-import { IEnemyInstance } from '../../models/enemy.interface';
 import { InterfaceDigitsPipe } from '../../pipes/interface-digits-pipe';
 
 const IconByRace: Record<EnemyRaceType, string> = {
   [EnemyRaceType.Goblin]: '👺',
-  [EnemyRaceType.Orc]: '👹',
-  [EnemyRaceType.Loup]: '🐺',
   [EnemyRaceType.Troll]: '🧌',
+  [EnemyRaceType.Loup]: '🐺',
+  [EnemyRaceType.Widow]: '🧝‍♀️',
+  [EnemyRaceType.DarkMage]: '🧙🏻‍♂️',
+  [EnemyRaceType.Lich]: '☠️',
+  [EnemyRaceType.Orc]: '😈',
+  [EnemyRaceType.Dragon]: '🐉',
+  [EnemyRaceType.Angular]: '🤴',
 };
 
 @Component({

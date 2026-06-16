@@ -5,13 +5,17 @@
 }
 
 .map-title {
-  font-size: 1.8rem;
-  font-weight: 700;
+  font-family: var(--font-display);
+  font-size: var(--text-2xl);
+  font-weight: 800;
+  letter-spacing: 0.03em;
   color: var(--accent);
+  text-shadow: 0 2px 18px var(--accent-glow);
   margin-bottom: 4px;
 }
 .map-subtitle {
   color: var(--text-muted);
+  font-style: italic;
   margin-bottom: 20px;
 }
 
@@ -93,13 +97,16 @@
   z-index: 1;
 }
 .zone-name {
-  font-size: 1.2rem;
+  font-family: var(--font-display);
+  font-size: var(--text-lg);
   font-weight: 700;
+  letter-spacing: 0.02em;
   color: var(--text);
 }
 .zone-desc {
   color: var(--text-muted);
   font-size: 0.9rem;
+  font-style: italic;
   margin: 4px 0;
 }
 .zone-meta {

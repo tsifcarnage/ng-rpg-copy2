@@ -1,13 +1,10 @@
 @use '../../../styles/mixins' as *;
 
 :host {
-  padding: 12px;
+  @include gold-frame(var(--radius-lg));
+  padding: 1.25rem 1.5rem;
   height: 300px;
   min-width: 50vw;
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: var(--radius-lg);
-  box-shadow: var(--shadow-card);
   display: flex;
   flex-direction: column;
   justify-content: space-evenly;
@@ -27,11 +24,16 @@
           margin: 0;
 
           &:first-child {
-            font-size: larger;
+            font-family: var(--font-display);
+            font-weight: 700;
+            font-size: var(--text-lg);
+            letter-spacing: 0.02em;
           }
           &:last-child {
-            font-size: smaller;
+            font-size: var(--text-xs);
             color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
           }
         }
       }

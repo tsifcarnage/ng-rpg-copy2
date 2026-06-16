@@ -28,10 +28,8 @@
 
 .history-card {
   @include themed-scrollbar;
-  border: 1px solid var(--border);
-  border-radius: var(--radius-lg);
-  background: var(--surface-sunken);
-  padding: 0.5rem 0.75rem;
+  @include gold-frame(var(--radius-lg), rgba(0, 0, 0, 0.55));
+  padding: 0.6rem 0.85rem;
   min-height: 200px;
   max-height: 220px;
   overflow-y: auto;

@@ -1,11 +1,17 @@
+@use '../../../styles/mixins' as *;
+
 .card-stats {
+  @include gold-frame(var(--radius-lg));
   max-width: 60vw;
-  border: 1px solid var(--violet-border);
   padding: 1.5rem;
   margin: 1rem auto;
-  border-radius: var(--radius-lg);
-  background: rgba(139, 124, 240, 0.04);
-  box-shadow: var(--shadow-card);
+
+  h3,
+  > p:first-child {
+    @include eyebrow;
+    font-size: var(--text-sm);
+    margin-bottom: 0.75rem;
+  }
 
   div {
     display: flex;

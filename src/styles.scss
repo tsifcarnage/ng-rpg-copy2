@@ -49,17 +49,28 @@
   --radius-lg: 12px;
   --radius-pill: 999px;
 
-  // Elevation & motion
-  --shadow-card: 0 8px 24px rgba(0, 0, 0, 0.35);
-  --shadow-hover: 0 14px 32px rgba(0, 0, 0, 0.5);
-  --shadow-glow-accent: 0 0 0 1px var(--accent-border), 0 10px 30px rgba(244, 175, 38, 0.18);
-  --shadow-glow-violet: 0 0 0 1px var(--violet-border), 0 10px 30px rgba(139, 124, 240, 0.2);
+  // Elevation & motion — layered (ambient + key light) for believable depth
+  --shadow-card: 0 1px 1px rgba(0, 0, 0, 0.5), 0 10px 28px rgba(0, 0, 0, 0.45);
+  --shadow-hover: 0 2px 4px rgba(0, 0, 0, 0.5), 0 18px 40px rgba(0, 0, 0, 0.55);
+  --shadow-glow-accent: 0 0 0 1px var(--accent-border), 0 12px 34px rgba(244, 175, 38, 0.2);
+  --shadow-glow-violet: 0 0 0 1px var(--violet-border), 0 12px 34px rgba(139, 124, 240, 0.22);
+  --inset-top-light: inset 0 1px 0 rgba(255, 255, 255, 0.07);
   --transition: 0.18s ease;
   --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
 
-  // Fonts
-  --font-sans: 'Inter', 'Roboto', Helvetica, system-ui, sans-serif;
+  // Fonts — Cinzel (epic engraved display), Spectral (literary body), JetBrains Mono (system log)
+  --font-display: 'Cinzel', 'Trajan Pro', Georgia, serif;
+  --font-body: 'Spectral', 'Iowan Old Style', Georgia, serif;
   --font-mono: 'JetBrains Mono', 'Courier New', monospace;
+
+  // Type scale (1.25 — major third)
+  --text-xs: 0.75rem;
+  --text-sm: 0.875rem;
+  --text-base: 1rem;
+  --text-lg: 1.25rem;
+  --text-xl: 1.6rem;
+  --text-2xl: 2rem;
+  --text-3xl: 2.6rem;
 }
 
 // ─── Base ───────────────────────────────────────────────────────────────────
@@ -69,17 +80,31 @@ html {
 html,
 body {
   background:
-    radial-gradient(1100px 560px at 12% -8%, rgba(139, 124, 240, 0.14), transparent 60%),
-    radial-gradient(1000px 520px at 92% -4%, rgba(244, 175, 38, 0.08), transparent 55%),
-    radial-gradient(circle at 50% 0%, var(--twilight-indigo), #0a0d12 78%);
+    radial-gradient(circle at 50% 32%, transparent 52%, rgba(0, 0, 0, 0.55) 100%),
+    radial-gradient(1100px 560px at 12% -8%, rgba(139, 124, 240, 0.16), transparent 60%),
+    radial-gradient(1000px 520px at 92% -4%, rgba(244, 175, 38, 0.1), transparent 55%),
+    radial-gradient(circle at 50% 0%, var(--twilight-indigo), #07090d 80%);
   background-attachment: fixed;
   color: var(--text);
   width: 100%;
   min-height: 100%;
   margin: 0;
-  font-family: var(--font-sans);
+  font-family: var(--font-body);
+  font-size: 16px;
+  line-height: 1.55;
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
+}
+
+// Fine film grain over the whole scene for tactile, non-flat darkness
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  pointer-events: none;
+  opacity: 0.035;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
 }
 
 *,
@@ -91,6 +116,12 @@ body {
 ::selection {
   background: var(--accent-soft);
   color: var(--accent);
+}
+
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+  border-radius: var(--radius-sm);
 }
 
 // ─── Motion ───────────────────────────────────────────────────────────────────
@@ -141,29 +172,37 @@ app-city-page {
 }
 
 // ─── Typography ───────────────────────────────────────────────────────────────
+h1,
+h2,
+h3,
+h4 {
+  font-family: var(--font-display);
+  font-weight: 700;
+}
+
 h1.title-contrast,
 h2.title-contrast {
   color: var(--accent);
   text-align: center;
-  margin-bottom: 0.25rem;
-  letter-spacing: 0.01em;
-  text-shadow: 0 2px 18px var(--accent-glow);
+  margin-bottom: 0.4rem;
+  letter-spacing: 0.04em;
+  text-shadow: 0 2px 22px var(--accent-glow);
 }
 h1.title-contrast {
-  font-size: 38px;
+  font-size: var(--text-3xl);
   font-weight: 800;
-  letter-spacing: -0.01em;
-  // Animated gold gradient text
-  background: linear-gradient(100deg, var(--gold) 0%, #fff3cf 25%, var(--accent) 50%, var(--gold) 75%);
+  // Animated engraved-gold gradient text
+  background: linear-gradient(100deg, var(--gold) 0%, #fff6da 22%, var(--accent) 48%, #fff6da 60%, var(--gold) 78%);
   background-size: 250% 100%;
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
   color: var(--accent); // fallback
   text-shadow: none;
-  animation: sheen 6s linear infinite;
+  animation: sheen 7s linear infinite;
 }
 h2.title-contrast {
+  font-size: var(--text-xl);
   font-weight: 700;
 }
 
@@ -172,15 +211,19 @@ h3.subtitle-contrast {
   text-align: center;
   margin-bottom: 0.125rem;
   font-weight: 600;
+  letter-spacing: 0.03em;
 }
 
 p.subtitle {
   color: var(--text-muted);
   text-align: center;
+  font-style: italic;
+  letter-spacing: 0.01em;
 }
 p.subtitle-left {
   color: var(--text-muted);
   text-align: left;
+  font-style: italic;
 }
 
 // ─── Forms ──────────────────────────────────────────────────────────────────
@@ -206,23 +249,41 @@ input {
 
 // ─── Buttons ──────────────────────────────────────────────────────────────────
 .landing-button {
+  position: relative;
+  overflow: hidden;
   width: 100%;
-  font-size: 28px;
-  font-weight: 600;
-  padding: 14px;
-  color: #1a1205;
+  font-family: var(--font-display);
+  font-size: var(--text-lg);
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  padding: 16px;
+  color: #2a1c02;
   border-radius: var(--radius);
-  background: linear-gradient(135deg, var(--accent), var(--gold));
+  background: linear-gradient(135deg, var(--accent), var(--gold) 55%, #ffe9a8);
   text-align: center;
   cursor: pointer;
-  margin-top: 2rem;
-  box-shadow: 0 8px 22px var(--accent-glow);
+  margin-top: 1.5rem;
+  box-shadow: 0 10px 26px var(--accent-glow), var(--inset-top-light),
+    inset 0 -2px 0 rgba(120, 72, 0, 0.35);
   transition: transform var(--transition), box-shadow var(--transition), filter var(--transition);
 
+  // Light sheen that sweeps across on hover
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -120%;
+    width: 60%;
+    height: 100%;
+    background: linear-gradient(100deg, transparent, rgba(255, 255, 255, 0.55), transparent);
+    transform: skewX(-18deg);
+    transition: left 0.6s var(--ease-out);
+  }
   &:hover {
     transform: translateY(-2px);
-    box-shadow: 0 12px 30px var(--accent-glow);
-    filter: brightness(1.05);
+    box-shadow: 0 16px 38px var(--accent-glow), var(--inset-top-light);
+    filter: brightness(1.04);
+    &::before { left: 130%; }
   }
   &:active {
     transform: translateY(0);
@@ -234,6 +295,7 @@ input {
     &:hover {
       transform: none;
       filter: none;
+      &::before { left: -120%; }
     }
   }
 }

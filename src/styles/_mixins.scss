@@ -14,6 +14,36 @@
   border-radius: $radius;
 }
 
+// Crafted gradient border (gold→arcane) for hero panels. Uses the padding-box /
+// border-box double-background trick so the gradient shows only in the border.
+@mixin gold-frame($radius: var(--radius-lg), $fill: rgba(16, 19, 26, 0.55)) {
+  border: 1px solid transparent;
+  border-radius: $radius;
+  background:
+    linear-gradient($fill, $fill) padding-box,
+    linear-gradient(
+      135deg,
+      var(--accent-border),
+      rgba(255, 255, 255, 0.06) 38%,
+      rgba(255, 255, 255, 0.02) 62%,
+      var(--violet-border)
+    ) border-box;
+  box-shadow: var(--shadow-card), var(--inset-top-light);
+}
+
+// Thin gradient eyebrow rule placed above a section/panel.
+@mixin accent-rule {
+  &::before {
+    content: '';
+    display: block;
+    width: 48px;
+    height: 2px;
+    margin: 0 0 0.6rem;
+    border-radius: var(--radius-pill);
+    background: linear-gradient(90deg, var(--accent), transparent);
+  }
+}
+
 // Interactive surface: lift + glow on hover.
 @mixin surface-interactive($radius: var(--radius)) {
   @include surface($radius);
@@ -49,9 +79,10 @@
 // Section / group eyebrow label.
 @mixin eyebrow {
   margin: 0;
+  font-family: var(--font-display);
   font-size: 0.8rem;
-  font-weight: 600;
-  letter-spacing: 0.08em;
+  font-weight: 700;
+  letter-spacing: 0.14em;
   text-transform: uppercase;
   color: var(--accent);
 }

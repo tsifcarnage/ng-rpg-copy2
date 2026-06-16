@@ -109,8 +109,10 @@
     min-width: 0;
     .name {
       margin: 0;
-      font-size: 1.15rem;
-      font-weight: 600;
+      font-family: var(--font-display);
+      font-size: var(--text-lg);
+      font-weight: 700;
+      letter-spacing: 0.02em;
       color: var(--text);
     }
     .subtitle {

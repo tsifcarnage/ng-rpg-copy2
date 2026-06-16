@@ -4,6 +4,7 @@
 
 <app-game-header [lvl]="player.lvl" [money]="player.money" [pseudo]="player.pseudo">
 </app-game-header>
+<app-player-inventory-summary [player]="player"></app-player-inventory-summary>
 } @else {
 <div class="container">
   <h1>ERRROR</h1>

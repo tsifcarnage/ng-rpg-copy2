@@ -1,10 +1,11 @@
 import { Component, inject } from '@angular/core';
 import { GameHeader } from '../../components/game-header/game-header';
 import { GameManagerService } from '../../services/game-manager.service';
+import { PlayerInventorySummary } from "../../components/player-inventory-summary/player-inventory-summary";
 
 @Component({
   selector: 'app-inventory-page',
-  imports: [GameHeader],
+  imports: [GameHeader, PlayerInventorySummary],
   templateUrl: './inventory-page.html',
   styleUrl: './inventory-page.scss',
 })

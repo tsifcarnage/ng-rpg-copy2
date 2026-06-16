@@ -2,22 +2,23 @@
   <h3>Stats de départ - {{ character().type | titlecase}}</h3>
   <div>
     <p>⚔️ Attaque</p>
-    <p>{{character().characteristics.atk}}</p>
+    <p>{{character().characteristics.atk | interfaceDigits}}</p>
   </div>
   <div>
     <p>🛡️ Défense</p>
-    <p>{{character().characteristics.def}}</p>
+    <p>{{character().characteristics.def | interfaceDigits}}</p>
   </div>
   <div>
     <p>💨 Vitesse</p>
-    <p>{{character().characteristics.speed}}</p>
+    <p>{{character().characteristics.speed | interfaceDigits}}</p>
   </div>
   <div>
     <p>❤️ PV max</p>
-    <p>{{character().characteristics.hp}}</p>
+    <p>{{character().characteristics.hp | interfaceDigits}}</p>
   </div>
   <div>
     <p>💙 MP max</p>
-    <p>{{character().characteristics.mana}}</p>
+    <p>{{character().characteristics.mana | interfaceDigits}}</p>
   </div>
+  <ng-content></ng-content>
 </div>

@@ -1,5 +1,9 @@
 <div class="card-stats">
+  @if (showDefaultTitle()) {
   <h3>Stats de départ - {{ character().type | titlecase}}</h3>
+  }@else {
+  <p>Stats du Personnage</p>
+  }
   <div>
     <p>⚔️ Attaque</p>
     <p>{{character().characteristics.atk | interfaceDigits}}</p>

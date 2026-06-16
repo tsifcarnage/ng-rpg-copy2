@@ -10,6 +10,19 @@
     }
   </div>
   <div class="bag-content">
-    <div class="bag-item">Je suis un item coucou</div>
+    @for (item of bag; track $index) {
+      <div [class]="'bag-item ' + item.rarity">
+        <div>
+          <div class="item-icon">{{item.icon}}</div>
+        </div>
+        <div class="item-content">
+          <div class="item-name">{{item.name}}</div>
+          <div class="item-description">{{item.description}}</div>
+          <div class="item-footer">
+            <div class="qty">x{{item.qty}}</div>
+          </div>
+        </div>
+      </div>
+    }
   </div>
 </div>

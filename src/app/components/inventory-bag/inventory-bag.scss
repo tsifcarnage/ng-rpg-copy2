@@ -23,10 +23,47 @@
   .bag-content {
     margin-top: 2.5rem;
     .bag-item {
+      cursor: pointer;
       padding: 0.5rem;
+      display: flex;
       background-color: rgba(148, 140, 192, 0.1);
       border-radius: 0.5rem;
-      border-left: 6px solid grey;
+
+      margin-top: 6px;
+      &.common {
+        border-left: 6px solid grey;
+      }
+
+      &.rare {
+        border-left: 6px solid rgb(148, 9, 248);
+      }
+
+      &.legendary {
+        border-left: 6px solid gold;
+      }
+
+      .item-icon {
+        font-size: 46px;
+        margin-right: 8px;
+      }
+      .item-name {
+        font-weight: 800;
+        font-size: 20px;
+      }
+      .item-description {
+        font-size: 18px;
+        color: gray;
+      }
+      .item-footer {
+        display: flex;
+        .qty {
+          margin-left: 6px;
+          color: yellow;
+        }
+      }
+      &:hover {
+        background-color: rgba(148, 140, 192, 0.3);
+      }
     }
   }
 }

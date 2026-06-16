@@ -1,14 +1,13 @@
 /* You can add global styles to this file, and also import other style files */
 // ─── Couleurs (HEX) ───────────────────────────────────────────────────────────
-$charcoal-blue: #313e50;
-$twilight-indigo: #3a435e;
-$charcoal-blue-2: #455561;
-$blue-slate: #5c6672;
-$slate-grey: #6c6f7f;
-$contrast-warning: #f4af26;
-
+$forest-green: #2f4f3f;
+$pine-green: #3e5f4f;
+$deep-moss: #4f6f5f;
+$soft-olive: #6f8f6f;
+$sage-grey: #8fa39f;
+$contrast-warning: #f96c00;
 // ─── Dégradés ─────────────────────────────────────────────────────────────────
-$_stops: $charcoal-blue, $twilight-indigo, $charcoal-blue-2, $blue-slate, $slate-grey;
+$_stops: $forest-green, $pine-green, $deep-moss, $soft-olive, $sage-grey;
 
 $gradient-top: linear-gradient(0deg, $_stops);
 $gradient-right: linear-gradient(90deg, $_stops);
@@ -22,7 +21,7 @@ $gradient-radial: radial-gradient($_stops);
 
 html,
 body {
-  background: radial-gradient($charcoal-blue, #000000);
+  background: radial-gradient($forest-green, #0f0e0e);
   color: white;
   width: 100%;
   height: 100%;
@@ -50,11 +49,11 @@ h3.subtitle-contrast {
 }
 
 p.subtitle {
-  color: $blue-slate;
+  color: $soft-olive;
   text-align: center;
 }
 p.subtitle-left {
-  color: $blue-slate;
+  color: $soft-olive;
   text-align: left;
 }
 
@@ -64,26 +63,26 @@ p.subtitle-left {
   padding: 12px;
   color: white;
   border-radius: 6px;
-  background-color: $twilight-indigo;
+  background-color: $pine-green;
   text-align: center;
   cursor: pointer;
-  margin-top: 2rem;
+  margin: 10px 0;
 }
 
 input {
   width: 100%;
   padding: 12px;
   background: rgba($color: #ffffff, $alpha: 0.05);
-  border: 1px solid $slate-grey;
+  border: 1px solid $sage-grey;
   border-radius: 4px;
-  color: $slate-grey;
+  color: $sage-grey;
 }
 
 app-character-card {
   padding: 6px;
   height: 300px;
   background: rgba($color: #ffffff, $alpha: 0.05);
-  border: 1px solid $slate-grey;
+  border: 1px solid $sage-grey;
   border-radius: 6px;
   min-width: 30%;
   margin: 6px;
@@ -92,11 +91,11 @@ app-character-card {
   justify-content: space-evenly;
   cursor: pointer;
   &:hover {
-    box-shadow: 9px 8px 12px 3px rgba(47, 47, 47, 0.71);
+    box-shadow: 3px 2px 6px 1px $soft-olive;
     transform: scale(1.03);
   }
   &.selected {
-    border: 1px solid $contrast-warning;
+    border: 1px solid $soft-olive;
     background: rgba($color: #ffffff, $alpha: 0.15) !important;
   }
 }

@@ -1,0 +1,15 @@
+.inventory-container {
+  display: flex;
+  width: 100%;
+  padding: 2.5rem;
+  justify-content: center;
+
+  app-player-inventory-summary {
+    min-width: 20vw;
+  }
+
+  app-inventory-bag {
+    min-width: 60vw;
+    margin-left: 2.5rem;
+  }
+}

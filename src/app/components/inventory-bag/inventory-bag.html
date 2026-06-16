@@ -1,1 +1,15 @@
-<p>inventory-bag works!</p>
+<div class="bag-container">
+  <div class="bag-filter-pill">
+    <div class="pill selected">
+      🎒 Tous
+    </div>
+    @for (item of inventoryTypeFilters; track $index) {
+    <div class="pill">
+      {{IconByItemType[item]}} {{item}}
+    </div>
+    }
+  </div>
+  <div class="bag-content">
+    <div class="bag-item">Je suis un item coucou</div>
+  </div>
+</div>

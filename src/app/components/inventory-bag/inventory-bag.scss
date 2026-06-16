@@ -1,69 +1,74 @@
-.bag {
-  &-stat {
-    max-width: 60vw;
-    border: 1px solid rgba(181, 179, 240, 0.5);
-    background-color: #2f4f3f2d;
-    padding: 2rem;
-    padding: 2rem;
-    margin: 1rem auto;
-    border-radius: 0.25rem;
-  }
-  &-button {
+.bag-container {
+  padding: 2.5rem;
+  border: solid 1px rgba($color: rgb(129, 111, 219), $alpha: 0.5);
+  border-radius: 0.5rem;
+  margin-top: 2.5;
+  .bag-filter-pill {
     display: flex;
-    gap: 1rem;
-
-    button {
-      border: transparent;
-      cursor: pointer;
+    .pill {
+      margin: 6px;
+      background-color: rgba(129, 111, 219, 0.1);
+      padding: 0.5rem;
       border-radius: 1rem;
-      background-color: rgba($color: #767676, $alpha: 0.2);
-      color: white;
-      padding: 0.5rem 1rem;
-      &:hover {
-        background-color: #8c4e88;
+      cursor: pointer;
+      &.selected {
+        background-color: rgb(129, 111, 219);
+      }
+      &:hover:not(.selected) {
+        background-color: rgba(129, 111, 219, 0.3);
       }
     }
   }
-  &-content {
-    display: flex;
-    justify-content: space-between;
-    border-radius: 0.5rem;
-    margin: 1rem 0;
-    padding: 0.5rem;
-    background-color: rgba($color: #767676, $alpha: 0.2);
-    .potion {
-      font-size: 40px;
-      align-self: center;
-    }
-    .content-text {
-      width: 70%;
-      h3,
-      p,
-      div {
-        margin: 0;
-      }
-      div {
-        display: flex;
-        p {
-          border-radius: 20px;
-          padding: 0.5rem;
-          background-color: rgba($color: #767676, $alpha: 0.2);
-        }
-        span {
-          padding: 0 1rem;
-          align-self: center;
-        }
-      }
-    }
-    .use {
-      cursor: pointer;
-      padding: 0 1rem;
-      height: 2rem;
-      color: white;
-      align-self: center;
-      background-color: #8c4e88;
-      border: none;
+
+  .bag-content {
+    margin-top: 2.5rem;
+    .bag-item {
+      padding: 0.5rem;
+      background-color: rgba(148, 140, 192, 0.1);
       border-radius: 0.5rem;
+      border-left: 6px solid grey;
     }
+  }
+}
+.bag-content {
+  display: flex;
+  justify-content: space-between;
+  border-radius: 0.5rem;
+  margin: 1rem 0;
+  padding: 0.5rem;
+  background-color: rgba($color: #767676, $alpha: 0.2);
+  .potion {
+    font-size: 40px;
+    align-self: center;
+  }
+  .content-text {
+    width: 70%;
+    h3,
+    p,
+    div {
+      margin: 0;
+    }
+    div {
+      display: flex;
+      p {
+        border-radius: 20px;
+        padding: 0.5rem;
+        background-color: rgba($color: #767676, $alpha: 0.2);
+      }
+      span {
+        padding: 0 1rem;
+        align-self: center;
+      }
+    }
+  }
+  .use {
+    cursor: pointer;
+    padding: 0 1rem;
+    height: 2rem;
+    color: white;
+    align-self: center;
+    background-color: #8c4e88;
+    border: none;
+    border-radius: 0.5rem;
   }
 }

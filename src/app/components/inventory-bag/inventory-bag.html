@@ -1,21 +1,27 @@
-<div class="bag-stat">
-  <div class="bag-button">
-    <button>🎒Tous</button>
-    <button>🧪Potion</button>
-    <button>🔪Armes</button>
-    <button>🛡️Armures</button>
-    <button>💍Accessoires</button>
+<div class="bag-container">
+  <div class="bag-filter-pill">
+    <div class="pill selected">
+      🎒 Tous
+    </div>
+    @for (item of inventoryTypeFilters; track $index) {
+    <div class="pill">
+      {{IconByItemType[item]}} {{item}}
+    </div>
+    }
   </div>
   <div class="bag-content">
-    <span class="potion">🧪</span>
-    <div class="content-text">
-      <h3>Petite potion de soin</h3>
-      <p>Restore 30 PV</p>
-      <div>
-        <p>Common</p>
-        <span>x3</span>
+    @for (item of bag; track $index) {
+      
+      <span class="potion">{{item.icon}}</span>
+      <div class="content-text">
+        <h3>{{item.name}}</h3>
+        <p>{{item.description}}</p>
+        <div>
+          <p>{{item.rarity}}</p>
+          <span>x{{item.qty}}</span>
+        </div>
       </div>
-    </div>
-    <button class="use">🧪Utiliser</button>
+      <button class="use">🧪Utiliser</button>
+    }
   </div>
 </div>

@@ -10,4 +10,5 @@ import { TitleCasePipe } from '@angular/common';
 })
 export class CharacterStats {
   public character = input.required<ICharacter>();
+  public showDefaultTitle =input(true)
 }

@@ -3,13 +3,9 @@
 
   <app-game-header [lvl]="player.lvl" [money]="player.money" [pseudo]="player.pseudo">
   </app-game-header>
-  <div class="inventory-flex">
-    <div>
-      <app-player-inventory-summary [player]="player"></app-player-inventory-summary>
-    </div>
-    <div>
-      <app-inventory-bag></app-inventory-bag>
-    </div>
+  <div class="inventory-container">
+    <app-player-inventory-summary [player]="player"></app-player-inventory-summary>
+    <app-inventory-bag></app-inventory-bag>
   </div>
 } @else {
   <div class="container">

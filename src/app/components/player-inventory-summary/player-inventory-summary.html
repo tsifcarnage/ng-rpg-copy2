@@ -1,4 +1,4 @@
-<div class="inventory-stats">
+<!-- <div class="inventory-stats">
   <h3>{{ player().type }} {{ IconByType[player().type] }}</h3>
   <p>{{ player().pseudo }} - Niv. {{ player().lvl }}</p>
   <div>
@@ -24,4 +24,9 @@
   <div class="moneySummary">
     <h3>💰 {{ player().money }} pièces d'or</h3>
   </div>
-</div>
+</div> -->
+<app-character-stats [character]="player()" [showDefaultTitle]="false">
+  <div class="gold">
+    <p>💰 {{ player().money | interfaceDigits}} pièces d'or</p>
+  </div>
+</app-character-stats>

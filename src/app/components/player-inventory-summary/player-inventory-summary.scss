@@ -20,8 +20,22 @@
     }
   }
   .moneySummary {
-    background-color: rgb(95, 95, 14);
+    background-color: #5f5f0e;
     justify-content: center;
     color: yellow;
+  }
+}
+.gold {
+  background-color: rgba($color: #fad242, $alpha: 0.1);
+  display: flex;
+  justify-content: space-between;
+  margin: 0.25rem;
+  padding: 0.5rem;
+  border-radius: 0.25rem;
+  p {
+    text-align: center;
+    color: yellow;
+    width: 100%;
+    font-size: larger;
   }
 }

@@ -2,13 +2,10 @@ div.container {
   padding: 2rem;
   max-width: 65vw;
   margin: auto;
+
   .select-class {
     display: flex;
     align-items: center;
     justify-content: center;
-  }
-  .landing-button.disabled {
-    opacity: .3;
-    cursor: not-allowed;
   }
 }

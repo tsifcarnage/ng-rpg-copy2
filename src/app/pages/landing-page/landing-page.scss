@@ -5,11 +5,13 @@ div.container {
   margin: auto;
   display: flex;
   flex-direction: column;
+
   img {
     max-width: 25vw;
     max-height: 150px;
     margin: auto;
     animation: float 3s ease-in-out infinite;
+    filter: drop-shadow(0 10px 24px rgba(0, 0, 0, 0.5));
   }
 }
 
@@ -19,14 +21,22 @@ div.container {
   flex-wrap: wrap;
   justify-content: center;
   margin: 1rem;
+
   .feature-item {
-    background-color: rgba($color: #ffffff, $alpha: 0.05);
-    padding: 8px;
-    margin: 2px;
+    background: var(--surface);
+    border: 1px solid var(--border-soft);
+    padding: 10px;
+    margin: 4px;
     display: block;
-    border-radius: 15px;
+    border-radius: var(--radius-lg);
     width: 40%;
     text-align: center;
+    transition: background var(--transition), transform var(--transition);
+
+    &:hover {
+      background: var(--surface-hover);
+      transform: translateY(-2px);
+    }
   }
 }
 

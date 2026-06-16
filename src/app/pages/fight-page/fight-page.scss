@@ -16,7 +16,7 @@
     font-size: 1.8rem;
   }
   .subtitle {
-    color: #9aa1ab;
+    color: var(--text-muted);
     margin: 0.25rem 0 0;
     font-size: 0.95rem;
   }
@@ -44,7 +44,7 @@
     position: absolute;
     inset: 0;
     border-radius: 50%;
-    background: radial-gradient(circle, rgba(244, 175, 38, 0.35), transparent 65%);
+    background: radial-gradient(circle, var(--accent-glow), transparent 65%);
     animation: pulse 2.4s ease-in-out infinite;
   }
 
@@ -52,11 +52,11 @@
     position: relative;
     font-size: 2rem;
     font-weight: 800;
-    color: #f4af26;
+    color: var(--accent);
     letter-spacing: 0.05em;
     text-shadow: 0 0 16px rgba(244, 175, 38, 0.55);
     padding: 0.5rem 0.85rem;
-    border: 2px solid rgba(244, 175, 38, 0.55);
+    border: 2px solid var(--accent-border);
     border-radius: 50%;
     background: rgba(0, 0, 0, 0.6);
     line-height: 1;

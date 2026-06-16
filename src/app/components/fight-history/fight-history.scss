@@ -1,3 +1,5 @@
+@use '../../../styles/mixins' as *;
+
 .history-wrapper {
   width: 100%;
   max-width: 960px;
@@ -12,40 +14,29 @@
   padding: 0 0.25rem;
 
   h3 {
-    margin: 0;
-    color: #f4af26;
+    @include eyebrow;
     font-size: 0.95rem;
     letter-spacing: 0.04em;
-    text-transform: uppercase;
   }
   .status-dot {
     font-size: 0.75rem;
-    color: #7cdc6e;
+    color: var(--success-light);
     text-transform: uppercase;
     letter-spacing: 0.08em;
   }
 }
 
 .history-card {
-  border: 1px solid #6c6f7f;
-  border-radius: 10px;
-  background: rgba(0, 0, 0, 0.45);
+  @include themed-scrollbar;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  background: var(--surface-sunken);
   padding: 0.5rem 0.75rem;
   min-height: 200px;
   max-height: 220px;
   overflow-y: auto;
-  font-family: 'JetBrains Mono', 'Courier New', monospace;
+  font-family: var(--font-mono);
   font-size: 0.85rem;
-  scrollbar-width: thin;
-  scrollbar-color: rgba(244, 175, 38, 0.4) transparent;
-
-  &::-webkit-scrollbar {
-    width: 6px;
-  }
-  &::-webkit-scrollbar-thumb {
-    background: rgba(244, 175, 38, 0.3);
-    border-radius: 999px;
-  }
 }
 
 .log-row {
@@ -54,7 +45,7 @@
   gap: 0.5rem;
   align-items: center;
   padding: 4px 6px;
-  border-radius: 4px;
+  border-radius: var(--radius-sm);
   border-left: 2px solid transparent;
 
   &:hover {
@@ -62,7 +53,7 @@
   }
 
   .time {
-    color: #6c6f7f;
+    color: var(--text-dim);
     font-variant-numeric: tabular-nums;
     font-size: 0.78rem;
   }
@@ -74,11 +65,11 @@
   }
 
   &.kind-system {
-    border-left-color: #f4af26;
-    .text { color: #f4af26; font-weight: 600; }
+    border-left-color: var(--accent);
+    .text { color: var(--accent); font-weight: 600; }
   }
   &.kind-info {
-    border-left-color: #5c6672;
+    border-left-color: var(--blue-slate);
     .text { color: #c7ccd5; font-style: italic; }
   }
   &.kind-player {
@@ -90,7 +81,7 @@
     .text { color: #f3b8b8; }
   }
   &.kind-heal {
-    border-left-color: #60a5fa;
+    border-left-color: var(--info);
     .text { color: #b4d2fb; }
   }
 }

@@ -1,46 +1,47 @@
 .bag-container {
   padding: 2.5rem;
-  border: solid 1px rgba($color: rgb(129, 111, 219), $alpha: 0.5);
-  border-radius: 0.5rem;
-  margin-top: 2.5;
+  border: 1px solid var(--violet-border);
+  border-radius: var(--radius-lg);
+  margin-top: 2.5rem;
+
   .bag-filter-pill {
     display: flex;
+    flex-wrap: wrap;
+
     .pill {
       margin: 6px;
-      background-color: rgba(129, 111, 219, 0.1);
-      padding: 0.5rem;
-      border-radius: 1rem;
+      padding: 0.5rem 1rem;
+      border-radius: var(--radius-pill);
+      background: var(--violet-soft);
       cursor: pointer;
+      transition: background var(--transition);
+
       &.selected {
-        background-color: rgb(129, 111, 219);
+        background: var(--violet);
+        color: #fff;
       }
       &:hover:not(.selected) {
-        background-color: rgba(129, 111, 219, 0.3);
+        background: rgba(139, 124, 240, 0.3);
       }
     }
   }
 
   .bag-content {
     margin-top: 2.5rem;
+
     .bag-item {
       cursor: pointer;
       padding: 0.5rem;
       display: flex;
-      background-color: rgba(148, 140, 192, 0.1);
-      border-radius: 0.5rem;
-
       margin-top: 6px;
-      &.common {
-        border-left: 6px solid grey;
-      }
+      background: rgba(139, 124, 240, 0.08);
+      border-radius: var(--radius);
+      border-left: 6px solid var(--border);
+      transition: background var(--transition), transform var(--transition);
 
-      &.rare {
-        border-left: 6px solid rgb(148, 9, 248);
-      }
-
-      &.legendary {
-        border-left: 6px solid gold;
-      }
+      &.common { border-left-color: var(--slate-grey); }
+      &.rare { border-left-color: var(--violet); }
+      &.legendary { border-left-color: var(--gold); }
 
       .item-icon {
         font-size: 46px;
@@ -52,17 +53,18 @@
       }
       .item-description {
         font-size: 18px;
-        color: gray;
+        color: var(--text-muted);
       }
       .item-footer {
         display: flex;
         .qty {
           margin-left: 6px;
-          color: yellow;
+          color: var(--gold);
         }
       }
       &:hover {
-        background-color: rgba(148, 140, 192, 0.3);
+        background: rgba(139, 124, 240, 0.2);
+        transform: translateX(3px);
       }
     }
   }

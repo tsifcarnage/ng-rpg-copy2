@@ -1,11 +1,13 @@
 .header {
-  background-color: black;
-  border-bottom: 1px solid rgba($color: #5c56a4, $alpha: 0.5);
+  background: rgba(0, 0, 0, 0.85);
+  backdrop-filter: blur(6px);
+  border-bottom: 1px solid var(--violet-border);
   display: flex;
   padding: 0.5rem;
   justify-content: space-between;
+
   h2 {
-    margin-top: 0px;
+    margin-top: 0;
   }
   .left {
     display: flex;
@@ -20,17 +22,18 @@
     button {
       cursor: pointer;
       max-height: 2rem;
-      background-color: transparent;
-      color: white;
+      background: transparent;
+      color: var(--text);
       margin: 0.25rem;
-      padding: 0.25rem;
+      padding: 0.25rem 0.5rem;
       border: none;
-      border-radius: 0.25rem;
+      border-radius: var(--radius-sm);
+      transition: background var(--transition);
       &:hover {
-        background-color: rgba($color: #ffffff, $alpha: 0.1) !important;
+        background: var(--surface-hover) !important;
       }
       &.active {
-        border-bottom: 1px solid rgba($color: #5c56a4, $alpha: 0.9)
+        border-bottom: 2px solid var(--violet);
       }
     }
   }
@@ -42,33 +45,34 @@
       margin: 0.25rem;
     }
     p:nth-child(1) {
-      color: yellow;
+      color: var(--gold);
     }
     p:nth-child(2) {
-      color: aqua;
+      color: var(--info);
     }
     button {
       cursor: pointer;
       max-height: 2rem;
-      background-color: transparent;
-      color: white;
+      background: transparent;
+      color: var(--text);
       margin: 0.25rem;
-      padding: 0.25rem;
+      padding: 0.25rem 0.5rem;
       border: none;
-      border-radius: 0.25rem;
+      border-radius: var(--radius-sm);
+      transition: background var(--transition);
       &:hover {
-        background-color: rgba($color: #ffffff, $alpha: 0.1) !important;
+        background: var(--surface-hover) !important;
       }
       &.success {
-        background-color: rgba($color: #15a308, $alpha: 0.7) !important;
+        background: rgba(21, 163, 8, 0.7) !important;
         &:hover {
-          background-color: rgba($color: #15a308, $alpha: 1) !important;
+          background: var(--success) !important;
         }
       }
       &.danger {
-        background-color: rgba($color: #ec3535, $alpha: 0.7) !important;
+        background: rgba(236, 53, 53, 0.7) !important;
         &:hover {
-          background-color: rgba($color: #ec3535, $alpha: 1) !important;
+          background: var(--danger) !important;
         }
       }
     }

@@ -1,13 +1,14 @@
 .gold {
-  background-color: rgba($color: #fad242, $alpha: 0.1);
+  background: rgba(250, 210, 66, 0.1);
   display: flex;
   justify-content: space-between;
   margin: 0.25rem;
   padding: 0.5rem;
-  border-radius: 0.25rem;
+  border-radius: var(--radius-sm);
+
   p {
     text-align: center;
-    color: yellow;
+    color: var(--gold);
     width: 100%;
     font-size: larger;
   }

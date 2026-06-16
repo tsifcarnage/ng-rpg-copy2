@@ -1,3 +1,5 @@
+@use '../../../styles/mixins' as *;
+
 .actions-wrapper {
   max-width: 960px;
   margin: 1.25rem auto 2rem;
@@ -17,12 +19,8 @@
   }
 
   .group-title {
+    @include eyebrow;
     margin: 0 0 0.15rem;
-    font-size: 0.8rem;
-    color: #f4af26;
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
-    font-weight: 600;
   }
 
   .group-grid {
@@ -37,29 +35,28 @@
   align-items: center;
   gap: 0.6rem;
   padding: 0.7rem 0.9rem;
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid #6c6f7f;
-  border-radius: 8px;
-  color: #fff;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  color: var(--text);
   font-size: 0.9rem;
+  font-family: inherit;
   text-align: left;
   cursor: pointer;
   transition:
-    background 0.15s,
-    transform 0.15s,
-    border-color 0.15s,
-    box-shadow 0.15s;
-  font-family: inherit;
+    background var(--transition),
+    transform var(--transition),
+    border-color var(--transition),
+    box-shadow var(--transition);
 
   &:hover {
-    background: rgba(255, 255, 255, 0.1);
+    background: var(--surface-hover);
     transform: translateY(-1px);
-    border-color: rgba(244, 175, 38, 0.4);
+    border-color: var(--accent-border);
   }
   &:active {
     transform: translateY(0);
   }
-
   &:disabled {
     cursor: not-allowed;
     filter: opacity(0.5);
@@ -76,17 +73,13 @@
     white-space: nowrap;
   }
   .btn-cost {
+    @include pill(var(--info), rgba(96, 165, 250, 0.12));
     font-size: 0.75rem;
-    color: #60a5fa;
-    background: rgba(96, 165, 250, 0.12);
-    padding: 3px 8px;
-    border-radius: 999px;
-    font-variant-numeric: tabular-nums;
     flex-shrink: 0;
 
     &.qty {
-      color: #f4af26;
-      background: rgba(244, 175, 38, 0.12);
+      color: var(--accent);
+      background: var(--accent-soft);
     }
   }
 
@@ -129,9 +122,8 @@
     border-color: rgba(96, 165, 250, 0.55);
     box-shadow: 0 0 14px rgba(96, 165, 250, 0.12);
   }
-
   &.item:hover {
-    border-color: rgba(244, 175, 38, 0.55);
-    box-shadow: 0 0 14px rgba(244, 175, 38, 0.12);
+    border-color: var(--accent-border);
+    box-shadow: 0 0 14px var(--accent-soft);
   }
 }

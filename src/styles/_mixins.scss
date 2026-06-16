@@ -1,0 +1,95 @@
+// ─────────────────────────────────────────────────────────────────────────────
+// Shared SCSS mixins for repeated structural patterns.
+//
+// Design *tokens* (colors / radii / shadows) live as CSS custom properties on
+// :root in styles.scss so they pierce Angular's component style encapsulation.
+// These mixins capture the repeated *structure* (card surface, pill, gauge…)
+// that several components were duplicating. Use with: `@use '...mixins' as *;`
+// ─────────────────────────────────────────────────────────────────────────────
+
+// Frosted panel used by every card-like surface.
+@mixin surface($radius: var(--radius)) {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: $radius;
+}
+
+// Interactive surface: lift + glow on hover.
+@mixin surface-interactive($radius: var(--radius)) {
+  @include surface($radius);
+  cursor: pointer;
+  transition:
+    transform var(--transition),
+    box-shadow var(--transition),
+    background var(--transition),
+    border-color var(--transition);
+
+  &:hover {
+    background: var(--surface-hover);
+    border-color: var(--accent-border);
+    box-shadow: var(--shadow-hover);
+    transform: translateY(-2px);
+  }
+}
+
+// Rounded badge / chip. Pass the accent color and its translucent fill.
+@mixin pill($fg: var(--accent), $bg: var(--accent-soft)) {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  margin: 0;
+  padding: 4px 10px;
+  border-radius: var(--radius-pill);
+  font-size: 0.78rem;
+  color: $fg;
+  background: $bg;
+  font-variant-numeric: tabular-nums;
+}
+
+// Section / group eyebrow label.
+@mixin eyebrow {
+  margin: 0;
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+// Slim rounded progress bar shared by player + fight gauges.
+@mixin gauge($height: 10px) {
+  width: 100%;
+  height: $height;
+  display: block;
+  appearance: none;
+  border: none;
+  border-radius: var(--radius-pill);
+  overflow: hidden;
+  background: var(--surface-sunken);
+
+  &::-webkit-progress-bar {
+    background: var(--surface-sunken);
+    border-radius: var(--radius-pill);
+  }
+  &::-webkit-progress-value {
+    border-radius: var(--radius-pill);
+    transition: width 0.35s ease;
+  }
+  &::-moz-progress-bar {
+    border-radius: var(--radius-pill);
+  }
+}
+
+// Thin themed scrollbar.
+@mixin themed-scrollbar($color: var(--accent)) {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(244, 175, 38, 0.4) transparent;
+
+  &::-webkit-scrollbar {
+    width: 6px;
+  }
+  &::-webkit-scrollbar-thumb {
+    background: rgba(244, 175, 38, 0.35);
+    border-radius: var(--radius-pill);
+  }
+}

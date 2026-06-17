@@ -1,0 +1,577 @@
+<div class="codex">
+  <!-- Chapter rail -->
+  <nav class="rail" aria-label="Chapitres">
+    <a routerLink="/landing" class="rail-home" title="Retour">‹ Accueil</a>
+    <a href="#chap-01">01 · La transmutation</a>
+    <a href="#chap-concepts">02 · Le problème</a>
+    <a href="#chap-tokens">03 · Les runes</a>
+    <a href="#chap-mixins">04 · Les incantations</a>
+    <a href="#chap-atelier">05 · L’atelier</a>
+    <a href="#chap-lab">06 · Le laboratoire</a>
+    <a href="#chap-extend">07 · Étendre</a>
+    <a href="#chap-quiz">08 · Les épreuves</a>
+  </nav>
+
+  <main class="scroll">
+    <!-- ─── HERO ─────────────────────────────────────────────────────────── -->
+    <header class="hero" id="chap-01">
+      <p class="kicker">Codex arcanique · design system</p>
+      <h1 class="hero-title">Transmuter le plomb<br />en or</h1>
+      <p class="hero-lede">
+        Refactoriser le SCSS, c’est transformer les valeurs magiques recopiées partout
+        (le plomb) en <strong>tokens</strong> et <strong>mixins</strong> uniques (l’or).
+        Le rendu ne change pas — la duplication disparaît.
+      </p>
+
+      <div class="transmute" [class.is-after]="showAfter()">
+        <div class="transmute-stage">
+          <span class="transmute-label">Rendu identique</span>
+          <button type="button" class="attack-demo">⚔️ Attaquer</button>
+        </div>
+
+        <div class="transmute-code">
+          <div class="transmute-tabs">
+            <button type="button" [class.active]="!showAfter()" (click)="showAfter.set(false)">
+              ⚗️ Avant · plomb
+            </button>
+            <button type="button" [class.active]="showAfter()" (click)="showAfter.set(true)">
+              ✨ Après · or
+            </button>
+          </div>
+          @if (showAfter()) {
+            <pre class="code"><code>{{ afterCode }}</code></pre>
+          } @else {
+            <pre class="code smell-bg"><code>{{ beforeCode }}</code></pre>
+          }
+          <p class="transmute-note">
+            @if (showAfter()) {
+              6 lignes de couleur en dur → 0. La teinte vit dans <code>--success-rgb</code>.
+            } @else {
+              <code>rgba(21, 163, 8, …)</code> était copié dans 5 fichiers. Une retouche = 5 risques.
+            }
+          </p>
+        </div>
+      </div>
+    </header>
+
+    <!-- ─── 02 · LE PROBLÈME (concepts) ──────────────────────────────────── -->
+    <section class="chapter" id="chap-concepts">
+      <p class="eyebrow">Chapitre 02</p>
+      <h2 class="chapter-title">Le problème</h2>
+      <p class="chapter-intro">
+        Avant de copier des recettes, comprends <em>pourquoi</em> le refactoring existe. Trois idées suffisent.
+      </p>
+
+      <div class="concept-grid">
+        <article class="concept">
+          <span class="concept-num">①</span>
+          <h3>La duplication coûte cher</h3>
+          <p>
+            La même couleur <code>rgba(21, 163, 8, …)</code> vivait dans <strong>5 fichiers</strong>.
+            Changer le vert, c’était 5 retouches — et 5 occasions d’en oublier une. Le code dérive,
+            les écrans ne se ressemblent plus.
+          </p>
+          <p class="concept-rule">
+            Règle <strong>DRY</strong> — <em>Don’t Repeat Yourself</em> : chaque décision n’existe qu’à un seul endroit.
+          </p>
+        </article>
+
+        <article class="concept">
+          <span class="concept-num">②</span>
+          <h3>Une source unique de vérité</h3>
+          <p>
+            On déplace la décision (« le vert succès ») vers un <strong>token</strong>, et la structure
+            (« le carré à icône ») vers un <strong>mixin</strong>. Les composants ne décrivent plus
+            <em>comment</em>, ils <em>réclament</em> : <code>var(--success)</code>, <code>&#64;include icon-badge()</code>.
+          </p>
+          <p class="concept-rule">
+            Modifier la source → tout l’écran suit. C’est le levier de cohérence.
+          </p>
+        </article>
+
+        <article class="concept">
+          <span class="concept-num">③</span>
+          <h3>Deux couches, deux portées</h3>
+          <p>
+            Angular <strong>encapsule</strong> le CSS de chaque composant (il est isolé). Mais les
+            variables CSS posées sur <code>:root</code> <strong>traversent</strong> cette barrière :
+            tout composant voit <code>var(--accent)</code> sans rien importer.
+          </p>
+          <p class="concept-rule">
+            <strong>Tokens</strong> = globaux, zéro import. <strong>Mixins</strong> = compilés, à <code>&#64;use</code> par fichier.
+          </p>
+        </article>
+      </div>
+
+      <div class="ledger">
+        <div class="ledger-side lead">
+          <span class="ledger-tag">⚗️ Avant · plomb</span>
+          <ul>
+            <li>couleurs <code>rgba()</code> recopiées dans 5 fichiers</li>
+            <li>8 lignes identiques pour chaque tuile d’icône</li>
+            <li>une retouche = la refaire partout, à la main</li>
+            <li><code>font-size: smaller</code> au hasard des fichiers</li>
+          </ul>
+        </div>
+        <div class="ledger-arrow">→</div>
+        <div class="ledger-side gold">
+          <span class="ledger-tag">✨ Après · or</span>
+          <ul>
+            <li><strong>0</strong> couleur en dur — tout passe par un token</li>
+            <li><code>&#64;include icon-badge()</code> en une ligne</li>
+            <li>une retouche au mixin → propagée d’un coup</li>
+            <li>une échelle <code>--text-*</code> unique et cohérente</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- ─── 03 · RUNES (tokens) ──────────────────────────────────────────── -->
+    <section class="chapter" id="chap-tokens">
+      <p class="eyebrow">Chapitre 03</p>
+      <h2 class="chapter-title">Les runes</h2>
+      <p class="chapter-intro">
+        Les tokens sont des variables CSS globales. Elles traversent l’encapsulation
+        Angular : aucun import, juste <code>var(--nom)</code>. Clique une pastille pour copier.
+      </p>
+
+      @for (group of swatchGroups; track group.title) {
+        <div class="rune-group">
+          <header class="rune-head">
+            <span class="rune-num">{{ group.num }}</span>
+            <h3>{{ group.title }}</h3>
+            <p>{{ group.hint }}</p>
+          </header>
+          <div class="swatch-grid">
+            @for (s of group.swatches; track s.token) {
+              <button
+                type="button"
+                class="swatch"
+                [class.copied]="copied() === 'var(' + s.token + ')'"
+                (click)="copy('var(' + s.token + ')')"
+              >
+                <span class="swatch-chip" [class.on-dark]="s.onDark">
+                  <span class="swatch-fill" [style.background]="'var(' + s.token + ')'"></span>
+                </span>
+                <span class="swatch-meta">
+                  <code>{{ s.token }}</code>
+                  <small>{{ s.value }}</small>
+                </span>
+                <span class="swatch-copied">
+                  {{ copied() === 'var(' + s.token + ')' ? 'Copié ✓' : 'var()' }}
+                </span>
+              </button>
+            }
+          </div>
+        </div>
+      }
+
+      <div class="token-duo">
+        <div class="rune-group">
+          <header class="rune-head">
+            <span class="rune-num">02·d</span>
+            <h3>Échelle typographique</h3>
+            <p>Tierce majeure (1.25). Toujours dimensionner via ces tokens.</p>
+          </header>
+          <ul class="type-list">
+            @for (t of typeScale; track t.token) {
+              <li (click)="copy('var(' + t.token + ')')" [class.copied]="copied() === 'var(' + t.token + ')'">
+                <span class="type-sample" [style.fontSize]="'var(' + t.token + ')'">Le héros</span>
+                <span class="type-meta"><code>{{ t.token }}</code><small>{{ t.rem }}</small></span>
+              </li>
+            }
+          </ul>
+        </div>
+
+        <div class="rune-group">
+          <header class="rune-head">
+            <span class="rune-num">02·e</span>
+            <h3>Rayons &amp; ombres</h3>
+            <p>La profondeur et l’arrondi, eux aussi standardisés.</p>
+          </header>
+          <div class="radii-row">
+            @for (r of radii; track r) {
+              <button type="button" class="radius-demo" (click)="copy('var(' + r + ')')" [class.copied]="copied() === 'var(' + r + ')'">
+                <span class="radius-box" [style.borderRadius]="'var(' + r + ')'"></span>
+                <code>{{ r }}</code>
+              </button>
+            }
+          </div>
+          <div class="shadow-row">
+            @for (sh of shadows; track sh) {
+              <button type="button" class="shadow-demo" (click)="copy('var(' + sh + ')')" [class.copied]="copied() === 'var(' + sh + ')'">
+                <span class="shadow-box" [style.boxShadow]="'var(' + sh + ')'"></span>
+                <code>{{ sh }}</code>
+              </button>
+            }
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ─── 04 · INCANTATIONS (mixins) ───────────────────────────────────── -->
+    <section class="chapter" id="chap-mixins">
+      <p class="eyebrow">Chapitre 04</p>
+      <h2 class="chapter-title">Les incantations</h2>
+      <p class="chapter-intro">
+        Les mixins capturent une <em>structure</em> répétée. Ils s’importent en tête de fichier :
+        <code>&#64;use '../../../styles/mixins' as *;</code> puis <code>&#64;include nom();</code>.
+        Les <code>$arguments</code> rendent le motif réglable ; les valeurs par défaut le rendent court à appeler.
+      </p>
+
+      <div class="spell-grid">
+        @for (m of mixins; track m.id) {
+          <article class="spell">
+            <div class="spell-demo">
+              @switch (m.id) {
+                @case ('surface-interactive') {
+                  <div class="demo-surface">Survole-moi</div>
+                }
+                @case ('gold-frame') {
+                  <div class="demo-goldframe"><span class="eyebrow-demo">Panneau héros</span>Cadre or → arcane</div>
+                }
+                @case ('icon-badge') {
+                  <div class="demo-badges">
+                    <span class="demo-badge">⚔️</span>
+                    <span class="demo-badge">🔮</span>
+                    <span class="demo-badge">🐉</span>
+                  </div>
+                }
+                @case ('pill') {
+                  <div class="demo-pills">
+                    <span class="demo-pill info">💧 8 PM</span>
+                    <span class="demo-pill gold">💰 50</span>
+                    <span class="demo-pill">Niv. 1</span>
+                  </div>
+                }
+                @case ('gauge') {
+                  <div class="demo-gauges">
+                    <div class="demo-gauge hp">
+                      <div class="demo-gauge-labels"><span>❤️ PV</span><span>120 / 120</span></div>
+                      <progress value="120" max="120"></progress>
+                    </div>
+                    <div class="demo-gauge mp">
+                      <div class="demo-gauge-labels"><span>💙 PM</span><span>18 / 30</span></div>
+                      <progress value="18" max="30"></progress>
+                    </div>
+                  </div>
+                }
+                @case ('eyebrow') {
+                  <div class="demo-eyebrow">
+                    <span class="eyebrow-demo">Compétences</span>
+                    <p>Le sur-titre annonce un groupe.</p>
+                  </div>
+                }
+              }
+            </div>
+            <div class="spell-body">
+              <h3>{{ m.name }}</h3>
+              <p>{{ m.desc }}</p>
+              <div class="codeblock">
+                <pre class="code"><code>{{ m.code }}</code></pre>
+                <button type="button" class="copy-btn" (click)="copy(m.code)">
+                  {{ copied() === m.code ? 'Copié ✓' : 'Copier' }}
+                </button>
+              </div>
+            </div>
+          </article>
+        }
+      </div>
+
+      <!-- Anatomy of a mixin -->
+      <div class="anatomy">
+        <header class="anatomy-head">
+          <span class="eyebrow-demo">Anatomie · &#64;mixin pill</span>
+          <p>Clique une ligne pour comprendre son rôle. Chaque déclaration a une raison d’être.</p>
+        </header>
+        <div class="anatomy-body">
+          <div class="anatomy-code">
+            @for (line of anatomy; track $index; let i = $index) {
+              @if (line.note) {
+                <button
+                  type="button"
+                  class="anatomy-line is-note"
+                  [class.active]="anatomyActive() === i"
+                  (click)="toggleAnatomy(i)"
+                >{{ line.text }}<span class="anatomy-dot">●</span></button>
+              } @else {
+                <span class="anatomy-line">{{ line.text }}</span>
+              }
+            }
+          </div>
+          <aside class="anatomy-note">
+            @if (anatomyActive() !== null) {
+              <p class="anatomy-note-line"><code>{{ anatomy[anatomyActive()!].text.trim() }}</code></p>
+              <p>{{ anatomy[anatomyActive()!].note }}</p>
+            } @else {
+              <p class="anatomy-hint">← Sélectionne une ligne surlignée pour afficher son explication ici.</p>
+            }
+          </aside>
+        </div>
+      </div>
+    </section>
+
+    <!-- ─── 05 · L'ATELIER (refactor pas-à-pas) ──────────────────────────── -->
+    <section class="chapter" id="chap-atelier">
+      <p class="eyebrow">Chapitre 05</p>
+      <h2 class="chapter-title">L’atelier</h2>
+      <p class="chapter-intro">
+        Un vrai refactoring, en direct : transformer le « carré à icône » dupliqué en mixin
+        <code>icon-badge</code>. Avance étape par étape — le rendu, lui, ne bouge pas.
+      </p>
+
+      <div class="atelier">
+        <ol class="stepper" aria-label="Étapes">
+          @for (s of walk; track s.tag; let i = $index) {
+            <li>
+              <button
+                type="button"
+                class="step-dot"
+                [class.active]="step() === i"
+                [class.done]="step() > i"
+                (click)="goStep(i)"
+                [attr.aria-current]="step() === i ? 'step' : null"
+              >{{ i + 1 }}</button>
+            </li>
+          }
+        </ol>
+
+        <div class="atelier-stage">
+          <div class="atelier-text">
+            <span class="atelier-tag">{{ walk[step()].tag }}</span>
+            <h3>{{ walk[step()].title }}</h3>
+            <p>{{ walk[step()].explain }}</p>
+            <div class="atelier-nav">
+              <button type="button" (click)="stepPrev()" [disabled]="step() === 0">‹ Précédent</button>
+              <span class="atelier-progress">{{ step() + 1 }} / {{ walk.length }}</span>
+              <button type="button" (click)="stepNext()" [disabled]="step() === walk.length - 1">Suivant ›</button>
+            </div>
+          </div>
+
+          <div class="atelier-code">
+            <pre class="code" [class.smell-bg]="step() === 0"><code>{{ walk[step()].code }}</code></pre>
+            <div class="atelier-result">
+              <span class="atelier-result-label">Rendu (inchangé à chaque étape)</span>
+              <span class="demo-badge">⚔️</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ─── 06 · LABORATOIRE (playground) ────────────────────────────────── -->
+    <section class="chapter" id="chap-lab">
+      <p class="eyebrow">Chapitre 06</p>
+      <h2 class="chapter-title">Le laboratoire</h2>
+      <p class="chapter-intro">
+        Une même carte, recolorée en changeant <strong>un seul token</strong>. C’est tout
+        l’intérêt : la cohérence se pilote depuis la racine, pas fichier par fichier.
+      </p>
+
+      <div
+        class="lab"
+        [style.--pg]="'var(' + accent().token + ')'"
+        [style.--pg-soft]="'var(' + accent().soft + ')'"
+        [style.--pg-border]="'var(' + accent().border + ')'"
+      >
+        <div class="lab-controls">
+          <span class="lab-controls-label">Teinte d’accent</span>
+          <div class="segmented">
+            @for (c of accentChoices; track c.id) {
+              <button type="button" [class.active]="accent().id === c.id" (click)="pickAccent(c)">
+                {{ c.label }}
+              </button>
+            }
+          </div>
+        </div>
+
+        <div class="lab-stage">
+          <article class="lab-card">
+            <span class="lab-badge">✦</span>
+            <h3>Carte d’objet</h3>
+            <p>L’accent pilote bordure, halo et pastille d’un coup.</p>
+            <div class="lab-pills">
+              <span class="lab-pill">Rare</span>
+              <span class="lab-pill">x1</span>
+            </div>
+          </article>
+
+          <pre class="code"><code>.carte &#123;
+  border-color: var(<span class="hl">{{ accent().border }}</span>);
+  box-shadow: 0 0 0 1px var(<span class="hl">{{ accent().border }}</span>);
+&#125;
+.carte .pill &#123;
+  &#64;include pill(
+    var(<span class="hl">{{ accent().token }}</span>),
+    var(<span class="hl">{{ accent().soft }}</span>)
+  );
+&#125;</code></pre>
+        </div>
+      </div>
+    </section>
+
+    <!-- ─── 07 · ÉTENDRE LE SYSTÈME (recette) ────────────────────────────── -->
+    <section class="chapter" id="chap-extend">
+      <p class="eyebrow">Chapitre 07</p>
+      <h2 class="chapter-title">Étendre le système</h2>
+      <p class="chapter-intro">
+        Un jour tu auras besoin d’une couleur ou d’un motif qui n’existent pas encore. Voici les deux
+        recettes — suis-les pour rester cohérent avec le reste.
+      </p>
+
+      <div class="recipe-duo">
+        <article class="recipe">
+          <header><span class="recipe-kicker">Recette A</span><h3>Ajouter une couleur sémantique</h3></header>
+          <p class="recipe-goal">Objectif : un statut « poison » 🐍, vert acide, réutilisable partout.</p>
+          <ol class="recipe-steps">
+            <li>
+              <span class="recipe-step-n">1</span>
+              <div>
+                <p>Déclare le <strong>triplet de canal</strong> dans <code>:root</code> (styles.scss).</p>
+                <pre class="code"><code>--poison-rgb: 132, 204, 22;</code></pre>
+              </div>
+            </li>
+            <li>
+              <span class="recipe-step-n">2</span>
+              <div>
+                <p>Décline les <strong>variantes standard</strong> à partir du triplet — comme les autres familles.</p>
+                <pre class="code"><code>--poison: #84cc16;
+--poison-soft: rgba(var(--poison-rgb), 0.14);
+--poison-border: rgba(var(--poison-rgb), 0.5);
+--poison-glow: rgba(var(--poison-rgb), 0.25);
+--poison-text: #d4f7a0;</code></pre>
+              </div>
+            </li>
+            <li>
+              <span class="recipe-step-n">3</span>
+              <div>
+                <p>Consomme-la, sans jamais réécrire le <code>rgba()</code> en dur.</p>
+                <pre class="code"><code>.tag-poison &#123;
+  &#64;include pill(
+    var(--poison-text),
+    var(--poison-soft),
+    var(--poison-border)
+  );
+&#125;</code></pre>
+              </div>
+            </li>
+          </ol>
+        </article>
+
+        <article class="recipe">
+          <header><span class="recipe-kicker">Recette B</span><h3>Ajouter un mixin</h3></header>
+          <p class="recipe-goal">Indice : tu copies-colles la même structure une 2ᵉ fois ? C’est le signal.</p>
+          <ol class="recipe-steps">
+            <li>
+              <span class="recipe-step-n">1</span>
+              <div>
+                <p>Repère ce qui se répète, isole ce qui <strong>varie</strong> → ce seront les <code>$arguments</code>.</p>
+              </div>
+            </li>
+            <li>
+              <span class="recipe-step-n">2</span>
+              <div>
+                <p>Déclare-le dans <code>_mixins.scss</code> avec des <strong>valeurs par défaut</strong>.</p>
+                <pre class="code"><code>&#64;mixin chip-stat($color: var(--accent)) &#123;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  color: $color;
+  font-variant-numeric: tabular-nums;
+&#125;</code></pre>
+              </div>
+            </li>
+            <li>
+              <span class="recipe-step-n">3</span>
+              <div>
+                <p>Remplace chaque copie par un <code>&#64;include</code>, puis vérifie d’un <code>grep</code> qu’il n’en reste plus.</p>
+                <pre class="code"><code>.atk &#123; &#64;include chip-stat(var(--danger)); &#125;
+.def &#123; &#64;include chip-stat(var(--info)); &#125;</code></pre>
+              </div>
+            </li>
+          </ol>
+        </article>
+      </div>
+
+      <p class="recipe-foot">
+        Le réflexe : <strong>une valeur en dur ou une structure copiée une 2ᵉ fois → arrête-toi et factorise.</strong>
+        Mieux vaut un token de plus qu’une dérive de plus.
+      </p>
+    </section>
+
+    <!-- ─── 08 · ÉPREUVES (exercises) ────────────────────────────────────── -->
+    <section class="chapter" id="chap-quiz">
+      <p class="eyebrow">Chapitre 08</p>
+      <h2 class="chapter-title">Les épreuves</h2>
+      <p class="chapter-intro">Mets en pratique. Réponds, puis observe la correction.</p>
+
+      <!-- Quiz -->
+      <div class="quiz">
+        <div class="quiz-head">
+          <span class="eyebrow-demo">Quiz · 4 questions</span>
+          <span class="quiz-score" [class.win]="answered() === quiz.length && score() === quiz.length">
+            Score {{ score() }} / {{ quiz.length }}
+          </span>
+        </div>
+
+        @for (q of quiz; track q.prompt; let qi = $index) {
+          <fieldset class="quiz-q" [class.done]="answers()[qi] !== -1">
+            <legend>{{ qi + 1 }}. {{ q.prompt }}</legend>
+            <div class="quiz-options">
+              @for (opt of q.options; track opt; let oi = $index) {
+                <button
+                  type="button"
+                  class="quiz-opt"
+                  [class.correct]="answers()[qi] !== -1 && oi === q.correct"
+                  [class.wrong]="answers()[qi] === oi && oi !== q.correct"
+                  [disabled]="answers()[qi] !== -1"
+                  (click)="answer(qi, oi)"
+                >
+                  <code>{{ opt }}</code>
+                </button>
+              }
+            </div>
+            @if (answers()[qi] !== -1) {
+              <p class="quiz-explain">
+                {{ answers()[qi] === q.correct ? '✓ Bien vu. ' : '✗ Presque. ' }}{{ q.explain }}
+              </p>
+            }
+          </fieldset>
+        }
+
+        @if (answered() === quiz.length) {
+          <button type="button" class="quiz-reset" (click)="resetQuiz()">↺ Recommencer</button>
+        }
+      </div>
+
+      <!-- Spot the smell -->
+      <div class="smell-ex">
+        <span class="eyebrow-demo">{{ smell.title }}</span>
+        <p class="smell-instr">Clique la ligne qui contient une valeur en dur (un « code smell »).</p>
+        <div class="smell-code">
+          @for (line of smell.lines; track $index; let li = $index) {
+            <button
+              type="button"
+              class="smell-line"
+              [class.picked]="smellPick() === li"
+              [class.is-smell]="smellPick() !== null && line.smell"
+              [class.is-miss]="smellPick() === li && !line.smell"
+              [disabled]="smellPick() !== null"
+              (click)="pickSmell(li)"
+            >{{ line.text }}</button>
+          }
+        </div>
+        @if (smellPick() !== null) {
+          <p class="smell-result" [class.ok]="smellCorrect()">
+            {{ smellCorrect() ? '✓ Exact. ' : '✗ Pas celle-là. ' }}{{ smell.fix }}
+          </p>
+        }
+      </div>
+    </section>
+
+    <footer class="codex-footer">
+      <p>Référence complète : <code>src/styles/README.md</code></p>
+      <a routerLink="/landing" class="footer-link">‹ Retour à l’accueil</a>
+    </footer>
+  </main>
+</div>

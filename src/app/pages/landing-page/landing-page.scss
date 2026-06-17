@@ -80,6 +80,24 @@ div.container {
   }
 }
 
+.codex-link {
+  display: block;
+  margin-top: 1.5rem;
+  text-align: center;
+  color: var(--text-muted);
+  text-decoration: none;
+  font-size: var(--text-sm);
+  font-style: italic;
+  letter-spacing: 0.01em;
+  transition: color var(--transition);
+
+  &:hover {
+    color: var(--accent);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+}
+
 @keyframes float {
   0%,
   100% {

@@ -1,11 +1,151 @@
 @if (gameManagerService.isInit) {
+@let p = player;
 
-@let player = gameManagerService.currentPlayer;
+<app-game-header [lvl]="p.lvl" [money]="p.money" [pseudo]="p.pseudo"></app-game-header>
 
-<app-game-header [lvl]="player.lvl" [money]="player.money" [pseudo]="player.pseudo">
-</app-game-header>
+<section class="city">
+  <header class="city-hero">
+    <h1 class="title-contrast">🏰 La Cité d’Angwen</h1>
+    <p class="subtitle">Dépense ton or, reprends des forces… ou renais plus puissant.</p>
+    @if (ascension > 0) {
+      <span class="ascension-badge">✦ Ascension {{ ascension }} · base ×{{ currentMultiplier }}</span>
+    }
+  </header>
+
+  <div class="buildings">
+    <!-- ─── Boutique ─────────────────────────────────────────────── -->
+    <article class="building shop">
+      <header class="building-head">
+        <span class="building-icon">🛒</span>
+        <div class="building-id">
+          <span class="building-eyebrow">Le Comptoir</span>
+          <h2>Boutique</h2>
+          <p class="npc">« Des améliorations permanentes, ami aventurier. »</p>
+        </div>
+      </header>
+
+      <ul class="shop-list">
+        @for (item of shopItems; track item.id) {
+          <li class="shop-item" [class.locked]="!canAfford(item.cost)">
+            <span class="item-icon">{{ item.icon }}</span>
+            <div class="item-main">
+              <p class="item-name">{{ item.name }}</p>
+              <p class="item-desc">{{ item.desc }}</p>
+            </div>
+            <span class="stat-pill">+{{ item.amount }} {{ item.statLabel }}</span>
+            <button class="buy-btn" [disabled]="!canAfford(item.cost)" (click)="buy(item)">
+              💰 {{ item.cost }}
+            </button>
+          </li>
+        }
+      </ul>
+    </article>
+
+    <!-- ─── Auberge ──────────────────────────────────────────────── -->
+    <article class="building inn">
+      <header class="building-head">
+        <span class="building-icon">🍺</span>
+        <div class="building-id">
+          <span class="building-eyebrow">L’Auberge du Repos</span>
+          <h2>Auberge</h2>
+          <p class="npc">« Une bonne nuit répare bien des blessures. »</p>
+        </div>
+      </header>
+
+      <div class="vitals">
+        <div class="gauge-row hp">
+          <div class="gauge-labels">
+            <span>❤️ PV</span>
+            <span>{{ p.currentHp | interfaceDigits }} / {{ p.characteristics.hp | interfaceDigits }}</span>
+          </div>
+          <progress [value]="p.currentHp | interfaceDigits" [max]="p.characteristics.hp | interfaceDigits"></progress>
+        </div>
+        <div class="gauge-row mp">
+          <div class="gauge-labels">
+            <span>💙 PM</span>
+            <span>{{ p.currentMp | interfaceDigits }} / {{ p.characteristics.mana | interfaceDigits }}</span>
+          </div>
+          <progress [value]="p.currentMp | interfaceDigits" [max]="p.characteristics.mana | interfaceDigits"></progress>
+        </div>
+      </div>
+
+      <div class="rest-options">
+        <button class="rest-btn" [disabled]="isFullHealth" (click)="rest()">
+          <span class="rest-icon">🛏️</span>
+          <span class="rest-text">
+            <span class="rest-name">Chambre &amp; repas</span>
+            <span class="rest-desc">Restaure tous les PV et PM.</span>
+          </span>
+          <span class="rest-cost">💰 {{ restCost }}</span>
+        </button>
+        <p class="rest-note">
+          @if (isFullHealth) {
+            ✓ Tu es déjà en pleine forme.
+          } @else {
+            Coût : 10 % de ton or ({{ restCost }} pièces).
+          }
+        </p>
+      </div>
+    </article>
+  </div>
+
+  <!-- ─── Mage mystérieux · New Game + ───────────────────────────── -->
+  <article class="mage">
+    <span class="mage-aura"></span>
+    <header class="mage-head">
+      <span class="mage-icon">🧙</span>
+      <div class="building-id">
+        <span class="mage-eyebrow">Le Mage Mystérieux</span>
+        <h2>Renaissance</h2>
+      </div>
+    </header>
+
+    <p class="mage-flavor">
+      « Le vrai pouvoir naît du recommencement. Abandonne tout — niveau, or, trésors — et je
+      doublerai la force qui coule en toi. À chaque renaissance, tu deviendras une légende. »
+    </p>
+
+    <div class="ascension-panel">
+      <table class="ascension-table">
+        <thead>
+          <tr>
+            <th>Caractéristique de base</th>
+            <th>Maintenant</th>
+            <th>Après</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (row of ascensionPreview; track row.label) {
+            <tr>
+              <td class="stat-label">{{ row.label }}</td>
+              <td class="val-now">{{ row.now | interfaceDigits }}</td>
+              <td class="val-next">{{ row.next | interfaceDigits }}</td>
+            </tr>
+          }
+        </tbody>
+      </table>
+
+      <div class="ascension-cta">
+        <p class="ascension-tier">Palier d’ascension : <strong>{{ ascension }}</strong> → <strong>{{ ascension + 1 }}</strong></p>
+        @if (canAscend) {
+          <p class="ascension-warn">⚠️ Réinitialise toute la progression. Irréversible.</p>
+          <button class="ng-btn" (click)="newGamePlus()">✦ Renaître · New Game +</button>
+        } @else {
+          <p class="ascension-locked">🔒 Débloqué au niveau {{ ASCENSION_MIN_LEVEL }} — tu es niveau {{ player.lvl }}.</p>
+          <button class="ng-btn" disabled>✦ Renaître · New Game +</button>
+        }
+      </div>
+    </div>
+  </article>
+</section>
+
+@if (toast(); as t) {
+  <div class="toast" [class.ok]="t.ok">{{ t.msg }}</div>
+}
+
 } @else {
 <div class="container">
-  <h1>ERRROR</h1>
+  <h1 class="title-contrast">⚠️ Erreur</h1>
+  <p class="subtitle">Aucune partie en cours.</p>
 </div>
 }

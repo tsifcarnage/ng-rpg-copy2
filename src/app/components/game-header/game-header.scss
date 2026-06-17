@@ -5,7 +5,7 @@
   background: rgba(10, 13, 18, 0.72);
   backdrop-filter: blur(12px) saturate(140%);
   border-bottom: 1px solid var(--violet-border);
-  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.45);
+  box-shadow: 0 6px 24px rgba(var(--black-rgb), 0.45);
   display: flex;
   padding: 0.5rem 1rem;
   justify-content: space-between;
@@ -61,7 +61,7 @@
         background: var(--surface-hover);
       }
       &.active {
-        color: #fff;
+        color: var(--text);
         &::after {
           transform: scaleX(1);
           box-shadow: 0 0 10px var(--violet);
@@ -86,8 +86,8 @@
     }
     p:nth-child(1) {
       color: var(--gold);
-      background: rgba(250, 210, 66, 0.1);
-      border-color: rgba(250, 210, 66, 0.25);
+      background: var(--gold-soft);
+      border-color: var(--gold-border);
     }
     p:nth-child(2) {
       color: var(--violet);
@@ -99,7 +99,7 @@
     }
     button {
       cursor: pointer;
-      color: #fff;
+      color: var(--text);
       margin-left: 0.15rem;
       padding: 0.4rem 0.75rem;
       border: 1px solid transparent;
@@ -113,17 +113,17 @@
         transform: translateY(1px);
       }
       &.success {
-        background: rgba(21, 163, 8, 0.7);
+        background: rgba(var(--success-rgb), 0.7);
         &:hover {
           background: var(--success);
-          box-shadow: 0 0 14px rgba(21, 163, 8, 0.45);
+          box-shadow: 0 0 14px rgba(var(--success-rgb), 0.45);
         }
       }
       &.danger {
-        background: rgba(236, 53, 53, 0.7);
+        background: rgba(var(--danger-rgb), 0.7);
         &:hover {
           background: var(--danger);
-          box-shadow: 0 0 14px rgba(236, 53, 53, 0.45);
+          box-shadow: 0 0 14px rgba(var(--danger-rgb), 0.45);
         }
       }
     }

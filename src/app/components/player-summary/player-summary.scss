@@ -14,9 +14,11 @@
     justify-content: space-between;
     .left {
       display: flex;
-      gap: 0.25rem;
+      align-items: center;
+      gap: 0.6rem;
       .icon {
-        font-size: 30px;
+        @include icon-badge(52px);
+        font-size: 28px;
         margin: 0;
       }
       .infos {
@@ -39,7 +41,9 @@
       }
     }
     .money {
-      color: var(--gold);
+      @include pill(var(--gold), var(--gold-soft), var(--gold-border));
+      align-self: flex-start;
+      font-size: var(--text-sm);
     }
   }
 }
@@ -51,16 +55,9 @@
 
   .gauge-item {
     div:first-child {
-      display: flex;
-      justify-content: space-between;
+      @include gauge-labels;
       p {
-        display: block;
-        font-size: smaller;
         margin: 0.15rem 0;
-        &:last-child {
-          color: var(--text-muted);
-          font-variant-numeric: tabular-nums;
-        }
       }
     }
     progress {
@@ -68,19 +65,14 @@
     }
 
     // HP / MP / XP — coloured value fills
-    &:nth-child(1) progress::-webkit-progress-value {
-      background: linear-gradient(90deg, #2fbf3a, var(--success-light));
+    &:nth-child(1) progress {
+      @include gauge-fill(var(--success-bright), var(--success-light));
     }
-    &:nth-child(1) progress::-moz-progress-bar { background: var(--success-light); }
-
-    &:nth-child(2) progress::-webkit-progress-value {
-      background: linear-gradient(90deg, var(--info-deep), var(--info));
+    &:nth-child(2) progress {
+      @include gauge-fill(var(--info-deep), var(--info));
     }
-    &:nth-child(2) progress::-moz-progress-bar { background: var(--info); }
-
-    &:nth-child(3) progress::-webkit-progress-value {
-      background: linear-gradient(90deg, var(--accent), var(--gold));
+    &:nth-child(3) progress {
+      @include gauge-fill(var(--accent), var(--gold));
     }
-    &:nth-child(3) progress::-moz-progress-bar { background: var(--gold); }
   }
 }

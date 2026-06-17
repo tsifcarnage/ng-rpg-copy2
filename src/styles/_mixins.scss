@@ -62,18 +62,124 @@
   }
 }
 
-// Rounded badge / chip. Pass the accent color and its translucent fill.
-@mixin pill($fg: var(--accent), $bg: var(--accent-soft)) {
+// Rounded badge / chip. Pass the accent color, its translucent fill, and an
+// optional border tint. A hairline border keeps the chip crisp on busy panels.
+@mixin pill($fg: var(--accent), $bg: var(--accent-soft), $border: rgba(var(--white-rgb), 0.08)) {
   display: inline-flex;
   align-items: center;
   gap: 0.35rem;
   margin: 0;
   padding: 4px 10px;
   border-radius: var(--radius-pill);
+  border: 1px solid $border;
   font-size: 0.78rem;
+  font-weight: 600;
   color: $fg;
   background: $bg;
   font-variant-numeric: tabular-nums;
+}
+
+// Square avatar/glyph tile — centers an emoji in a sunken, lit, bordered box.
+// Was duplicated as `.identity .icon`, `.zone-icon`, the player-summary icon…
+@mixin icon-badge($size: 64px, $radius: var(--radius-lg)) {
+  flex-shrink: 0;
+  width: $size;
+  height: $size;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+  border-radius: $radius;
+  border: 1px solid var(--border-soft);
+  background:
+    radial-gradient(120% 120% at 50% 0%, rgba(var(--white-rgb), 0.07), transparent 60%),
+    var(--scrim);
+  box-shadow: var(--inset-top-light);
+}
+
+// Neutral "ghost" button on the frosted surface — lift + accent glow on hover.
+// Collapses the near-identical `.action-btn` rules in map-selector & fight-actions.
+@mixin ghost-button($radius: var(--radius)) {
+  cursor: pointer;
+  color: var(--text);
+  font-family: inherit;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: $radius;
+  transition:
+    background var(--transition),
+    border-color var(--transition),
+    box-shadow var(--transition),
+    transform var(--transition);
+
+  &:hover {
+    background: var(--surface-hover);
+    border-color: var(--accent-border);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-hover);
+  }
+  &:active {
+    transform: translateY(0);
+  }
+  // Kept after :hover so disabled state wins on equal specificity.
+  &:disabled,
+  &.disabled {
+    cursor: not-allowed;
+    opacity: 0.5;
+    transform: none;
+    box-shadow: none;
+    background: var(--surface);
+    border-color: var(--border);
+  }
+}
+
+// Two-up label row above a gauge: name on the left, value (tabular) on the right.
+@mixin gauge-labels {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+
+  p {
+    margin: 0;
+    font-size: var(--text-xs);
+    color: var(--text-soft);
+
+    &:last-child {
+      color: var(--text-muted);
+      font-variant-numeric: tabular-nums;
+    }
+  }
+}
+
+// Coloured progress fill — call inside a `progress` rule. $a→$b is the gradient;
+// a top highlight makes the bar read as glossy/lit. $moz fills Firefox (no ::value).
+@mixin gauge-fill($a, $b, $moz: $b) {
+  &::-webkit-progress-value {
+    background:
+      linear-gradient(180deg, rgba(var(--white-rgb), 0.28), transparent 48%),
+      linear-gradient(90deg, $a, $b);
+  }
+  &::-moz-progress-bar {
+    background: $moz;
+  }
+}
+
+// Centered, max-width page column shared by every routed page / section.
+@mixin page-shell($max: 1100px, $pad: 1.5rem) {
+  width: 100%;
+  max-width: $max;
+  margin: 0 auto;
+  padding: $pad;
+}
+
+// Engraved display heading in accent gold with a soft glow halo.
+@mixin display-title($size: var(--text-2xl)) {
+  font-family: var(--font-display);
+  font-size: $size;
+  font-weight: 800;
+  letter-spacing: 0.03em;
+  color: var(--accent);
+  text-shadow: 0 2px 18px var(--accent-glow);
 }
 
 // Section / group eyebrow label.
@@ -87,7 +193,8 @@
   color: var(--accent);
 }
 
-// Slim rounded progress bar shared by player + fight gauges.
+// Slim rounded progress bar shared by player + fight gauges. The inset ring +
+// faint highlight give the empty track a recessed, machined look.
 @mixin gauge($height: 10px) {
   width: 100%;
   height: $height;
@@ -97,6 +204,9 @@
   border-radius: var(--radius-pill);
   overflow: hidden;
   background: var(--surface-sunken);
+  box-shadow:
+    inset 0 1px 2px rgba(var(--black-rgb), 0.55),
+    inset 0 0 0 1px rgba(var(--white-rgb), 0.04);
 
   &::-webkit-progress-bar {
     background: var(--surface-sunken);
@@ -104,7 +214,7 @@
   }
   &::-webkit-progress-value {
     border-radius: var(--radius-pill);
-    transition: width 0.35s ease;
+    transition: width 0.45s var(--ease-out);
   }
   &::-moz-progress-bar {
     border-radius: var(--radius-pill);

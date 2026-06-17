@@ -1,9 +1,7 @@
 @use '../../../styles/mixins' as *;
 
 .history-wrapper {
-  width: 100%;
-  max-width: 960px;
-  margin: 0 auto;
+  @include page-shell(960px, 0);
 }
 
 .history-header {
@@ -28,7 +26,7 @@
 
 .history-card {
   @include themed-scrollbar;
-  @include gold-frame(var(--radius-lg), rgba(0, 0, 0, 0.55));
+  @include gold-frame(var(--radius-lg), rgba(var(--black-rgb), 0.55));
   padding: 0.6rem 0.85rem;
   min-height: 200px;
   max-height: 220px;
@@ -47,7 +45,7 @@
   border-left: 2px solid transparent;
 
   &:hover {
-    background: rgba(255, 255, 255, 0.03);
+    background: rgba(var(--white-rgb), 0.03);
   }
 
   .time {
@@ -59,7 +57,7 @@
     text-align: center;
   }
   .text {
-    color: #d0d4dc;
+    color: var(--text-soft);
   }
 
   &.kind-system {
@@ -68,18 +66,18 @@
   }
   &.kind-info {
     border-left-color: var(--blue-slate);
-    .text { color: #c7ccd5; font-style: italic; }
+    .text { color: var(--text-soft); font-style: italic; }
   }
   &.kind-player {
-    border-left-color: rgba(124, 220, 110, 0.8);
-    .text { color: #b8e8ad; }
+    border-left-color: var(--success-light);
+    .text { color: var(--success-text); }
   }
   &.kind-enemy {
-    border-left-color: rgba(255, 107, 107, 0.8);
-    .text { color: #f3b8b8; }
+    border-left-color: var(--danger-light);
+    .text { color: var(--danger-text); }
   }
   &.kind-heal {
     border-left-color: var(--info);
-    .text { color: #b4d2fb; }
+    .text { color: var(--info-text); }
   }
 }

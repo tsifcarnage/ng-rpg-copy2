@@ -1,7 +1,8 @@
+@use '../../../styles/mixins' as *;
+
 .fight-container {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 1.5rem 1.5rem 3rem;
+  @include page-shell(1200px, 1.5rem);
+  padding-bottom: 3rem;
   display: flex;
   flex-direction: column;
   gap: 1.5rem;
@@ -54,11 +55,11 @@
     font-weight: 800;
     color: var(--accent);
     letter-spacing: 0.05em;
-    text-shadow: 0 0 16px rgba(244, 175, 38, 0.55);
+    text-shadow: 0 0 16px rgba(var(--accent-rgb), 0.55);
     padding: 0.5rem 0.85rem;
     border: 2px solid var(--accent-border);
     border-radius: 50%;
-    background: rgba(0, 0, 0, 0.6);
+    background: var(--scrim-strong);
     line-height: 1;
   }
 }

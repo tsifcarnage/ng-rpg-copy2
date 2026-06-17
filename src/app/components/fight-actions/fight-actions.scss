@@ -1,7 +1,7 @@
 @use '../../../styles/mixins' as *;
 
 .actions-wrapper {
-  max-width: 960px;
+  @include page-shell(960px, 0);
   margin: 1.25rem auto 2rem;
   display: flex;
   flex-direction: column;
@@ -31,36 +31,13 @@
 }
 
 .action-btn {
+  @include ghost-button;
   display: flex;
   align-items: center;
   gap: 0.6rem;
   padding: 0.7rem 0.9rem;
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  color: var(--text);
   font-size: 0.9rem;
-  font-family: inherit;
   text-align: left;
-  cursor: pointer;
-  transition:
-    background var(--transition),
-    transform var(--transition),
-    border-color var(--transition),
-    box-shadow var(--transition);
-
-  &:hover {
-    background: var(--surface-hover);
-    transform: translateY(-1px);
-    border-color: var(--accent-border);
-  }
-  &:active {
-    transform: translateY(0);
-  }
-  &:disabled {
-    cursor: not-allowed;
-    filter: opacity(0.5);
-  }
 
   .btn-icon {
     font-size: 1.25rem;
@@ -73,28 +50,30 @@
     white-space: nowrap;
   }
   .btn-cost {
-    @include pill(var(--info), rgba(96, 165, 250, 0.12));
+    @include pill(var(--info), var(--info-soft), var(--info-border));
     font-size: 0.75rem;
     flex-shrink: 0;
 
     &.qty {
       color: var(--accent);
       background: var(--accent-soft);
+      border-color: var(--accent-border);
     }
   }
 
   &.primary {
     flex: 1;
     justify-content: center;
-    background: rgba(21, 163, 8, 0.22);
-    border-color: rgba(21, 163, 8, 0.6);
+    background: rgba(var(--success-rgb), 0.22);
+    border-color: var(--success-border);
     font-weight: 600;
     font-size: 1rem;
     padding: 0.85rem;
 
     &:hover {
-      background: rgba(21, 163, 8, 0.35);
-      box-shadow: 0 0 16px rgba(21, 163, 8, 0.25);
+      background: rgba(var(--success-rgb), 0.35);
+      border-color: var(--success-border);
+      box-shadow: 0 0 16px var(--success-glow);
     }
     .btn-label {
       flex: 0;
@@ -105,13 +84,14 @@
     flex: 0 0 auto;
     justify-content: center;
     min-width: 140px;
-    background: rgba(236, 53, 53, 0.18);
-    border-color: rgba(236, 53, 53, 0.5);
+    background: var(--danger-soft);
+    border-color: var(--danger-border);
     padding: 0.85rem;
 
     &:hover {
-      background: rgba(236, 53, 53, 0.3);
-      box-shadow: 0 0 16px rgba(236, 53, 53, 0.2);
+      background: rgba(var(--danger-rgb), 0.3);
+      border-color: var(--danger-border);
+      box-shadow: 0 0 16px var(--danger-glow);
     }
     .btn-label {
       flex: 0;
@@ -119,8 +99,8 @@
   }
 
   &.skill:hover {
-    border-color: rgba(96, 165, 250, 0.55);
-    box-shadow: 0 0 14px rgba(96, 165, 250, 0.12);
+    border-color: var(--info-border);
+    box-shadow: 0 0 14px var(--info-soft);
   }
   &.item:hover {
     border-color: var(--accent-border);

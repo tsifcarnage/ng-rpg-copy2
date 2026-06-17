@@ -1,7 +1,11 @@
+@use '../../../styles/mixins' as *;
+
 .bag-container {
   padding: 2.5rem;
+  background: var(--surface);
   border: 1px solid var(--violet-border);
   border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-card);
   margin-top: 2.5rem;
 
   .bag-filter-pill {
@@ -9,19 +13,21 @@
     flex-wrap: wrap;
 
     .pill {
+      @include pill(var(--text), var(--violet-soft), var(--violet-border));
       margin: 6px;
       padding: 0.5rem 1rem;
-      border-radius: var(--radius-pill);
-      background: var(--violet-soft);
+      font-size: var(--text-sm);
       cursor: pointer;
-      transition: background var(--transition);
+      transition: background var(--transition), color var(--transition),
+        border-color var(--transition);
 
       &.selected {
         background: var(--violet);
+        border-color: var(--violet);
         color: #fff;
       }
       &:hover:not(.selected) {
-        background: rgba(139, 124, 240, 0.3);
+        background: rgba(var(--violet-rgb), 0.3);
       }
     }
   }
@@ -34,7 +40,7 @@
       padding: 0.5rem;
       display: flex;
       margin-top: 6px;
-      background: rgba(139, 124, 240, 0.08);
+      background: rgba(var(--violet-rgb), 0.08);
       border-radius: var(--radius);
       border-left: 6px solid var(--border);
       transition: background var(--transition), transform var(--transition);
@@ -63,7 +69,7 @@
         }
       }
       &:hover {
-        background: rgba(139, 124, 240, 0.2);
+        background: rgba(var(--violet-rgb), 0.2);
         transform: translateX(3px);
       }
     }

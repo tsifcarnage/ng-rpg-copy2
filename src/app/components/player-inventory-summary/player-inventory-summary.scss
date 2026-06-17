@@ -1,5 +1,6 @@
 .gold {
-  background: rgba(250, 210, 66, 0.1);
+  background: var(--gold-soft);
+  border: 1px solid var(--gold-border);
   display: flex;
   justify-content: space-between;
   margin: 0.25rem;
@@ -10,6 +11,7 @@
     text-align: center;
     color: var(--gold);
     width: 100%;
-    font-size: larger;
+    font-size: var(--text-lg);
+    font-variant-numeric: tabular-nums;
   }
 }

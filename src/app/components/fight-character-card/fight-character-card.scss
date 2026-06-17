@@ -1,20 +1,20 @@
 @use '../../../styles/mixins' as *;
 
 .fight-card {
+  @include surface(var(--radius-lg));
   width: 360px;
   padding: 1.25rem;
-  border-radius: var(--radius-lg);
-  background: var(--surface);
-  border: 1px solid var(--border);
   display: flex;
   flex-direction: column;
   gap: 1rem;
   position: relative;
   overflow: hidden;
+  box-shadow: var(--shadow-card);
   transition: transform 0.2s, box-shadow 0.2s;
 
   &:hover {
     transform: translateY(-4px);
+    box-shadow: var(--shadow-hover);
   }
 
   &::before {
@@ -22,36 +22,36 @@
     position: absolute;
     inset: 0;
     pointer-events: none;
-    background: linear-gradient(135deg, rgba(255, 255, 255, 0.04), transparent 60%);
+    background: linear-gradient(135deg, rgba(var(--white-rgb), 0.04), transparent 60%);
   }
 
   &.player {
     animation: card-in-left 0.5s var(--ease-out) both;
-    border-color: rgba(21, 163, 8, 0.55);
-    box-shadow: 0 0 24px rgba(21, 163, 8, 0.08), inset 0 0 0 1px rgba(21, 163, 8, 0.1);
+    border-color: var(--success-border);
+    box-shadow: 0 0 24px var(--success-soft), inset 0 0 0 1px rgba(var(--success-rgb), 0.1);
 
     .side-tag {
       color: var(--success-light);
-      border-color: rgba(124, 220, 110, 0.4);
-      background: rgba(21, 163, 8, 0.12);
+      border-color: var(--success-border);
+      background: var(--success-soft);
     }
-    .gauge-item.hp progress::-webkit-progress-value {
-      background: linear-gradient(90deg, #2fbf3a, var(--success-light));
+    .gauge-item.hp progress {
+      @include gauge-fill(var(--success-bright), var(--success-light));
     }
   }
 
   &.enemy {
     animation: card-in-right 0.5s var(--ease-out) both;
-    border-color: rgba(236, 53, 53, 0.55);
-    box-shadow: 0 0 24px rgba(236, 53, 53, 0.08), inset 0 0 0 1px rgba(236, 53, 53, 0.1);
+    border-color: var(--danger-border);
+    box-shadow: 0 0 24px var(--danger-soft), inset 0 0 0 1px rgba(var(--danger-rgb), 0.1);
 
     .side-tag {
-      color: #ff8a8a;
-      border-color: rgba(255, 138, 138, 0.4);
-      background: rgba(236, 53, 53, 0.12);
+      color: var(--danger-light);
+      border-color: var(--danger-border);
+      background: var(--danger-soft);
     }
-    .gauge-item.hp progress::-webkit-progress-value {
-      background: linear-gradient(90deg, #c92a2a, var(--danger-light));
+    .gauge-item.hp progress {
+      @include gauge-fill(var(--danger-bright), var(--danger-light));
     }
   }
 }
@@ -78,10 +78,12 @@
     &.kind-elite {
       color: var(--violet);
       background: var(--violet-soft);
+      border-color: var(--violet-border);
     }
     &.kind-boss {
       color: var(--danger-light);
-      background: rgba(255, 107, 107, 0.14);
+      background: var(--danger-soft);
+      border-color: var(--danger-border);
     }
   }
 }
@@ -92,17 +94,8 @@
   align-items: center;
 
   .icon {
+    @include icon-badge(64px);
     font-size: 2.75rem;
-    line-height: 1;
-    flex-shrink: 0;
-    width: 64px;
-    height: 64px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: rgba(0, 0, 0, 0.35);
-    border-radius: var(--radius-lg);
-    border: 1px solid var(--border-soft);
   }
   .infos {
     flex: 1;
@@ -137,28 +130,14 @@
 
   .gauge-item {
     .gauge-labels {
-      display: flex;
-      justify-content: space-between;
-      p {
-        margin: 0;
-        font-size: 0.78rem;
-        color: #c7ccd5;
-
-        &:last-child {
-          font-variant-numeric: tabular-nums;
-          color: var(--text-muted);
-        }
-      }
+      @include gauge-labels;
     }
     progress {
       @include gauge(10px);
       margin-top: 4px;
     }
-    &.mp progress::-webkit-progress-value {
-      background: linear-gradient(90deg, var(--info-deep), var(--info));
-    }
-    progress::-moz-progress-bar {
-      background: var(--info);
+    &.mp progress {
+      @include gauge-fill(var(--info-deep), var(--info));
     }
   }
 }

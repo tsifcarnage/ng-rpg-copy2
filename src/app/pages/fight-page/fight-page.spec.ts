@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { CityPage } from '../city-page/city-page';
 
-import { CityPage } from './city-page';
 
 describe('CityPage', () => {
   let component: CityPage;

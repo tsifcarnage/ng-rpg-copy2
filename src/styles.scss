@@ -7,11 +7,11 @@
 // Exposed as CSS custom properties so every (encapsulated) component sees them.
 :root {
   // Base palette
-  --charcoal-blue: #313e50;
-  --twilight-indigo: #3a435e;
-  --charcoal-blue-2: #455561;
-  --blue-slate: #5c6672;
-  --slate-grey: #6c6f7f;
+  --charcoal-blue: #463150;
+  --twilight-indigo: #503a5e;
+  --charcoal-blue-2: #544561;
+  --blue-slate: #6a5c72;
+  --slate-grey: #7a6c7f;
 
   // Channel triples — let components write rgba(var(--x-rgb), α) instead of
   // re-typing the same magic rgba literals in every file.
@@ -25,7 +25,7 @@
   --black-rgb: 0, 0, 0;
 
   // Accents — one amber, one violet (the 5 old purples collapse into this)
-  --accent: #f4af26;
+  --accent: #ac26f4;
   --accent-soft: rgba(var(--accent-rgb), 0.12);
   --accent-border: rgba(var(--accent-rgb), 0.45);
   --accent-glow: rgba(var(--accent-rgb), 0.25);
@@ -33,7 +33,7 @@
   --violet-soft: rgba(var(--violet-rgb), 0.12);
   --violet-border: rgba(var(--violet-rgb), 0.45);
   --violet-glow: rgba(var(--violet-rgb), 0.25);
-  --gold: #fad242;
+  --gold: #b342fa;
   --gold-soft: rgba(var(--gold-rgb), 0.1);
   --gold-border: rgba(var(--gold-rgb), 0.25);
 
@@ -112,8 +112,8 @@ html,
 body {
   background:
     radial-gradient(circle at 50% 32%, transparent 52%, rgba(0, 0, 0, 0.55) 100%),
-    radial-gradient(1100px 560px at 12% -8%, rgba(139, 124, 240, 0.16), transparent 60%),
-    radial-gradient(1000px 520px at 92% -4%, rgba(244, 175, 38, 0.1), transparent 55%),
+    radial-gradient(1100px 560px at 12% -8%, rgba(207, 124, 240, 0.16), transparent 60%),
+    radial-gradient(1000px 520px at 92% -4%, rgba(206, 38, 244, 0.1), transparent 55%),
     radial-gradient(circle at 50% 0%, var(--twilight-indigo), #07090d 80%);
   background-attachment: fixed;
   color: var(--text);
@@ -290,7 +290,7 @@ input {
   padding: 16px;
   color: #2a1c02;
   border-radius: var(--radius);
-  background: linear-gradient(135deg, var(--accent), var(--gold) 55%, #ffe9a8);
+  background: linear-gradient(135deg, var(--accent), var(--gold) 55%, #dfa8ff);
   text-align: center;
   cursor: pointer;
   margin-top: 1.5rem;
